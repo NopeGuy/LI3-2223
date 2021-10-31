@@ -20,8 +20,6 @@ typedef struct data
     // falta o "tipo" login (char,ints,"-")
 } * Data;
 
-//sanitizeInt
-//sanitize char
 
 int *sanitizearray(int follow, char *tempid)
 {
@@ -70,25 +68,18 @@ int sendStruct(Data values, char buff[], FILE *fr1)
 
     char *timetype = strsep(&output, ";");
     int year, month, day, hour, minute, second;
-    if (strlen(timetype) == 19)
+   if (strlen(timetype) == 19)
     {
         if (sscanf(timetype, "%4d-%2d-%2d %2d:%2d:%2d", &year, &month, &day, &hour, &minute, &second) != EOF)
         {
-            if (year >= 2005 && month >= 4 && day <= 7)
+            if (year < 2005 || year >2021 || month<0 || month>12 || day<1 || day >31 || hour<0 || hour >23 || minute<0 || minute>59 || second <0 || second >59 || month==2 && day>28 || year == 2005 && month < 4 || year == 2005 && month == 4 && day<7)
             {
                 return 0;
             }
             else
             {
-
-                if (year > 2005 || year < 2020 || month > 0 || month < 13 || day > 0 || day < 32 || hour >= 0 || hour < 24 || minute >= 0 || minute < 61 || second >= 0 || second < 61)
-                {
-                    values->date = timetype;
-                }
-                else
-                {
-                    return 0;
-                }
+                printf("%s\n", timetype);
+                values->date = timetype;
             }
         }
         else
@@ -165,7 +156,7 @@ int main()
     char buff[4096];                           //buffer
     Data values = malloc(sizeof(struct data)); //array para dar store a valores
 
-    //while fr1 != NULL{
+    //primeiro ficheiro
     int c;
     while ((c = fgetc(fr1)) != EOF)
     {
@@ -177,9 +168,6 @@ int main()
             memset(values, 0, sizeof(values));
         }
     }
-    //validateStructValues();
-    //structToFile();
-    //}
 
     //abrir outros ficheiros
     /*
