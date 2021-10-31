@@ -74,9 +74,14 @@ int sendStruct(Data values, char buff[], FILE *fr1)
     {
         if (sscanf(timetype, "%4d-%2d-%2d %2d:%2d:%2d", &year, &month, &day, &hour, &minute, &second) != EOF)
         {
-            if (year <= 2005 && month <= 4 && day <= 7)
+            if (year >= 2005 && month >= 4 && day <= 7)
             {
-                if (2005 < year || year < 2020 || month > 0 || month < 13 || day > 0 || day < 32 || hour >= 0 || hour < 24 || minute >= 0 || minute < 61 || second >= 0 || second < 61)
+                return 0;
+            }
+            else
+            {
+
+                if (year > 2005 || year < 2020 || month > 0 || month < 13 || day > 0 || day < 32 || hour >= 0 || hour < 24 || minute >= 0 || minute < 61 || second >= 0 || second < 61)
                 {
                     values->date = timetype;
                 }
@@ -84,10 +89,6 @@ int sendStruct(Data values, char buff[], FILE *fr1)
                 {
                     return 0;
                 }
-            }
-            else
-            {
-                return 0;
             }
         }
         else
@@ -165,13 +166,16 @@ int main()
     Data values = malloc(sizeof(struct data)); //array para dar store a valores
 
     //while fr1 != NULL{
-    for (int i = 0; i < 100000; i++)
+    int c;
+    while ((c = fgetc(fr1)) != EOF)
     {
-        if (sendStruct(values, buff, fr1))
         {
-            fputs(buff, fw1);
+            if (sendStruct(values, buff, fr1))
+            {
+                fputs(buff, fw1);
+            }
+            memset(values, 0, sizeof(values));
         }
-        memset(values, 0, sizeof(values));
     }
     //validateStructValues();
     //structToFile();
