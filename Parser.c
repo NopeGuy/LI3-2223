@@ -3,14 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-// verificar follower_list com o valor do followers
-// verificar following_list(6ยบ campo) com valor do following(9ยบ campo)
-
 typedef struct data
 {
     int public_repos, id, followers, public_gists, following, num_linhas;
     int follower_list[1024], following_list[1024];
-    char *type, *date, *login;
+    char *date, *login;
+    enum type {Bot, Organization, User} type;
 
     // falta o "tipo" created_at;
     // falta o "tipo" login (char,ints,"-")
@@ -28,17 +26,85 @@ int *sanitizearray(int followers, char *tempid)
     for (int i = 0; i < followers; i++)
     {
         final[i] = atoi(strsep(&tempid, ","));
+        if (final[i]<0)return 0;
     }
     return final;
 }
 
-
-
-void validateStruct(Data values)
+int sendStruct(Data values, char buff[], FILE *fr1)
 {
+    char *temptype, *output, *line, *tempid;
+    fgets(buff, 4096, fr1);
+    output = strdup(buff);
 
+    values->id = atoi(strsep(&output, ";"));
+    if(values->id<0) return 0;
+    values->login = strsep(&output, ";");
+
+    //verificação e obtenção type
+    temptype = strsep(&output, ";");
+    if (strcmp(temptype, "Organization") == 0)
+    {
+        values->type = Organization;
+    } 
+    else if((strcmp(temptype, "User")) == 0 ){
+        values->type = User;
+        }
+    else if((strcmp(temptype, "Bot")) == 0){
+        values->type = Bot;
+    }
+    else{
+        return 0;
+    }
+
+    values->date = strsep(&output, ";");
+    values->followers = atoi(strsep(&output, ";"));
+    if (values->followers < 0)return 0;
+
+    line = strsep(&output, ";");
+
+    printf("id - %d\n", values->id);
+
+    //enviar followers para a lista
+    if (values->followers > 0 && strlen(line) > 0)
+    {
+        tempid = strsep(&line, "\0");
+        int *followers = sanitizearray(values->followers, tempid);
+        for (int j = 0; j < values->followers; j++)
+        {
+            values->follower_list[j] = followers[j];
+            printf("follower - %d\n", values->follower_list[j]);
+        }
+    }
+    values->following = atoi(strsep(&output, ";"));
+    if (values->following < 0) return 0;
+
+    line = strsep(&output, ";");
+
+    //enviar following para a lista
+    if (values->following > 0 && strlen(line) > 0)
+    {
+        tempid = strsep(&line, "\0");
+        int *following = sanitizearray(values->following, tempid);
+        for (int k = 0; k < values->following; k++)
+        {
+            values->following_list[k] = following[k];
+            printf("following - %d\n", values->following_list[k]);
+        }
+    }
+    if (values->public_gists < 0)return 0;
+    values->public_gists = atoi(strsep(&output, ";"));
+   
+    if (values->public_repos < 0) return 0;
+    values->public_repos = atoi(strsep(&output, ";"));
+/*
+    if (validateStruct)
+    {
+        fputs(buff, fw1);
+    }
+    */
+   return 1;
 }
-
 
 int main()
 {
@@ -57,52 +123,13 @@ int main()
     //while fr1 != NULL{
     for (int i = 0; i < 40; i++)
     {
-        char *output, *line, *tempid;
-        fgets(buff, 4096, fr1);
-        output = strdup(buff);
-
-        values->id = atoi(strsep(&output, ";"));
-        values->login = strsep(&output, ";");
-        values->type = strsep(&output, ";");
-        values->date = strsep(&output, ";");
-        values->followers = atoi(strsep(&output, ";"));
-
-        line = strsep(&output, ";");
-
-        printf("id - %d\n", values->id);
-
-        //enviar followers para a lista
-        if (values->followers > 0 && strlen(line) > 0)
-        {
-            tempid = strsep(&line, "\0");
-            int *followers = sanitizearray(values->followers, tempid);
-            for (int j = 0; j < values->followers; j++)
-            {
-                values->follower_list[j] = followers[j];
-                printf("follower - %d\n", values->follower_list[j]);
-            }
-        }
-        values->following = atoi(strsep(&output, ";"));
-        line = strsep(&output, ";");
-
-        //enviar following para a lista
-        if (values->following > 0 && strlen(line) > 0)
-        {
-            tempid = strsep(&line, "\0");
-            int *following = sanitizearray(values->following, tempid);
-            for (int k = 0; k < values->following; k++)
-            {
-                values->following_list[k] = following[k];
-                printf("following - %d\n", values->following_list[k]);
-            }
-        }
-        values->public_gists = atoi(strsep(&output, ";"));
-        values->public_repos = atoi(strsep(&output, ";"));
-
-        if(validateStruct){
-            fputs(buff, fw1);
+        if(sendStruct(values, buff, fr1)){
+        fputs(buff, fw1);
         }
     }
+    //validateStructValues();
+    //structToFile();
+    //}
 
     //abrir outros ficheiros
     /*
