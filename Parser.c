@@ -1,5 +1,3 @@
-//Memória da lista arrebenta programa, não chega
-
 #define MAX_BUFFER 4096;
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +9,7 @@
 typedef struct data
 {
     int public_repos, id, followers, public_gists, following, num_linhas;
-    int *follower_list[1024], *following_list[1024];
+    int follower_list[1024], following_list[1024];
     char *type, *date, *login;
 
     // falta o "tipo" created_at;
