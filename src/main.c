@@ -32,17 +32,16 @@ int main(int argc, char const *argv[])
     setDrivers(cat, g_tree_new(inteiros));
     setRides(cat, g_tree_new(inteiros));
 
-
-    //load de comandos
-    char *commandFile = "./entrada/commands.txt";
-
-    FILE *file = fopen(commandFile, "r");
-    if (file == NULL)
+    // load de comandosif (file == NULL)
     {
         printf("Ficheiro não encontrado, introduza ficheiro em: ./entrada/commands.txt\n");
         return 0;
     }
 
+
+    char *commandFile = "./entrada/commands.txt";
+    FILE *file = fopen(commandFile, "r");
+    
 
     //load de entrada
     fileUsers = "./entrada/users.csv";
@@ -58,7 +57,7 @@ int main(int argc, char const *argv[])
     while (fgets(buff, max_len, file))
     {
         executeQueries(buff, users, drivers, rides, query);
-        query++;
+        //query++;
     }
 
 
@@ -66,8 +65,8 @@ int main(int argc, char const *argv[])
     fclose(file);
 
     g_tree_destroy(getUsers(cat));
-    g_tree_destroy(getCommits(cat));
-    g_tree_destroy(getRep(cat));
+    g_tree_destroy(getDriver(cat));
+    g_tree_destroy(getRides(cat));
     free(cat);
 
     return 1;
@@ -76,9 +75,8 @@ int main(int argc, char const *argv[])
 void executeQueries(char *line, GTree *users, GTree *commits, GTree *repos, int query)
 {
     char *id = strsep(&line, " ");
-    char *buff = &line;
     int idInt = atoi(id);
-    int firstTime = 1;
+    char *buff = &line;
     char queryToString[30] = "";
     char fileName[2000] = "";
 
@@ -86,35 +84,51 @@ void executeQueries(char *line, GTree *users, GTree *commits, GTree *repos, int 
     sprintf(queryToString, "%d", query);
     switch (idInt)
     {
+// chamar ficheiro de queries
     case 1:
-        //chamar ficheiro de queries ou fazer aqui?
-
+    //Query1/ separada se é user ou driver
+        if ((buff[0] >= 'a' && buff[0] <= 'z') || (buff[0] >= 'A' && buff[0] <= 'Z'))
+        {
+            profileThroughUsername();
+        }
+        else{
+            profileThroughId();
+        }
         
-        // queryCharOut = numTypes(users);
-        // // char* writeToFile1 = malloc(sizeof(char)*200);
-        // // sprintf(writeToFile1, "%d", queryCharOut);
-        // strcat(fileName, queryToString);
-        // strcat(fileName, "_output.txt");
-        // saveToFile(fileName, queryCharOut, firstTime);
+
         break;
     case 2:
-    
+    //Query2/ N top condutores com maior avaliação média
+        topDrivers();
         break;
+
     case 3:
-    
+        Query3();
         break;
+
     case 4:
-    
+        Query4();
         break;
 
     case 5:
-    
+        Query5();
         break;
+
     case 6:
-    
+        Query6();
         break;
+
     case 7:
-    
+    //Query7/top Rides de uma cidade e não top rides de uma nacionalidade
+        topPerCity();
+        break;
+    case 8:
+        Query8();
+        break;
+            
+    case 9:
+        Query9();
+        break;
+
     }
-    
 }
