@@ -23,13 +23,6 @@ gint inteiros(gconstpointer a, gconstpointer b)
         return 0;
 }
 
-char *id = strsep(&line, " ");
-char *buff = &line;
-int idInt = atoi(id);
-int firstTime = 1;
-char queryToString[30] = "";
-char fileName[2000] = "";
-
     // chamadas da main
 
 topDrivers()
