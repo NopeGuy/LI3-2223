@@ -72,7 +72,7 @@ int main(int argc, char const *argv[])
     return 1;
 }
 
-void executeQueries(char *line, GTree *users, GTree *commits, GTree *repos, int query)
+void executeQueries(char *line, GTree *users, GTree *drivers, GTree *rides, int query)
 {
     char *id = strsep(&line, " ");
     int idInt = atoi(id);
@@ -86,16 +86,19 @@ void executeQueries(char *line, GTree *users, GTree *commits, GTree *repos, int 
     {
 // chamar ficheiro de queries
     case 1:
+    char*username =strsep(&line," ");
     //Query1/ separada se é user ou driver
         if ((buff[0] >= 'a' && buff[0] <= 'z') || (buff[0] >= 'A' && buff[0] <= 'Z'))
         {
-            profileThroughUsername();
+            if(username!=NULL);
+            profileThroughUsername(users,username);
         }
-        else{
-            profileThroughId();
+        else
+        {
+            int id_condutor = atoi(username);
+            profileThroughId(drivers,id_condutor);
         }
         
-
         break;
     case 2:
     //Query2/ N top condutores com maior avaliação média

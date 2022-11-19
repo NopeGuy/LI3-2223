@@ -7,7 +7,7 @@
 #include <glib.h>
 
 #include "queries.h"
-#include "catalogo-users.h"
+//#include "catalogo-users.h"
 #include "catalogo-rides.h"
 #include "catalogo-drivers.h"
 #include "constructors.h"
@@ -41,4 +41,9 @@ topDrivers()
     // strcat(fileName, "_output.txt");
     // saveToFile(fileName, queryCharOut, firstTime);
 }
+
+profilefromUsername(GTree *users,char*username)
+{
+int *user_key = GINT_TO_POINTER(getUsers)
+
 }
