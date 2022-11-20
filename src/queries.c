@@ -7,7 +7,7 @@
 #include <glib.h>
 
 #include "queries.h"
-//#include "catalogo-users.h"
+#include "catalogo-users.h"
 #include "catalogo-rides.h"
 #include "catalogo-drivers.h"
 #include "constructors.h"
