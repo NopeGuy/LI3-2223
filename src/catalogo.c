@@ -11,9 +11,11 @@ struct catalogo
     GTree* users;
     GTree* drivers;
     GTree* rides;
-// int numOfX;
+    int n_cidade;
+    int n_Basic;
+    int n_Green;
+    int n_Premium;
 // float averageX;
-
 };
 
 CATALOGO iniciarCatalogo(){
@@ -34,6 +36,20 @@ GTree* getRep(CATALOGO cat){
     return cat->rides;
 }
 
+void getCidade(CATALOGO cat){
+    return cat->n_cidade;
+}
+void getBasic(CATALOGO cat){
+    return cat->n_Basic;
+}
+void getGreen(CATALOGO cat){
+    return cat->n_Green;
+}
+void getPremium(CATALOGO cat){
+    return cat->n_Premium;
+}
+
+
 void setUsers(CATALOGO cat, GTree* t){
     cat->users = t;
 }
@@ -42,4 +58,17 @@ void setDrivers(CATALOGO cat, GTree* t){
 }
 void setRep(CATALOGO cat, GTree* t){
     cat->rides = t;
+}
+
+void setCidade(CATALOGO cat,int value){
+    cat->n_cidade= value;
+}
+void setBasic(CATALOGO cat,int value){
+    cat->n_Basic= value;
+}
+void setGreen(CATALOGO cat,int value){
+    cat->n_Green= value;
+}
+void setPremium(CATALOGO cat,int value){
+    cat->n_Premium= value;
 }

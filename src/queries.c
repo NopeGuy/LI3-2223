@@ -13,7 +13,11 @@
 #include "constructors.h"
 #include "catalogo.h"
 
+typedef struct query4{
+
+} STRUCT_QUERY4;
 //funcoes auxiliares
+
 gint inteiros(gconstpointer a, gconstpointer b)
 {
     if (a > b)
@@ -25,28 +29,57 @@ gint inteiros(gconstpointer a, gconstpointer b)
 }
 
 //funcoes_aux Query4
-int verificaTarifa(int userId,GTree *drivers)
-{
- 
+
+int verificaCidade(char cidade,CATALOGO cat,int id_driver){
+    GTree *temp=NULL;
+    temp=getDrivers(cat);
+    int* idDriver = GINT_TO_POINTER(id_driver);
+    int* alvo = g_tree_lookup(temp,idDriver);
+    if(cidade == getDriversCity(alvo)) {
+        g_tree_destroy(temp);
+        return 1;
+    }
+    g_tree_destroy(temp);
+    return 0;
 }
+
+char* verificaClasse(int id_driver,CATALOGO cat)
+{
+    GTree *temp=NULL;
+    temp=getDrivers(cat);
+    int* idDriver = GINT_TO_POINTER(id_driver);
+    int* alvo = g_tree_lookup(temp,idDriver);
+    char* tarifa = getDriversCarClass(alvo);
+    g_tree_destroy(temp);
+    return tarifa;
+}
+
+//funcao que remove todos os nodos que não são daquela cidade (para ser usada numa g_tree_foreach())
+gboolean removePorCidade (gpointer key, gpointer cidade, gpointer data){
+
+
+
+
+}
+
 
 int calculaBasic(int dist)
 {
-double preco=3.25;
+double preco=0;
 preco += 0.62*dist;
 return preco;
 }
 
 int calculaGreen(int dist)
 {
-double preco=4.00;
+double preco=0;
 preco += 0.79*dist;
 return preco;
 }
 
 int calculaPremium(int dist)
 {
-double preco=5.20;
+double preco=0;
 preco += 0.94*dist;
 return preco;
 }
@@ -79,8 +112,17 @@ topDrivers(int topN)
 //Query 3
 
 //Query 4
-med_preco_viagem(char* cidade)
+
+
+
+void q4(char* cidade,CATALOGO cat)
 {
-    int dist = 0;
+    GTree *temp_drivers = NULL;
+    temp_drivers=getDrivers(cat);
+
+
+    g_tree_foreach(temp_drivers,removePorCidade,cat);
+    setCidade(cat,g_tree_nnodes(temp_drivers));
+    
 
 }
