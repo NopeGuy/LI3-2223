@@ -102,7 +102,8 @@ void executeQueries(char *line, GTree *users, GTree *drivers, GTree *rides, int 
         break;
     case 2:
     //Query2/ N top condutores com maior avaliação média
-        topDrivers();
+    int topN=atoi(strsep(&line," "));
+        topDrivers(topN);
         break;
 
     case 3:
@@ -110,7 +111,9 @@ void executeQueries(char *line, GTree *users, GTree *drivers, GTree *rides, int 
         break;
 
     case 4:
-        Query4();
+    //Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
+    char* cidade =strsep(&line," ");
+        med_preco_viagem(cidade);
         break;
 
     case 5:

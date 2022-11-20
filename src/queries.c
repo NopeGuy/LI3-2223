@@ -13,6 +13,7 @@
 #include "constructors.h"
 #include "catalogo.h"
 
+//funcoes auxiliares
 gint inteiros(gconstpointer a, gconstpointer b)
 {
     if (a > b)
@@ -23,9 +24,48 @@ gint inteiros(gconstpointer a, gconstpointer b)
         return 0;
 }
 
-    // chamadas da main
+//funcoes_aux Query4
+int verificaTarifa(int userId,GTree *drivers)
+{
+ 
+}
 
-topDrivers()
+int calculaBasic(int dist)
+{
+double preco=3.25;
+preco += 0.62*dist;
+return preco;
+}
+
+int calculaGreen(int dist)
+{
+double preco=4.00;
+preco += 0.79*dist;
+return preco;
+}
+
+int calculaPremium(int dist)
+{
+double preco=5.20;
+preco += 0.94*dist;
+return preco;
+}
+// chamadas da main
+
+//Query 1
+
+profilefromUsername(GTree *users,char*username)
+{
+
+}
+
+profileThroughId(GTree *drivers,int id_condutor)
+{
+
+}
+
+//Query 2
+topDrivers(int topN)
 {
     // queryCharOut = numTypes(users);
     // // char* writeToFile1 = malloc(sizeof(char)*200);
@@ -33,10 +73,14 @@ topDrivers()
     // strcat(fileName, queryToString);
     // strcat(fileName, "_output.txt");
     // saveToFile(fileName, queryCharOut, firstTime);
+
 }
 
-profilefromUsername(GTree *users,char*username)
+//Query 3
+
+//Query 4
+med_preco_viagem(char* cidade)
 {
-int *user_key = GINT_TO_POINTER(getUsers)
+    int dist = 0;
 
 }

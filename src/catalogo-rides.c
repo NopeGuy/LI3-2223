@@ -27,12 +27,12 @@ struct ride {
     double tip; // gorjeta que o utlizador deixa
     char *comment;
     int lnNumber; //linha da rides.csv
-}
+};
 
 //getters
 
 int getRidesid(RIDES a){
-    return a->id;
+    return a->id;id_condutor
 }
 
 struct tm getRidesDate(RIDES a){
@@ -82,6 +82,7 @@ struct tm date = {0};
 int id_temp = atoi(strsep(&buffR,";\n"));
 char *date_temp = strsep(&buffR,";\n");
 strptime(date_temp, "%d-%m-%Y",&date);
+date=verifyTime(date);
 int driver_temp = atoi(strsep(&buffR,";\n"));
 char *user_temp = strsep(&buffR,";\n");
 char *city_temp = strsep(&buffR,";\n");
@@ -95,7 +96,8 @@ if(id_temp == 0 || id_temp == NULL) return;
 if(driver_temp == NULL) return;
 if(user_temp == NULL) return;
 if(city_temp == NULL) return;
-if(verifydate(date) == NULL) return;
+if(date->tm.year=0) return;
+
 //Passar para tree temporária
 temp->id = id_temp;
 temp->date = date
@@ -109,6 +111,7 @@ temp->tip = tip_temp;
 temp->comment = malloc(sizeof(char)*400000);
 temp->lnNumber = nLinha;
 //inserir na glib
+
 g_tree_insert(t, GINT_TO_POINTER(id), temp);
 }
 
