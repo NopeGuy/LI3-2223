@@ -12,9 +12,6 @@
 
 //id;date;driver;user;city;distance;score_user;score_driver;tip;comment
 
-RIDES loadCompleteRIDES(char* filename, int id_ride);   //por fazer
-
-
 struct ride {
     int id;
     struct tm date;
@@ -32,7 +29,7 @@ struct ride {
 //getters
 
 int getRidesid(RIDES a){
-    return a->id;id_condutor
+    return a->id;
 }
 
 struct tm getRidesDate(RIDES a){
@@ -80,9 +77,7 @@ RIDES temp = malloc(sizeof(struct ride));
 struct tm date = {0};
 
 int id_temp = atoi(strsep(&buffR,";\n"));
-char *date_temp = strsep(&buffR,";\n");
-strptime(date_temp, "%d-%m-%Y",&date);
-date=verifyTime(date);
+struct tm date_temp = verifyTime(strsep(&buffR, ";\n"));
 int driver_temp = atoi(strsep(&buffR,";\n"));
 char *user_temp = strsep(&buffR,";\n");
 char *city_temp = strsep(&buffR,";\n");
@@ -96,14 +91,14 @@ if(id_temp == 0 || id_temp == NULL) return;
 if(driver_temp == NULL) return;
 if(user_temp == NULL) return;
 if(city_temp == NULL) return;
-if(date->tm.year=0) return;
+if(date_temp.tm_year=0) return;
 
 //Passar para tree temporária
 temp->id = id_temp;
-temp->date = date
+temp->date = date;
 temp->driver = malloc(sizeof(char)*50); //    PODE DAR SEGFAULT _ TAMANHO
 temp->user = user_temp;
-temp->city = malloc(sizeof(char)*15); //      PODE DAR SEGFAULT _ TAMANHO pouco provavel tho
+temp->city = malloc(sizeof(char)*15); //      PODE DAR SEGFAULT _ TAMANHO (pouco provavel tho)
 temp->distance = distance_temp;
 temp->score_user = score_user_temp;
 temp->score_driver = score_driver_temp;
@@ -112,7 +107,7 @@ temp->comment = malloc(sizeof(char)*400000);
 temp->lnNumber = nLinha;
 //inserir na glib
 
-g_tree_insert(t, GINT_TO_POINTER(id), temp);
+g_tree_insert(t, GINT_TO_POINTER(id_temp), temp);
 }
 
 void loadRides(char* filename, CATALOGO cat){

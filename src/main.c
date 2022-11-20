@@ -56,7 +56,7 @@ int main(int argc, char const *argv[])
     //correr commands
     while (fgets(buff, max_len, file))
     {
-        executeQueries(buff, users, drivers, rides, query);
+        executeQueries(buff,cat,query);
         //query++;
     }
 
@@ -72,7 +72,7 @@ int main(int argc, char const *argv[])
     return 1;
 }
 
-void executeQueries(char *line, GTree *users, GTree *drivers, GTree *rides, int query)
+void executeQueries(char *line,CATALOGO cat, int query)
 {
     char *id = strsep(&line, " ");
     int idInt = atoi(id);
@@ -91,12 +91,12 @@ void executeQueries(char *line, GTree *users, GTree *drivers, GTree *rides, int 
         if ((buff[0] >= 'a' && buff[0] <= 'z') || (buff[0] >= 'A' && buff[0] <= 'Z'))
         {
             if(username!=NULL);
-            profileThroughUsername(users,username);
+            profileThroughUsername(cat,username);
         }
         else
         {
             int id_condutor = atoi(username);
-            profileThroughId(drivers,id_condutor);
+            profileThroughId(cat,id_condutor);
         }
         
         break;
