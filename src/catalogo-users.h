@@ -6,7 +6,7 @@
 #include "catalogo.h"
 
 
-typedef struct users* USERS;
+typedef struct users* USER;
 
 char *getUsername(USER u);
 

@@ -5,7 +5,7 @@
 #include <time.h>
 #include <glib.h>
 
-#include "catalogo-rides.h"
+#include "catalogo-users.h"
 #include "constructors.h"
 #include "catalogo.h"        //ver isto
 #include "main.h"
