@@ -55,30 +55,6 @@ char getAccount_status(USER u){
 	return u->account_status;
 }
 
-
-USER buildUserWithoutTree(char* line, int id_user) {
-    char* buff2 = line;
-    char* id = strsep(&buff2, ";\n");
-    int id_actual = atoi(id);
-
-    if(id_user != id_actual){
-        return NULL;
-    }
-
-    USER temp = malloc(sizeof(struct user));
-
-    char* name = strsep(&buff2, ";\n");
-    temp->login = malloc(sizeof(char)*strlen(name));
-    temp->typeUser = genTypeUser(strsep(&buff2, ";\n"));
-
-    strcpy(temp->login, name);
-    temp->id = id_user;
-
-    return temp;
-}
-
-
-// falta acabar build users
 void buildUsers(char* line, CATALOGO cat) {
     GTree* t = NULL;
     t = getUsers(cat);
@@ -86,63 +62,52 @@ void buildUsers(char* line, CATALOGO cat) {
     char* buff2 = line;
     USER temp = malloc(sizeof(struct user));
 
-    char* id = strsep(&buff2, ";\n");
+    char* username = strsep(&buff2, ";\n");
     char* name = strsep(&buff2, ";\n");
-    int id_user = atoi(id);
-    //int* id_key = GINT_TO_POINTER(id_user);
-
-
-
-
-    //temp->login = malloc(sizeof(char)*strlen(name));
-
-    temp->typeUser = genTypeUser(strsep(&buff2, ";\n"));
-
-    //strcpy(temp->login, name);
-    temp->id = id_user;
-
-
-    struct tm data = verifyTime(strsep(&buff2, ";\n"));
-    temp->created_at = data;
-    if(id_user < 0 || temp->typeUser == -1 || data.tm_mday == 0){
-        free(temp);
-        return;
-    }
-
-    if(temp->typeUser == 1)
-        setNumUsers(cat, getNumUsers(cat)+1);
-    if(temp->typeUser == 2)
-        setNumBots(cat, getNumBots(cat)+1);
-    if(temp->typeUser == 3)
-        setNumOrganizations(cat, getNumOrganizations(cat)+1);
-
-
-    g_tree_insert(t, toIntAsterix(id_user), temp);
-}
-
-USER loadCompleteUSER(char* filename, int id_user){
-    int max_len = 400000;
-    int count = 0;
-    char buff[max_len];
-
-    FILE *f = fopen(filename, "r");
-    if(f == NULL){
-        printf("Ficheiro não encontrado: %s\n", filename);
-        return NULL;
-    }
-    char line[400000]; /* or other suitable maximum line size */
-    fgets(line, sizeof line, f);
-    while (fgets(line, sizeof line, f) != NULL) /* read a line */
+    
+    char gender;
+    if (strcmp(strsep(&buff2, ";\n"), "M") == 0)
     {
-        USER u = buildUserWithoutTree(line, id_user);
-        if(u != NULL)
-        {
-            fclose(f);
-            return u;
-        }
+        gender = 'm';
+    } else{
+        gender = 'f';
     }
-    fclose(f);
+    
+    struct tm birth_date = verifyTime(strsep(&buff2, ";\n"));
+    struct tm account_creation = verifyTime(strsep(&buff2, ";\n"));
+    
+    char pay_method;
+    char* temp_pay_method = strsep(&buff2, ";\n");
+    if (strcmp(temp_pay_method, "cash") == 0)
+    {
+        pay_method = 'c';
+    } else if (strcmp(temp_pay_method, "debit_card") == 0)
+    {
+        pay_method = 'd';
+    } else if(strcmp(temp_pay_method, "credit_card") == 0){
+        pay_method = 'r';
+    }
+
+    char account_status;
+    char* temp_account_status = strsep(&buff2, ";\n");
+    if (strcmp(temp_pay_method, "active") == 0)
+    {
+        pay_method = 'a';
+    } else if(strcmp(temp_pay_method, "inactive") == 0){
+        pay_method = 'i';
+    }
+
+    strcpy(temp->username, username);
+    strcpy(temp->name, name);
+    temp->gender = gender;
+    temp->birth_date = birth_date;
+    temp->account_creation = account_creation;
+    temp->pay_method = pay_method;
+    temp->account_status = account_status;
+
+    g_tree_insert(t, username, temp);
 }
+
 
 void loadUsers(char *fileName, CATALOGO cat) {
     int max_len = 400000;
