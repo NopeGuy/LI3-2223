@@ -13,7 +13,6 @@
 #include "catalogo-rides.h"
 #include "queries.h"
 #include "constructors.h"
-#include "interpretador.h"
 #include "catalogo.h"
 
 void executeQueries(char* line, CATALOGO* cat, int query);
