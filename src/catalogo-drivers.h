@@ -8,10 +8,17 @@
 
 typedef struct drivers* DRIVERS;
 
-int getRepos(DRIVERS c);
 
-struct tm getDate(DRIVERS c);
+int getDriversId(DRIVERS c);
+char* getDriversName(DRIVERS c);
+struct tm getDriversBirthDay(DRIVERS c)
+char getDriversGender(DRIVERS c)
+char* getDriversCarClass(DRIVERS c)
+char* getDriversLicensePlate(DRIVERS c)
+char* getDriversCity(DRIVERS c)
+struct tm getDriversAccCreation(DRIVERS c)
+char getDriversAccountStatus(DRIVERS c)
+
 
 void buildDrivers(char* line, int lineNumber, CATALOGO cat);
-
 void loadDrivers(char* filename, CATALOGO cat);

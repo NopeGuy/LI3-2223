@@ -21,8 +21,56 @@ struct drivers
     
     struct tm account_creation;
     char account_status;
-    int *
 };
+
+// getters
+
+int getDriversId(DRIVERS c)
+{
+    return c->id;
+}
+
+char* getDriversName(DRIVERS c)
+{
+    return strdup(c->name);
+}
+
+struct tm getDriversBirthDay(DRIVERS c)
+{
+    return c->birth_day;
+}
+
+char getDriversGender(DRIVERS c)
+{
+    return (c->gender);
+}
+
+char *getDriversCarClass(DRIVERS c)
+{
+    return strdup(c->car_class);
+}
+
+char *getDriversLicensePlate(DRIVERS c)
+{
+    return strdup(c->license_plate);
+}
+
+char *getDriversCity(DRIVERS c)
+{
+    return strdup(c->city);
+}
+
+struct tm getDriversAccCreation(DRIVERS c)
+{
+    return c->account_creation;
+}
+
+char getDriversAccountStatus(DRIVERS c)
+{
+    return (c->account_status);
+}
+
+//Build and Load
 
 void buildDrivers(char *line, int lineNumber, CATALOGO cat)
 {
