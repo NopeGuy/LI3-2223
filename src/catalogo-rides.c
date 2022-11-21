@@ -74,7 +74,7 @@ GTree* t = NULL;
 t = getRides(cat);                          //por fazer
 char* buffR = line;
 RIDES temp = malloc(sizeof(struct ride));
-struct tm date = {0};
+//struct tm date = {0};
 
 int id_temp = atoi(strsep(&buffR,";\n"));
 struct tm date_temp = verifyTime(strsep(&buffR, ";\n"));
@@ -87,18 +87,18 @@ double score_driver_temp = atof(strsep(&buffR,";\n"));
 double tip_temp = atof(strsep(&buffR,";\n"));
 
 //verificações
-if(id_temp == 0 || id_temp == NULL) return;
-if(driver_temp == NULL) return;
-if(user_temp == NULL) return;
-if(city_temp == NULL) return;
-if(date_temp.tm_year=0) return;
+if(id_temp == 0) return;
+if(driver_temp == 0) return;
+if(user_temp == 0) return;
+if(city_temp == 0) return;
+if(date_temp.tm_year==0) return;
 
 //Passar para tree temporária
 temp->id = id_temp;
-temp->date = date;
-temp->driver = malloc(sizeof(char)*50); //    PODE DAR SEGFAULT _ TAMANHO
+temp->date = date_temp;
+temp->driver = driver_temp;
 temp->user = user_temp;
-temp->city = malloc(sizeof(char)*15); //      PODE DAR SEGFAULT _ TAMANHO (pouco provavel tho)
+temp->city = city_temp;
 temp->distance = distance_temp;
 temp->score_user = score_user_temp;
 temp->score_driver = score_driver_temp;
@@ -118,7 +118,7 @@ void loadRides(char* filename, CATALOGO cat){
         printf("Ficheiro não encontrado: %s\n", filename);
         return;
     }
-    fgets(buff,max_len,f);
+    fgets(buff,max_len,f); //primeira linha
     int line=0;
     while(fgets(buff,max_len, f)){
         buildRides(buff,cat,line);

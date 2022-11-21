@@ -90,11 +90,11 @@ void buildUsers(char* line, CATALOGO cat) {
 
     char account_status;
     char* temp_account_status = strsep(&buff2, ";\n");
-    if (strcmp(temp_pay_method, "active") == 0)
+    if (strcmp(temp_account_status, "active") == 0)
     {
-        pay_method = 'a';
-    } else if(strcmp(temp_pay_method, "inactive") == 0){
-        pay_method = 'i';
+        account_status = 'a';
+    } else if(strcmp(temp_account_status, "inactive") == 0){
+        account_status = 'i';
     }
 
     strcpy(temp->username, username);
@@ -102,8 +102,8 @@ void buildUsers(char* line, CATALOGO cat) {
     temp->gender = gender;
     temp->birth_date = birth_date;
     temp->account_creation = account_creation;
-    temp->pay_method = pay_method;
-    temp->account_status = account_status;
+    temp->pay_method = pay_method; //pay_method may be initialized
+    temp->account_status = account_status; //account_status may be unitialized
 
     g_tree_insert(t, username, temp);
 }
@@ -120,7 +120,7 @@ void loadUsers(char *fileName, CATALOGO cat) {
         return;
     }
 
-    fgets(buff, max_len, file);
+    fgets(buff, max_len, file); //primeira linha
     while(fgets(buff, max_len, file))
     {
         buildUsers(buff, cat);

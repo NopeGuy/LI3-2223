@@ -79,14 +79,17 @@ void executeQueries(char *line,CATALOGO cat, int query)
     char *buff = &line;
     char queryToString[30] = "";
     char fileName[2000] = "";
-
+    char*username;
+    int topN;
+    char* cidade;
+    
     strcat(fileName, "./saida/command");
     sprintf(queryToString, "%d", query);
     switch (idInt)
     {
 // chamar ficheiro de queries
     case 1:
-    char*username =strsep(&line," ");
+    username =strsep(&line," ");
     //Query1/ separada se é user ou driver
         if ((buff[0] >= 'a' && buff[0] <= 'z') || (buff[0] >= 'A' && buff[0] <= 'Z'))
         {
@@ -102,7 +105,7 @@ void executeQueries(char *line,CATALOGO cat, int query)
         break;
     case 2:
     //Query2/ N top condutores com maior avaliação média
-    int topN=atoi(strsep(&line," "));
+        topN=atoi(strsep(&line," "));
         topDrivers(topN);
         break;
 
@@ -112,7 +115,7 @@ void executeQueries(char *line,CATALOGO cat, int query)
 
     case 4:
     //Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
-    char* cidade =strsep(&line," ");
+        cidade =strsep(&line," ");
         med_preco_viagem(cidade);
         break;
 

@@ -59,8 +59,8 @@ struct tm verifyTime (char* str)
        if(tempo.tm_mday < 1 || tempo.tm_mday > 31) tempo.tm_year = 0; // verificar dia 
        if(tempo.tm_mon < 1 || tempo.tm_mon > 12) tempo.tm_year = 0; // verificar mês
        if(tempo.tm_year < 1 || tempo.tm_year > DATA_FINAL_ANO) tempo.tm_year = 0; //verificar ano
-       if(tempo.tm_year == DATA_FINAL_ANO && tempo.tm_mon > DATA_FINAL_MES ||    //verifica se ultrapassa a data final estipulada no enunciado
-          tempo.tm_year == DATA_FINAL_ANO && tempo.tm_mon == DATA_FINAL_MES && tempo.tm_mday > DATA_FINAL_DIA) tempo.tm_year = 0;     
+       if((tempo.tm_year == DATA_FINAL_ANO && tempo.tm_mon > DATA_FINAL_MES) ||    //verifica se ultrapassa a data final estipulada no enunciado
+          (tempo.tm_year == DATA_FINAL_ANO && tempo.tm_mon == DATA_FINAL_MES && tempo.tm_mday > DATA_FINAL_DIA)) tempo.tm_year = 0;     
     
     return tempo;
 }

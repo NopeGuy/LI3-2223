@@ -93,14 +93,14 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     char *license_plate = strsep(&buff2, ";");
     char *city = strsep(&buff2, ";");
 
-    char *datestr = strsep(&buff2, ";");
+    char *datestr2 = strsep(&buff2, ";");
     struct tm account_creationst;
-    strptime(datestr, "%d-%m-%Y", &account_creationst);
+    strptime(datestr2, "%d-%m-%Y", &account_creationst);
 
     char account_status = strsep(&buff2, ";")[0]; // verify later
 
     // verifier
-    if (id == 0 || id == NULL)
+    if (id == 0)
         return;
 
     // Send the info
