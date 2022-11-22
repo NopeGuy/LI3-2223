@@ -197,16 +197,6 @@ char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest)
 }
 
 //Query 2
-topDrivers(int topN)
-{
-    // queryCharOut = numTypes(users);
-    // // char* writeToFile1 = malloc(sizeof(char)*200);
-    // // sprintf(writeToFile1, "%d", queryCharOut);
-    // strcat(fileName, queryToString);
-    // strcat(fileName, "_output.txt");
-    // saveToFile(fileName, queryCharOut, firstTime);
-
-}
 
 //Query 3
 
