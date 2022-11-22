@@ -6,9 +6,9 @@
 #include <time.h>
 #include <glib.h>
 
-#include "catalogo-drivers.h"
-#include "catalogo.h"
-#include "constructors.h"
+#include "../includes/catalogo-drivers.h"
+#include "../includes/catalogo.h"
+#include "../includes/constructors.h"
 
 struct drivers
 {

@@ -50,8 +50,13 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/includes" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="guiao_3" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="guiao_3" TARGET_NAME="guiao_3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="guiao_3" RUN_TARGET_NAME="guiao_3">
+    <configuration name="guiao_3" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="./entrada/" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="guiao_3" TARGET_NAME="guiao_3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="guiao_3" RUN_TARGET_NAME="guiao_3">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -69,7 +74,7 @@
       <workItem from="1669118837437" duration="2000000" />
       <workItem from="1669126160872" duration="17708000" />
       <workItem from="1669152686378" duration="1020000" />
-      <workItem from="1669155504830" duration="2856000" />
+      <workItem from="1669155504830" duration="3876000" />
     </task>
     <servers />
   </component>
@@ -81,7 +86,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/main.c</url>
-          <line>95</line>
+          <line>103</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -96,13 +101,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/main.c</url>
-          <line>60</line>
+          <line>68</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/main.c</url>
-          <line>134</line>
+          <line>142</line>
           <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/main.c</url>
+          <line>53</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

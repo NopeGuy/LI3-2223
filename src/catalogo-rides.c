@@ -5,10 +5,10 @@
 #include <time.h>
 #include <glib.h>
 
-#include "catalogo-rides.h"
-#include "constructors.h"
-#include "catalogo.h"        //ver isto
-#include "main.h"
+#include "../includes/catalogo-rides.h"
+#include "../includes/constructors.h"
+#include "../includes/catalogo.h"        //ver isto
+#include "../includes/main.h"
 
 //id;date;driver;user;city;distance;score_user;score_driver;tip;comment
 

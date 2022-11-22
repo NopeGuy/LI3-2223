@@ -7,9 +7,9 @@
 #include <sys/resource.h>
 #include <glib-2.0/glib.h>
 #include <ctype.h>
-#include "queries.h"
-#include "catalogo.h"
-#include "constructors.h"
+#include "../includes/queries.h"
+#include "../includes/catalogo.h"
+#include "../includes/constructors.h"
 
 char *fileUsers;
 char *fileDrivers;
@@ -45,9 +45,17 @@ int main(int argc, char const *argv[])
 
 
     //load de entrada
-    fileUsers = "./entrada/users.csv";
-    fileDrivers = "./entrada/drivers.csv";
-    fileRides = "./entrada/rides.csv";
+    fileUsers = malloc(sizeof(char)*300);
+    fileDrivers = malloc(sizeof(char)*300);
+    fileRides = malloc(sizeof(char)*300);
+
+
+    strcat(fileUsers, argv[1]);
+    strcat(fileUsers, "users.csv");
+    strcpy(fileDrivers, argv[1]);
+    strcat(fileDrivers, "drivers.csv");
+    strcpy(fileRides, argv[1]);
+    strcat(fileRides, "rides.csv");
 
     loadUsers(fileUsers, cat);
     loadDrivers(fileDrivers, cat);

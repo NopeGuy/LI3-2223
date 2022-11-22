@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <glib.h>
-#include "catalogo.h"
+#include "../includes/catalogo.h"
 
 struct catalogo
 {

@@ -12,17 +12,17 @@ include_directories(${GLIB_INCLUDE_DIRS})
 
 add_executable(guiao_3
         src/catalogo-rides.c
-        src/catalogo-rides.h
+        includes/catalogo-rides.h
         src/catalogo-drivers.c
-        src/catalogo-drivers.h
+        includes/catalogo-drivers.h
         src/constructors.c
         src/catalogo.c
-        src/constructors.h
+        includes/constructors.h
         src/main.c
         src/queries.c
-        src/queries.h
+        includes/queries.h
         src/catalogo-users.c
-        src/catalogo-users.h src/main.h src/catalogo.h)
+        includes/catalogo-users.h includes/main.h includes/catalogo.h)
 
 
 target_link_libraries(${PROJECT_NAME} ${GLIB_LIBRARIES})

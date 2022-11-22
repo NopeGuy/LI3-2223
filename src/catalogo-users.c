@@ -5,10 +5,10 @@
 #include <time.h>
 #include <glib.h>
 
-#include "catalogo-users.h"
-#include "constructors.h"
-#include "catalogo.h"        //ver isto
-#include "main.h"
+#include "../includes/catalogo-users.h"
+#include "../includes/constructors.h"
+#include "../includes/catalogo.h"        //ver isto
+#include "../includes/main.h"
 
 struct user {
 	char* username;

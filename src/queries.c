@@ -6,12 +6,12 @@
 #include <time.h>
 #include <glib.h>
 
-#include "queries.h"
-#include "catalogo-users.h"
-#include "catalogo-rides.h"
-#include "catalogo-drivers.h"
-#include "constructors.h"
-#include "catalogo.h"
+#include "../includes/queries.h"
+#include "../includes/catalogo-users.h"
+#include "../includes/catalogo-rides.h"
+#include "../includes/catalogo-drivers.h"
+#include "../includes/constructors.h"
+#include "../includes/catalogo.h"
 
 //structs auxiliares
 
@@ -65,7 +65,7 @@ char* verificaClasse(int id_driver,CATALOGO cat)
 
 // chamadas da main
 
-float getTripPrice(DRIVERS* treeDrivers, int driver_id, int km){
+double getTripPrice(DRIVERS* treeDrivers, int driver_id, int km){
     DRIVERS driver = g_tree_lookup(treeDrivers, driver_id);
     int carClass = getDriversCarClass(driver);
 
@@ -197,6 +197,16 @@ char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest)
 }
 
 //Query 2
+//topDrivers(int topN)
+//{
+    // queryCharOut = numTypes(users);
+    // // char* writeToFile1 = malloc(sizeof(char)*200);
+    // // sprintf(writeToFile1, "%d", queryCharOut);
+    // strcat(fileName, queryToString);
+    // strcat(fileName, "_output.txt");
+    // saveToFile(fileName, queryCharOut, firstTime);
+
+//}
 
 //Query 3
 
@@ -264,7 +274,7 @@ gboolean median_between_iter(gpointer key, gpointer value, gpointer data) {
 
     if(date_trip.tm_year >= date1.tm_year && date_trip.tm_mon >= date1.tm_mday && date_trip.tm_mday >= date1.tm_mday
         && date_trip.tm_year <= date2.tm_year && date_trip.tm_mon <= date2.tm_mon && date_trip.tm_mday <= date2.tm_mday){
-        float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+        double tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
         median_iter->nnodes++;
         median_iter->preco_total += tripPrice;
 
