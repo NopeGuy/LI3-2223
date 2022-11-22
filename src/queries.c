@@ -138,7 +138,7 @@ char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
 
     g_tree_foreach(getRides(cat), conta_viagens, trip);
 
-    fprintf(dest, "%d", getUsername(u));
+    fprintf(dest, "%s", getName(u));
     fprintf(dest, ";");
     fprintf(dest, "%c", getGender(u));
     fprintf(dest, ";");
@@ -149,8 +149,6 @@ char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
     fprintf(dest, "%d", trip->total_drives);
     fprintf(dest, ";");
     fprintf(dest, "%0.3f", trip->price_sum);
-
-
 
 
     free(trip);

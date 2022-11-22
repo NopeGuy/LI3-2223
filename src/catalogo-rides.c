@@ -104,7 +104,7 @@ temp->distance = distance_temp;
 temp->score_user = score_user_temp;
 temp->score_driver = score_driver_temp;
 temp->tip = tip_temp;
-temp->comment = malloc(sizeof(char)*400000);
+//temp->comment = malloc(sizeof(char)*400000);
 temp->lnNumber = nLinha;
 //inserir na glib
 

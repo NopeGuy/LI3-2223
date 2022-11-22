@@ -70,6 +70,7 @@ int main(int argc, char const *argv[])
     g_tree_destroy(getDrivers(cat));
     g_tree_destroy(getRides(cat));
     free(cat);
+    //free(buff);
 
     return 1;
 }
@@ -93,6 +94,7 @@ void executeQueries(char *line,CATALOGO cat, int query)
     sprintf(queryToString, "%d", query);
     strcat(fileName, "./Resultados/command");
     strcat(fileName, queryToString);
+    strcat(fileName, "_output.txt");
     FILE* f = fopen(fileName, "w");
     switch (idInt)
     {

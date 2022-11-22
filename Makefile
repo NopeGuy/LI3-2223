@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Ofast `pkg-config --cflags glib-2.0`
+CFLAGS=-Wall -Ofast -Wpedantic -Wextra -g `pkg-config --cflags glib-2.0`
 
 
 BIN     := .
