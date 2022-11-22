@@ -50,19 +50,20 @@ char* toUppercase(char* buff){
     }
 }
 
+
 struct tm verifyTime (char* str)
 {
     struct tm tempo = {0};
     if(strlen(str)!=10) tempo.tm_year=0;
        strptime(str, "%d/%m/%Y", &tempo);
 
-
+    /*
        if(tempo.tm_mday < 1 || tempo.tm_mday > 31) tempo.tm_year = 0; // verificar dia 
        if(tempo.tm_mon < 1 || tempo.tm_mon > 12) tempo.tm_year = 0; // verificar mês
        if(tempo.tm_year < 1 || tempo.tm_year > DATA_FINAL_ANO) tempo.tm_year = 0; //verificar ano
        if((tempo.tm_year == DATA_FINAL_ANO && tempo.tm_mon > DATA_FINAL_MES) ||    //verifica se ultrapassa a data final estipulada no enunciado
           (tempo.tm_year == DATA_FINAL_ANO && tempo.tm_mon == DATA_FINAL_MES && tempo.tm_mday > DATA_FINAL_DIA)) tempo.tm_year = 0;     
-
+        */
        tempo.tm_year += 1900;
     return tempo;
 }

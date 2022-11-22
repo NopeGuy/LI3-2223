@@ -235,8 +235,6 @@ gboolean city_iter(gpointer key, gpointer value, gpointer data) {
     return FALSE;
 }
 
-
-
 void medianPrice(CATALOGO cat, char* cidade, FILE *f)
 {
     //inicialização da struct aux query4
@@ -253,4 +251,52 @@ void medianPrice(CATALOGO cat, char* cidade, FILE *f)
     free(cities_iter);
    
 
+}
+
+
+//Query 5
+
+struct median_between_iter
+{
+    CATALOGO cat;
+    struct tm date1;
+    struct tm date2;
+    double preco_total;
+    int nnodes;
+};
+typedef struct median_between_iter* MEDIAN_BETWEEN_ITER;
+
+gboolean median_between_iter(gpointer key, gpointer value, gpointer data) {
+    MEDIAN_BETWEEN_ITER median_iter = (MEDIAN_BETWEEN_ITER) data;
+    RIDES ride = (RIDES) value;
+    GTree* driversTree = getDrivers(median_iter->cat);
+    struct tm date1 = median_iter->date1;
+    struct tm date2 = median_iter->date2;
+    struct tm date_trip = getRidesDate(ride);
+
+    if(date_trip.tm_year >= date1.tm_year && date_trip.tm_mon >= date1.tm_mday && date_trip.tm_mday >= date1.tm_mday
+        && date_trip.tm_year <= date2.tm_year && date_trip.tm_mon <= date2.tm_mon && date_trip.tm_mday <= date2.tm_mday){
+        float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+        median_iter->nnodes++;
+        median_iter->preco_total += tripPrice;
+
+    }
+    return FALSE;
+}
+
+void medianPriceBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f){
+    MEDIAN_BETWEEN_ITER median_iter = malloc(sizeof(struct median_between_iter));
+    median_iter->cat = cat;
+    median_iter->date1 = date1;
+    median_iter->date2 = date2;
+    median_iter->preco_total = 0;
+    median_iter->nnodes = 0;
+
+    g_tree_foreach(getRides(cat), median_between_iter,median_iter);
+
+    double preco_medio = median_iter->preco_total / median_iter->nnodes;
+
+    fprintf(f, "%0.3f", preco_medio);
+
+    free(median_iter);
 }

@@ -57,6 +57,7 @@ int main(int argc, char const *argv[])
     //correr commands
     while (fgets(buff, max_len, file))
     {
+        printf("A executar a query %d...\n", query);
         executeQueries(buff,cat,query);
         query++;
     }
@@ -83,6 +84,8 @@ void executeQueries(char *line,CATALOGO cat, int query)
     char*username;
     int topN;
     char* cidade;
+
+    struct tm data1, data2;
 
 
 
@@ -127,7 +130,9 @@ void executeQueries(char *line,CATALOGO cat, int query)
         break;
 
     case 5:
-        //Query5();
+        data1 = verifyTime(strsep(&line," "));
+        data2 = verifyTime(strsep(&line," "));
+        medianPriceBetween(cat, data1, data2, f);
         break;
 
     case 6:
