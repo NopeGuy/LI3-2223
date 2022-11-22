@@ -90,15 +90,16 @@ void executeQueries(char *line,CATALOGO cat, int query)
     sprintf(queryToString, "%d", query);
     strcat(fileName, "./Resultados/command");
     strcat(fileName, queryToString);
+    FILE* f = fopen(fileName, "w");
     switch (idInt)
     {
     // chamar ficheiro de queries
     case 1:
         username =strsep(&line,"\n");
         //Query1/ separada se é user ou driver
-        FILE* f = fopen(fileName, "w");
         if ((username[0] >= 'a' && username[0] <= 'z') || (username[0] >= 'A' && username[0] <= 'Z'))
         {
+
             if(username!=NULL)
                 profilefromUsername(cat,username, f);
         }
@@ -107,7 +108,7 @@ void executeQueries(char *line,CATALOGO cat, int query)
             int id_condutor = atoi(username);
                 profilefromID(cat,id_condutor, f);
         }
-        fclose(f);
+
         break;
     case 2:
     //Query2/ N top condutores com maior avaliação média
@@ -121,8 +122,8 @@ void executeQueries(char *line,CATALOGO cat, int query)
 
     case 4:
     //Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
-        cidade =strsep(&line," ");
-        //med_preco_viagem(cidade);
+        cidade =strsep(&line,"\n");
+        medianPrice(cat, cidade, f);
         break;
 
     case 5:
@@ -146,4 +147,6 @@ void executeQueries(char *line,CATALOGO cat, int query)
         break;
 
     }
+
+    fclose(f);
 }

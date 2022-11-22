@@ -72,3 +72,13 @@
 5	197	1669140790610209400	CMakeFiles/guiao_3.dir/src/catalogo-drivers.c.o	ecb321ff89ac1440
 5	200	1669140790610209400	CMakeFiles/guiao_3.dir/src/queries.c.o	58961302c099aa67
 200	293	1669140790705345400	guiao_3	f576676a7b26c157
+7	140	1669142331976858900	CMakeFiles/guiao_3.dir/src/catalogo-drivers.c.o	ecb321ff89ac1440
+8	170	1669142332008340300	CMakeFiles/guiao_3.dir/src/queries.c.o	58961302c099aa67
+174	274	1669142332111053900	guiao_3	f576676a7b26c157
+4	324	1669142488048933400	CMakeFiles/guiao_3.dir/src/catalogo-rides.c.o	6d5c1cdac539900
+8	328	1669142488049916100	CMakeFiles/guiao_3.dir/src/catalogo-users.c.o	e77fd6928d6d1745
+5	150	1669142559731343100	CMakeFiles/guiao_3.dir/src/main.c.o	17955bb694c7a602
+3	159	1669142599258128500	CMakeFiles/guiao_3.dir/src/catalogo-rides.c.o	6d5c1cdac539900
+4	162	1669142599262611000	CMakeFiles/guiao_3.dir/src/catalogo-users.c.o	e77fd6928d6d1745
+4	166	1669142611764885900	CMakeFiles/guiao_3.dir/src/queries.c.o	58961302c099aa67
+167	343	1669142611942074300	guiao_3	f576676a7b26c157

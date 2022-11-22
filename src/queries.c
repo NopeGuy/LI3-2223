@@ -15,19 +15,6 @@
 
 //structs auxiliares
 
-struct query4
-{
-    GTree* temp_drivers;
-    char* cidade;
-    char* message;
-    int n_cidade;
-    int n_Basic;
-    int n_Green;
-    int n_Premium;
-    int nnodes;
-    int nodoatual;
-};
-typedef struct query4* QUERY4;
 //funcoes auxiliares
 
 //balanceia a tree
@@ -74,36 +61,8 @@ char* verificaClasse(int id_driver,CATALOGO cat)
 
 //funcao que remove todos os nodos que não são daquela cidade (para ser usada numa g_tree_foreach())
 //(q4->temp_drivers,removePorCidade,q4)
-gboolean removePorCidade (gpointer key, gpointer cidade, gpointer q4){
 
-QUERY4 aux = (QUERY4) q4;
-    if(aux->nodoatual>aux->nnodes) return TRUE; //Para parar a travessia na arvore
-    int id = asterixToInt(key);
-    //if(aux->cidade != )
 
-aux->nodoatual++;
-}
-
-int calculaBasic(int dist)
-{
-double preco=0;
-preco += 0.62*dist;
-return preco;
-}
-
-int calculaGreen(int dist)
-{
-double preco=0;
-preco += 0.79*dist;
-return preco;
-}
-
-int calculaPremium(int dist)
-{
-double preco=0;
-preco += 0.94*dist;
-return preco;
-}
 // chamadas da main
 
 float getTripPrice(DRIVERS* treeDrivers, int driver_id, int km){
@@ -255,22 +214,43 @@ topDrivers(int topN)
 
 //Query 4
 
+struct cities_iter
+{
+    CATALOGO cat;
+    char* city;
+    double preco_total;
+};
+typedef struct cities_iter* CITIES_ITER;
 
-void q4(char* cidade,CATALOGO cat)
+
+gboolean city_iter(gpointer key, gpointer value, gpointer data) {
+    CITIES_ITER cities_iter = (CITIES_ITER) data;
+    RIDES ride = (RIDES) value;
+    GTree* driversTree = getDrivers(cities_iter->cat);
+
+    if (strcmp(getRidesCity(ride), cities_iter->city) == 0) {
+        float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+        cities_iter->preco_total += tripPrice;
+    }
+    return FALSE;
+}
+
+
+
+void medianPrice(CATALOGO cat, char* cidade, FILE *f)
 {
     //inicialização da struct aux query4
-    QUERY4 q4 = malloc(sizeof(struct query4));
-    q4->temp_drivers=getDrivers(cat);
-    q4->cidade=cidade;
-    q4->n_Basic=0;
-    q4->n_Green=0;
-    q4->n_Premium=0;
-    q4->n_cidade=0;
-    q4->nodoatual=0;
-    q4->nnodes=g_tree_nnodes(q4->temp_drivers);
+    CITIES_ITER cities_iter = malloc(sizeof(struct cities_iter));
+    cities_iter->cat = cat;
+    cities_iter->city = cidade;
 
-    g_tree_foreach(q4->temp_drivers,removePorCidade,q4);
+    g_tree_foreach(getRides(cat), city_iter,cities_iter);
+
+    double preco_medio = cities_iter->preco_total / g_tree_nnodes(getRides(cat));
+
+    fprintf(f, "%0.3f", preco_medio);
+
+    free(cities_iter);
    
 
-    free(q4);
 }

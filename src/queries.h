@@ -18,3 +18,5 @@ gint CompareNames (gconstpointer name1, gconstpointer name2);
 char* profilefromUsername(CATALOGO cat,char*username, FILE* dest);
 
 char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest);
+
+void medianPrice(CATALOGO cat, char* cidade, FILE *f);

@@ -15,6 +15,6 @@
 #include "constructors.h"
 #include "catalogo.h"
 
-void executeQueries(char* line, CATALOGO* cat, int query);
+void executeQueries(char *line,CATALOGO cat, int query);
 
 #endif //MAIN_H
