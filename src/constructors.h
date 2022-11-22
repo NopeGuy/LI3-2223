@@ -17,6 +17,6 @@ void writeLineToFile(char* fileName, char* write, int firstTime);
 
 char* toUppercase(char* buff);
 
-void saveToFile(char* fileName, char* write, int firstTime);
+void saveToFile(char* fileName, char write[200000], int firstTime);
 
 #endif //PROJETO_CONSTRUCTORS_H

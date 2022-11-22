@@ -15,7 +15,7 @@ struct drivers
     char *name;
     struct tm birth_day;
     char gender;
-    char *car_class;
+    int car_class;
     char *license_plate;
     char *city;
     
@@ -45,9 +45,9 @@ char getDriversGender(DRIVERS c)
     return (c->gender);
 }
 
-char *getDriversCarClass(DRIVERS c)
+int getDriversCarClass(DRIVERS c)
 {
-    return strdup(c->car_class);
+    return (c->car_class);
 }
 
 char *getDriversLicensePlate(DRIVERS c)
@@ -86,7 +86,7 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
 
     char *datestr = strsep(&buff2, ";");
     struct tm birth_dayst;
-    strptime(datestr, "%d-%m-%Y", &birth_dayst);
+    strptime(datestr, "%d/%m/%Y", &birth_dayst);
 
     char gender = strsep(&buff2, ";")[0]; // verify later
     char *car_class = strsep(&buff2, ";");
@@ -103,12 +103,15 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     if (id == 0)
         return;
 
+    int car_class_int = 0;
+    if(strcmp(car_class, "green")) car_class_int = 1;
+    if(strcmp(car_class, "premium")) car_class_int = 2;
     // Send the info
     temp->id = id;
     temp->name = name;
     temp->birth_day = birth_dayst;
     temp->gender = gender;
-    temp->car_class = car_class;
+    temp->car_class = car_class_int;
     temp->license_plate = license_plate;
     temp->city = city;
     temp->account_creation = account_creationst;

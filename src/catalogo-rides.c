@@ -42,11 +42,11 @@ int getRidesDriver(RIDES a){
 }
 
 char *getRidesUser(RIDES a){
-    return strdup(a->user);
+    return a->user;
 }
 
 char *getRidesCity(RIDES a){
-    return strdup(a->city);
+    return a->city;
 }
 
 double getRidesDistance(RIDES a){
@@ -98,8 +98,8 @@ if(date_temp.tm_year==0) return;
 temp->id = id_temp;
 temp->date = date_temp;
 temp->driver = driver_temp;
-temp->user = user_temp;
-temp->city = city_temp;
+temp->user = strdup(user_temp);
+temp->city = strdup(city_temp);
 temp->distance = distance_temp;
 temp->score_user = score_user_temp;
 temp->score_driver = score_driver_temp;

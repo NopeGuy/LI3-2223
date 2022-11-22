@@ -12,7 +12,7 @@
 #define DATA_FINAL_ANO 2022
 
 char* intToString(int i){
-    char* buff = malloc(sizeof(char)*20000);
+    char* buff = malloc(sizeof(char)*30);
     sprintf(buff, "%d", i);
     return buff;
 }
@@ -53,7 +53,7 @@ struct tm verifyTime (char* str)
 {
     struct tm tempo = {0};
     if(strlen(str)!=10) tempo.tm_year=0;
-       strptime(str, "%d-%m-%Y", &tempo);
+       strptime(str, "%d/%m/%Y", &tempo);
 
 
        if(tempo.tm_mday < 1 || tempo.tm_mday > 31) tempo.tm_year = 0; // verificar dia 
@@ -75,8 +75,9 @@ int* toIntAsterix(int i){
     return ret;
 }
 
-void saveToFile(char* fileName, char* write, int firstTime) {
-    FILE *f = fopen(fileName, "a");
+void saveToFile(char* fileName, char write[200000], int firstTime) {
+    FILE *f;
+    if(firstTime == 0) f = fopen(fileName, "a");
     if(firstTime == 1) f = fopen(fileName, "w");
 
     if (f == NULL)
@@ -85,7 +86,11 @@ void saveToFile(char* fileName, char* write, int firstTime) {
         return;
     }
 
-    fprintf(f, "%s", write);
+    for(int i = 0; i<strlen(write); i++){
+        fprintf(f, "%c", write[i]);
+    }
+
+
 
     fclose(f);
 

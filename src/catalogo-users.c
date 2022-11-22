@@ -24,7 +24,7 @@ struct user {
 };
 
 char *getUsername(USER u){
-    return strdup(u->username);
+    return u->username;
 }
 
 char *getName(USER u){
@@ -34,7 +34,7 @@ char *getName(USER u){
     return strdup(u->name);
 }
 
-char gender(USER u){
+char getGender(USER u){
 	return u->gender;
 }
 
@@ -61,6 +61,7 @@ void buildUsers(char* line, CATALOGO cat) {
 
     char* buff2 = line;
     USER temp = malloc(sizeof(struct user));
+
 
     char* username = strsep(&buff2, ";\n");
     char* name = strsep(&buff2, ";\n");
@@ -97,15 +98,15 @@ void buildUsers(char* line, CATALOGO cat) {
         account_status = 'i';
     }
 
-    strcpy(temp->username, username);
-    strcpy(temp->name, name);
+    temp->username = strdup(username);
+    temp->name = strdup(name);
     temp->gender = gender;
     temp->birth_date = birth_date;
     temp->account_creation = account_creation;
     temp->pay_method = pay_method; //pay_method may be initialized
     temp->account_status = account_status; //account_status may be unitialized
 
-    g_tree_insert(t, username, temp);
+    g_tree_insert(t, temp->username, temp);
 }
 
 

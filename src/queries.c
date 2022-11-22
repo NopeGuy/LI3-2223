@@ -41,6 +41,11 @@ gint inteiros(gconstpointer a, gconstpointer b)
         return 0;
 }
 
+gint CompareNames (gconstpointer name1, gconstpointer name2)
+{
+    return (strcmp (name1, name2));
+}
+
 //funcoes_aux Query4
 
 int verificaCidade(char cidade,CATALOGO cat,int id_driver){
@@ -101,14 +106,87 @@ return preco;
 }
 // chamadas da main
 
-//Query 1
+float getTripPrice(DRIVERS* treeDrivers, int driver_id, int km){
+    DRIVERS driver = g_tree_lookup(treeDrivers, driver_id);
+    int carClass = getDriversCarClass(driver);
 
-profilefromUsername(GTree *users,char*username)
-{
-    
+    if(carClass == 1){
+        return 4.00 + 0.79*km;
+    }
+    if(carClass == 0){
+        return 3.25 + 0.62*km;
+    }
+    if(carClass == 2){
+        return 5.20 + 0.94*km;
+    }
 }
 
-profileThroughId(GTree *drivers,int id_condutor)
+
+//Query 1
+struct trip_iter {
+    CATALOGO cat;
+    char* username;
+    double price_sum;
+    double ranking_sum;
+    int total_drives;
+};
+
+typedef struct trip_iter* TRIP_ITER;
+
+
+gboolean conta_viagens(gpointer key, gpointer value, gpointer data) {
+    TRIP_ITER trip_iterator = (TRIP_ITER) data;
+    RIDES ride = (RIDES) value;
+    GTree* driversTree = getDrivers(trip_iterator->cat);
+
+    if(strcmp(getRidesUser(ride), trip_iterator->username) == 0){
+        float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+        trip_iterator->price_sum += tripPrice;
+        trip_iterator->total_drives++;
+        trip_iterator->ranking_sum += getRidesScoreUser(ride);
+    }
+
+    return FALSE;
+}
+
+char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
+{
+    USER* u = g_tree_lookup(getUsers(cat), username);
+    TRIP_ITER trip = malloc(sizeof(struct trip_iter));
+    trip->username = username;
+    trip->cat = cat;
+    trip->total_drives = 0.000;
+    trip->ranking_sum = 0;
+    trip->price_sum = 0.000;
+
+    g_tree_foreach(getRides(cat), conta_viagens, trip);
+
+    if(u == NULL) {
+        fprintf(dest, "%s", "Utilizador nao encontradoo.");
+    }
+
+    fprintf(dest, "%s", getUsername(u));
+    fprintf(dest, ";");
+    fprintf(dest, "%c", getGender(u));
+    fprintf(dest, ";");
+    fprintf(dest, "%s","DATA");
+    fprintf(dest, ";");
+    fprintf(dest, "%d", trip->ranking_sum/trip->total_drives);
+    fprintf(dest, ";");
+    fprintf(dest, "%d", trip->total_drives);
+    fprintf(dest, ";");
+    fprintf(dest, "%0.3f", trip->price_sum);
+
+
+
+
+    free(trip);
+
+
+    return "";
+}
+
+char* profileThroughId(CATALOGO cat,int id_condutor)
 {
 
 }

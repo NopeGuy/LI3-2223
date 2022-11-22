@@ -20,6 +20,7 @@ GTree* getDrivers(CATALOGO cat);
 
 void setUsers(CATALOGO cat, GTree* t);
 void setRides(CATALOGO cat, GTree* t);
+void setDrivers(CATALOGO cat, GTree* t);
 
 //Funcoes
 

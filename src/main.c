@@ -17,7 +17,7 @@ char *fileRides;
 
 int main(int argc, char const *argv[])
 {
-    GTree *users = g_tree_new(inteiros);
+    GTree *users = g_tree_new(CompareNames);
     GTree *drivers = g_tree_new(inteiros);
     GTree *rides = g_tree_new(inteiros);
 
@@ -28,9 +28,9 @@ int main(int argc, char const *argv[])
 
     CATALOGO cat = iniciarCatalogo();
 
-    setUsers(cat, g_tree_new((GCompareFunc)g_ascii_strcasecmp));
-    setDrivers(cat, g_tree_new(inteiros));
-    setRides(cat, g_tree_new(inteiros));
+    setUsers(cat, users);
+    setDrivers(cat, drivers);
+    setRides(cat, rides);
 
 
 
@@ -58,7 +58,7 @@ int main(int argc, char const *argv[])
     while (fgets(buff, max_len, file))
     {
         executeQueries(buff,cat,query);
-        //query++;
+        query++;
     }
 
 
@@ -83,26 +83,31 @@ void executeQueries(char *line,CATALOGO cat, int query)
     char*username;
     int topN;
     char* cidade;
-    
-    strcat(fileName, "./saida/command");
+
+
+
+
     sprintf(queryToString, "%d", query);
+    strcat(fileName, "./Resultados/command");
+    strcat(fileName, queryToString);
     switch (idInt)
     {
-// chamar ficheiro de queries
+    // chamar ficheiro de queries
     case 1:
-    username =strsep(&line," ");
-    //Query1/ separada se é user ou driver
-        if ((buff[0] >= 'a' && buff[0] <= 'z') || (buff[0] >= 'A' && buff[0] <= 'Z'))
+        username =strsep(&line,"\n");
+        //Query1/ separada se é user ou driver
+        FILE* f = fopen(fileName, "w");
+        if ((username[0] >= 'a' && username[0] <= 'z') || (username[0] >= 'A' && username[0] <= 'Z'))
         {
-            if(username!=NULL);
-            //profileThroughUsername(cat,username);
+            if(username!=NULL)
+                profilefromUsername(cat,username, f);
         }
         else
         {
             int id_condutor = atoi(username);
-            //profileThroughId(cat,id_condutor);
+                profileThroughId(cat,id_condutor);
         }
-        
+        fclose(f);
         break;
     case 2:
     //Query2/ N top condutores com maior avaliação média

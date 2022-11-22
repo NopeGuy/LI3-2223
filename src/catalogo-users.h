@@ -12,7 +12,7 @@ char *getUsername(USER u);
 
 char *getName(USER u);
 
-char gender(USER u);
+char getGender(USER u);
 
 struct tm getBirth_date(USER u);
 

@@ -13,7 +13,7 @@ int getDriversId(DRIVERS c);
 char* getDriversName(DRIVERS c);
 struct tm getDriversBirthDay(DRIVERS c);
 char getDriversGender(DRIVERS c);
-char* getDriversCarClass(DRIVERS c);
+int getDriversCarClass(DRIVERS c);
 char* getDriversLicensePlate(DRIVERS c);
 char* getDriversCity(DRIVERS c);
 struct tm getDriversAccCreation(DRIVERS c);
