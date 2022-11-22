@@ -28,6 +28,7 @@ struct ride {
 
 //getters
 
+
 int getRidesid(RIDES a){
     return a->id;
 }

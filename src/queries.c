@@ -74,7 +74,7 @@ gboolean removePorCidade (gpointer key, gpointer cidade, gpointer q4){
 QUERY4 aux = (QUERY4) q4;
     if(aux->nodoatual>aux->nnodes) return TRUE; //Para parar a travessia na arvore
     int id = asterixToInt(key);
-    if(aux->cidade != )
+    //if(aux->cidade != )
 
 aux->nodoatual++;
 }

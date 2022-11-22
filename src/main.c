@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/resource.h>
-#include <glib.h>
+#include <glib-2.0/glib.h>
 #include <ctype.h>
 #include "queries.h"
 #include "catalogo.h"
@@ -17,7 +17,7 @@ char *fileRides;
 
 int main(int argc, char const *argv[])
 {
-    GTree *users = g_tree_new((GCompareFunc)g_ascii_strcasecmp);
+    GTree *users = g_tree_new(inteiros);
     GTree *drivers = g_tree_new(inteiros);
     GTree *rides = g_tree_new(inteiros);
 
@@ -32,16 +32,17 @@ int main(int argc, char const *argv[])
     setDrivers(cat, g_tree_new(inteiros));
     setRides(cat, g_tree_new(inteiros));
 
-    // load de comandosif (file == NULL)
+
+
+    char *commandFile = "./entrada/commands.txt";
+    FILE *file = fopen(commandFile, "r");
+
+    if (file == NULL)
     {
         printf("Ficheiro não encontrado, introduza ficheiro em: ./entrada/commands.txt\n");
         return 0;
     }
 
-
-    char *commandFile = "./entrada/commands.txt";
-    FILE *file = fopen(commandFile, "r");
-    
 
     //load de entrada
     fileUsers = "./entrada/users.csv";
@@ -65,7 +66,7 @@ int main(int argc, char const *argv[])
     fclose(file);
 
     g_tree_destroy(getUsers(cat));
-    g_tree_destroy(getDriver(cat));
+    g_tree_destroy(getDrivers(cat));
     g_tree_destroy(getRides(cat));
     free(cat);
 
@@ -94,49 +95,49 @@ void executeQueries(char *line,CATALOGO cat, int query)
         if ((buff[0] >= 'a' && buff[0] <= 'z') || (buff[0] >= 'A' && buff[0] <= 'Z'))
         {
             if(username!=NULL);
-            profileThroughUsername(cat,username);
+            //profileThroughUsername(cat,username);
         }
         else
         {
             int id_condutor = atoi(username);
-            profileThroughId(cat,id_condutor);
+            //profileThroughId(cat,id_condutor);
         }
         
         break;
     case 2:
     //Query2/ N top condutores com maior avaliação média
         topN=atoi(strsep(&line," "));
-        topDrivers(topN);
+        //topDrivers(topN);
         break;
 
     case 3:
-        Query3();
+        //Query3();
         break;
 
     case 4:
     //Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
         cidade =strsep(&line," ");
-        med_preco_viagem(cidade);
+        //med_preco_viagem(cidade);
         break;
 
     case 5:
-        Query5();
+        //Query5();
         break;
 
     case 6:
-        Query6();
+        //Query6();
         break;
 
     case 7:
     //Query7/top Rides de uma cidade e não top rides de uma nacionalidade
-        topPerCity();
+        //topPerCity();
         break;
     case 8:
-        Query8();
+        //Query8();
         break;
             
     case 9:
-        Query9();
+        //Query9();
         break;
 
     }

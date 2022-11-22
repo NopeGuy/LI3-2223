@@ -24,10 +24,12 @@ CATALOGO iniciarCatalogo(){
 GTree* getUsers(CATALOGO cat){
     return cat->users;
 }
+
+
 GTree* getDrivers(CATALOGO cat){
     return cat->drivers;
 }
-GTree* getRep(CATALOGO cat){
+GTree* getRides(CATALOGO cat){
     return cat->rides;
 }
 
@@ -40,6 +42,6 @@ void setUsers(CATALOGO cat, GTree* t){
 void setDrivers(CATALOGO cat, GTree* t){
     cat->drivers = t;
 }
-void setRep(CATALOGO cat, GTree* t){
+void setRides(CATALOGO cat, GTree* t){
     cat->rides = t;
 }
