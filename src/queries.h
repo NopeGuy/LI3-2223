@@ -17,4 +17,4 @@ gint CompareNames (gconstpointer name1, gconstpointer name2);
 
 char* profilefromUsername(CATALOGO cat,char*username, FILE* dest);
 
-char* profileThroughId(CATALOGO cat,int id_condutor);
+char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest);

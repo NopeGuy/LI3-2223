@@ -15,6 +15,10 @@ int* toIntAsterix(int i);
 
 void writeLineToFile(char* fileName, char* write, int firstTime);
 
+int getAge(struct tm date);
+
+struct tm verifyTime (char* str);
+
 char* toUppercase(char* buff);
 
 void saveToFile(char* fileName, char write[200000], int firstTime);

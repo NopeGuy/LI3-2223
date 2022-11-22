@@ -126,6 +126,7 @@ float getTripPrice(DRIVERS* treeDrivers, int driver_id, int km){
 struct trip_iter {
     CATALOGO cat;
     char* username;
+    int id;
     double price_sum;
     double ranking_sum;
     int total_drives;
@@ -139,39 +140,52 @@ gboolean conta_viagens(gpointer key, gpointer value, gpointer data) {
     RIDES ride = (RIDES) value;
     GTree* driversTree = getDrivers(trip_iterator->cat);
 
-    if(strcmp(getRidesUser(ride), trip_iterator->username) == 0){
-        float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
-        trip_iterator->price_sum += tripPrice;
-        trip_iterator->total_drives++;
-        trip_iterator->ranking_sum += getRidesScoreUser(ride);
-    }
+    if(trip_iterator->id != -1){
+        if (getRidesDriver(ride) == trip_iterator->id) {
+            float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+            trip_iterator->price_sum += tripPrice;
+            trip_iterator->total_drives++;
+            trip_iterator->ranking_sum += getRidesScoreUser(ride);
+        }
+    } else {
 
+        if (strcmp(getRidesUser(ride), trip_iterator->username) == 0) {
+            float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+            trip_iterator->price_sum += tripPrice;
+            trip_iterator->total_drives++;
+            trip_iterator->ranking_sum += getRidesScoreUser(ride);
+        }
+
+    }
     return FALSE;
 }
 
 char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
 {
-    USER* u = g_tree_lookup(getUsers(cat), username);
+    USER u = g_tree_lookup(getUsers(cat), username);
+
+    if(u == NULL) {
+        fprintf(dest, "%s", "Utilizador nao encontradoo.");
+        return "";
+    }
+
     TRIP_ITER trip = malloc(sizeof(struct trip_iter));
     trip->username = username;
+    trip->id = -1;
     trip->cat = cat;
-    trip->total_drives = 0.000;
-    trip->ranking_sum = 0;
+    trip->total_drives = 0;
+    trip->ranking_sum = 0.000;
     trip->price_sum = 0.000;
 
     g_tree_foreach(getRides(cat), conta_viagens, trip);
 
-    if(u == NULL) {
-        fprintf(dest, "%s", "Utilizador nao encontradoo.");
-    }
-
-    fprintf(dest, "%s", getUsername(u));
+    fprintf(dest, "%d", getUsername(u));
     fprintf(dest, ";");
     fprintf(dest, "%c", getGender(u));
     fprintf(dest, ";");
-    fprintf(dest, "%s","DATA");
+    fprintf(dest, "%d", getAge(getBirth_date(u)));
     fprintf(dest, ";");
-    fprintf(dest, "%d", trip->ranking_sum/trip->total_drives);
+    fprintf(dest, "%0.3f", trip->ranking_sum/trip->total_drives);
     fprintf(dest, ";");
     fprintf(dest, "%d", trip->total_drives);
     fprintf(dest, ";");
@@ -186,9 +200,43 @@ char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
     return "";
 }
 
-char* profileThroughId(CATALOGO cat,int id_condutor)
+char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest)
 {
+    DRIVERS d = g_tree_lookup(getDrivers(cat), id_condutor);
 
+    if(d == NULL) {
+        fprintf(dest, "%s", "Driver nao encontrado.");
+        return "";
+    }
+
+    TRIP_ITER trip = malloc(sizeof(struct trip_iter));
+    trip->id = id_condutor;
+    trip->cat = cat;
+    trip->total_drives = 0;
+    trip->ranking_sum = 0.000;
+    trip->price_sum = 0.000;
+
+    g_tree_foreach(getRides(cat), conta_viagens, trip);
+
+    fprintf(dest, "%s", getDriversName(d));
+    fprintf(dest, ";");
+    fprintf(dest, "%c", getDriversGender(d));
+    fprintf(dest, ";");
+    fprintf(dest, "%d", getAge(getDriversBirthDay(d)));
+    fprintf(dest, ";");
+    fprintf(dest, "%0.3f", trip->ranking_sum/trip->total_drives);
+    fprintf(dest, ";");
+    fprintf(dest, "%d", trip->total_drives);
+    fprintf(dest, ";");
+    fprintf(dest, "%0.3f", trip->price_sum);
+
+
+
+
+    free(trip);
+
+
+    return "";
 }
 
 //Query 2

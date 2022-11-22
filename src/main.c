@@ -105,7 +105,7 @@ void executeQueries(char *line,CATALOGO cat, int query)
         else
         {
             int id_condutor = atoi(username);
-                profileThroughId(cat,id_condutor);
+                profilefromID(cat,id_condutor, f);
         }
         fclose(f);
         break;

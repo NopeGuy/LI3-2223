@@ -8,6 +8,7 @@
 
 #include "catalogo-drivers.h"
 #include "catalogo.h"
+#include "constructors.h"
 
 struct drivers
 {
@@ -84,18 +85,14 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     int id = atoi(strsep(&buff2, ";")); //";\n"
     char *name = strsep(&buff2, ";");
 
-    char *datestr = strsep(&buff2, ";");
-    struct tm birth_dayst;
-    strptime(datestr, "%d/%m/%Y", &birth_dayst);
+    struct tm birth_dayst = verifyTime(strsep(&buff2, ";"));
 
     char gender = strsep(&buff2, ";")[0]; // verify later
     char *car_class = strsep(&buff2, ";");
     char *license_plate = strsep(&buff2, ";");
     char *city = strsep(&buff2, ";");
 
-    char *datestr2 = strsep(&buff2, ";");
-    struct tm account_creationst;
-    strptime(datestr2, "%d-%m-%Y", &account_creationst);
+    struct tm account_creationst = verifyTime(strsep(&buff2, ";"));
 
     char account_status = strsep(&buff2, ";")[0]; // verify later
 
@@ -108,12 +105,12 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     if(strcmp(car_class, "premium")) car_class_int = 2;
     // Send the info
     temp->id = id;
-    temp->name = name;
+    temp->name = strdup(name);
     temp->birth_day = birth_dayst;
     temp->gender = gender;
     temp->car_class = car_class_int;
     temp->license_plate = license_plate;
-    temp->city = city;
+    temp->city = strdup(city);
     temp->account_creation = account_creationst;
     temp->account_status = account_status;
 
