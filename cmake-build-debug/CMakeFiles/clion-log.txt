@@ -1,7 +1,0 @@
-/home/luis/Downloads/CLion-2022.2.4/clion-2022.2.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/luis/Downloads/CLion-2022.2.4/clion-2022.2.4/bin/ninja/linux/ninja -G Ninja -S "/media/sf_Universidade/LEI/2 Ano/Li3/GrupoBerna" -B "/media/sf_Universidade/LEI/2 Ano/Li3/GrupoBerna/cmake-build-debug"
--- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2") 
--- Checking for module 'glib-2.0'
---   Found glib-2.0, version 2.72.1
--- Configuring done
--- Generating done
--- Build files have been written to: /media/sf_Universidade/LEI/2 Ano/Li3/GrupoBerna/cmake-build-debug
