@@ -16,6 +16,8 @@
 #include "constructors.h"
 #include "catalogo.h"
 
-void executeQueries(char *line,CATALOGO cat, int query);
+void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile);
 
-#endif //MAIN_H
+void commandInterpreter(GTree *users,GTree *rides,GTree *drivers, char *filename);
+
+#endif /* INTERPRETER_H */
