@@ -12,6 +12,7 @@
 #include "../includes/catalogo-drivers.h"
 #include "../includes/catalogo-rides.h"
 #include "../includes/constructors.h"
+#include "../includes/interpreter.h"
 
 char *fileUsers;
 char *fileDrivers;
@@ -44,6 +45,9 @@ int main(int argc, char const *argv[])
     fileRides = malloc(sizeof(char)*300);
 
 
+
+    //unload
+
     strcat(fileUsers, argv[1]);
     strcat(fileUsers, "users.csv");
     strcpy(fileDrivers, argv[1]);
@@ -55,16 +59,25 @@ int main(int argc, char const *argv[])
     loadDrivers(fileDrivers, drivers);
     loadRides(fileRides, rides);
 
+// correr commands
+    /*passar isto*/
+    if (argc == 1)
+    {
+        interpreter(cat, 0);
+    }
 
-    //correr commands
-    while (fgets(buff, max_len, file))
+
+    if (argc == 2)
     {
         printf("A executar a query %d...\n", query);
         executeQueries(buff,users,rides,drivers,query);
         query++;
+        commandInterpreter(cat, argv[1]);
     }
 
-
+    if (strcmp(argv[0], "./testes") == 0)
+    {
+    }
     //unload
     fclose(file);
 
@@ -88,8 +101,6 @@ void executeQueries(char *line,GTree *users,GTree *rides,GTree *drivers, int que
     char* cidade;
 
     struct tm data1, data2;
-
-
 
 
     sprintf(queryToString, "%d", query);
