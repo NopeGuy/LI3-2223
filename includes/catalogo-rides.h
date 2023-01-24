@@ -26,6 +26,6 @@ double getRidesTip(RIDES a);
 
 char *getRidesComment(RIDES a);
 
-void buildRides (char* line, CATALOGO cat, int nLinha);
+void buildRides (char* line, GTree *rides, int nLinha);
 
-void loadRides(char* filename, CATALOGO cat);
+void loadRides(char* filename, GTree* rides);

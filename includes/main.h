@@ -13,8 +13,8 @@
 #include "catalogo-rides.h"
 #include "queries.h"
 #include "constructors.h"
-#include "catalogo.h"
 
-void executeQueries(char *line,CATALOGO cat, int query);
+
+void executeQueries(char *line,GTree *users,GTree *rides,GTree *drivers, int query);
 
 #endif //MAIN_H
