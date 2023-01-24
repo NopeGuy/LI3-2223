@@ -13,12 +13,13 @@ int getDriversId(DRIVERS c);
 char* getDriversName(DRIVERS c);
 struct tm getDriversBirthDay(DRIVERS c);
 char getDriversGender(DRIVERS c);
-int getDriversCarClass(DRIVERS c);
+char* getDriversCarClass(DRIVERS c);
 char* getDriversLicensePlate(DRIVERS c);
 char* getDriversCity(DRIVERS c);
 struct tm getDriversAccCreation(DRIVERS c);
 char getDriversAccountStatus(DRIVERS c);
 
 
-void buildDrivers(char* line, int lineNumber, CATALOGO cat);
-void loadDrivers(char* filename, CATALOGO cat);
+void buildDrivers(char *line, int lineNumber, GTree* drivers);
+void loadDrivers(char *filename, GTree* drivers);
+
