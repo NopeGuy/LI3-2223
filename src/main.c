@@ -63,16 +63,13 @@ int main(int argc, char const *argv[])
     /*passar isto*/
     if (argc == 1)
     {
-        interpreter(cat, 0);
+        interpreter(users, rides, drivers, 0);
     }
 
 
     if (argc == 2)
     {
-        printf("A executar a query %d...\n", query);
-        executeQueries(buff,users,rides,drivers,query);
-        query++;
-        commandInterpreter(cat, argv[1]);
+        commandInterpreter(users, rides, drivers, argv[1]);
     }
 
     if (strcmp(argv[0], "./testes") == 0)
