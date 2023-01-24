@@ -14,7 +14,6 @@
 #include "catalogo-rides.h"
 #include "queries.h"
 #include "constructors.h"
-#include "catalogo.h"
 
 void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile);
 

@@ -3,7 +3,6 @@
 #include <string.h>
 #include <time.h>
 #include <glib.h>
-#include "catalogo.h"
 
 
 typedef struct user* USER;

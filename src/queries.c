@@ -11,7 +11,6 @@
 #include "../includes/catalogo-rides.h"
 #include "../includes/catalogo-drivers.h"
 #include "../includes/constructors.h"
-#include "../includes/catalogo.h"
 
 //structs auxiliares
 

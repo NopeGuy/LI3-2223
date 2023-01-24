@@ -6,8 +6,7 @@
 #include <glib.h>
 
 #include "../includes/catalogo-users.h"
-#include "../includes/constructors.h"
-#include "../includes/catalogo.h"        //ver isto
+#include "../includes/constructors.h"      //ver isto
 #include "../includes/main.h"
 
 struct user {

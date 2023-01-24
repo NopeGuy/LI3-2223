@@ -1,3 +1,6 @@
+#define _XOPEN_SOURCE
+#define _DEFAULT_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,13 +8,14 @@
 #include <glib-2.0/glib.h>
 #include <ctype.h>
 #include "../includes/queries.h"
-#include "../includes/catalogo.h"
 #include "../includes/constructors.h"
 
-void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile)
+//tirar catalogo de funçoes do interpretador e ver o que é STDOUT_FILENO e TIOCGWINSZ
+
+void interpreter(CATALOGO cat, int writeToFile)
 {
     int terminated = 0;
-    char* userInput = ' ';
+    char *userInput = ' ';
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
@@ -41,7 +45,7 @@ void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile)
                      "--------------------------------------------------------------------\n"
                      "| 99 | Fechar programa                                              |\n"
                      "--------------------------------------------------------------------\n";
-                     while (terminated == 0)
+    while (terminated == 0)
     {
         system("clear");
         int queryNum = 0;
@@ -52,10 +56,12 @@ void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile)
         char arg3[300000], arg4[300000];
 
         printf("%s", imprimir);
-        if (validez == 0) printf("Opção inválida, introduza outra: ");
-        else printf("Introduz uma opção: ");
+        if (validez == 0)
+            printf("Opção inválida, introduza outra: ");
+        else
+            printf("Introduz uma opção: ");
         scanf("%d", &userInput);
-        if (userInput >= 0 && userInput <=9)
+        if (userInput >= 0 && userInput <= 9)
         {
             validez = 1;
             if (userInput == 1)
@@ -64,29 +70,34 @@ void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile)
                 scanf("%s", arg1);
                 queryNum = 1;
             }
-            if (userInput == 2){
+            if (userInput == 2)
+            {
                 printf("Introduza o N: ");
                 scanf("%d", &argInt1);
                 queryNum = 2;
             }
-            if (userInput == 3){
+            if (userInput == 3)
+            {
                 printf("Introduza o N: ");
                 scanf("%d", &argInt1);
                 queryNum = 3;
             }
-            if (userInput == 4){
+            if (userInput == 4)
+            {
                 printf("Introduza a cidade: ");
                 scanf("%s", arg1);
                 queryNum = 4;
             }
-            if (userInput == 5){
+            if (userInput == 5)
+            {
                 printf("Introduza a data A: ");
                 scanf("%s", arg1);
                 printf("Introduza a data B: ");
                 scanf("%s", arg3);
                 queryNum = 5;
             }
-            if (userInput == 6){
+            if (userInput == 6)
+            {
                 printf("Introduza a cidade: ");
                 scanf("%s", arg1);
                 printf("Introduza a data A: ");
@@ -95,21 +106,24 @@ void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile)
                 scanf("%s", arg4);
                 queryNum = 6;
             }
-            if (userInput == 7){
+            if (userInput == 7)
+            {
                 printf("Introduza o N: ");
                 scanf("%d", &argInt1);
                 printf("Introduza a cidade: ");
                 scanf("%s", arg3);
                 queryNum = 7;
             }
-            if (userInput == 8){
+            if (userInput == 8)
+            {
                 printf("Introduza o género: ");
                 scanf("%s", arg1);
                 printf("Introduza a idade: ");
                 scanf("%d", &argInt1);
                 queryNum = 8;
             }
-            if(userInput == 9){
+            if (userInput == 9)
+            {
                 printf("Introduza a data A: ");
                 scanf("%s", arg1);
                 printf("Introduza a data B: ");
@@ -117,19 +131,19 @@ void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile)
                 queryNum = 9;
             }
         }
-        if(userInput == 99)
+        if (userInput == 99)
         {
             printf("A fechar...\n");
             terminated = 1;
         }
-        if(userInput > 9 && userInput < 99)
+        if (userInput > 9 && userInput < 99)
         {
             validez = 0;
         }
     }
 }
 
-void commandInterpreter(GTree *users,GTree *rides,GTree *drivers, char *filename)
+void commandInterpreter(CATALOGO cat, char *filename)
 {
     int max_len = 200000;
     int query = 1;
@@ -147,10 +161,8 @@ void commandInterpreter(GTree *users,GTree *rides,GTree *drivers, char *filename
     while (fgets(buff, max_len, file))
     {
         printf("A executar a query %d...\n", query);
-        executeQueries(buff, users, rides, drivers, query);
+        executeQueries(buff, cat, query);
         query++;
     }
     fclose(file);
 }
-
-    

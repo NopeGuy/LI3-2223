@@ -7,7 +7,6 @@
 #include <glib.h>
 
 #include "../includes/catalogo-drivers.h"
-#include "../includes/catalogo.h"
 #include "../includes/constructors.h"
 
 struct drivers
