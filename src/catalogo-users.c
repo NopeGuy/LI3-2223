@@ -55,9 +55,9 @@ char getAccount_status(USER u){
 	return u->account_status;
 }
 
-void buildUsers(char* line, CATALOGO cat) {
+void buildUsers(char* line, GTree *users) {
     GTree* t = NULL;
-    t = getUsers(cat);
+    t = users;
 
     char* buff2 = line;
     USER temp = malloc(sizeof(struct user));
@@ -110,7 +110,7 @@ void buildUsers(char* line, CATALOGO cat) {
 }
 
 
-void loadUsers(char *fileName, CATALOGO cat) {
+void loadUsers(char *fileName, GTree* users) {
     int max_len = 400000;
     char buff[max_len];
 
@@ -124,7 +124,7 @@ void loadUsers(char *fileName, CATALOGO cat) {
     fgets(buff, max_len, file); //primeira linha
     while(fgets(buff, max_len, file))
     {
-        buildUsers(buff, cat);
+        buildUsers(buff, users);
     }
 
     fclose(file);
