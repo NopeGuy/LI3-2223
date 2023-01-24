@@ -73,10 +73,10 @@ char getDriversAccountStatus(DRIVERS c)
 
 //Build and Load
 
-void buildDrivers(char *line, int lineNumber, CATALOGO cat)
+void buildDrivers(char *line, int lineNumber, GTree* drivers)
 {
     GTree *t = NULL;
-    t = getDrivers(cat);
+    t = drivers;
 
     char *buff2 = line;
     DRIVERS temp = malloc(sizeof(struct drivers));
@@ -117,7 +117,7 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     g_tree_insert(t, GINT_TO_POINTER(id), temp);
 }
 
-void loadDrivers(char *filename, CATALOGO cat)
+void loadDrivers(char *filename, GTree* drivers)
 {
     int max_len = 200000;
     char buff[max_len];
@@ -132,7 +132,7 @@ void loadDrivers(char *filename, CATALOGO cat)
     int line = 0;
     while (fgets(buff, max_len, f))
     {
-        buildDrivers(buff, line, cat);
+        buildDrivers(buff, line, drivers);
         line++;
     }
     fclose(f);
