@@ -48,12 +48,9 @@ int main(int argc, char const *argv[])
 
     //unload
 
-    strcat(fileUsers, argv[1]);
-    strcat(fileUsers, "users.csv");
-    strcpy(fileDrivers, argv[1]);
-    strcat(fileDrivers, "drivers.csv");
-    strcpy(fileRides, argv[1]);
-    strcat(fileRides, "rides.csv");
+    strcat(fileUsers, "entrada/users.csv");
+    strcat(fileDrivers, "entrada/drivers.csv");
+    strcat(fileRides, "entrada/rides.csv");
 
     loadUsers(fileUsers, users);
     loadDrivers(fileDrivers, drivers);

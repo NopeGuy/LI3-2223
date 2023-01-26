@@ -49,8 +49,8 @@ int verificaCidade(char cidade,GTree *drivers,int id_driver){
 
 char* verificaClasse(int id_driver,GTree *drivers)
 {
-    GTree *temp=NULL;
-    temp=getDrivers(drivers);
+    GTree *temp = NULL;
+    temp = drivers;
     int* idDriver = toIntAsterix(id_driver);
     int* alvo = g_tree_lookup(temp,idDriver);
     char* tarifa = getDriversCarClass(alvo);

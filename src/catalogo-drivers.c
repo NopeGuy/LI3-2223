@@ -47,7 +47,7 @@ char getDriversGender(DRIVERS c)
 
 int getDriversCarClass(DRIVERS c)
 {
-    return (c->car_class);
+    return c->car_class;
 }
 
 char *getDriversLicensePlate(DRIVERS c)
@@ -124,7 +124,7 @@ void loadDrivers(char *filename, GTree* drivers)
     FILE *f = fopen(filename, "r");
     if (f == NULL)
     {
-        printf("Ficheiro não encontrado: %s\n", filename);
+        printf("Ficheiro não encontrado: %s fds\n", filename);
         return;
     }
     fgets(buff, max_len, f);

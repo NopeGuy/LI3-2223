@@ -1,6 +1,3 @@
-#define _XOPEN_SOURCE
-#define _DEFAULT_SOURCE
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,14 +7,10 @@
 #include "../includes/queries.h"
 #include "../includes/constructors.h"
 
-//tirar catalogo de funçoes do interpretador e ver o que é STDOUT_FILENO e TIOCGWINSZ
-
-void interpreter(CATALOGO cat, int writeToFile)
+void interpreter(GTree *users, GTree *rides, GTree *drivers, int writeToFile)
 {
     int terminated = 0;
     char *userInput = ' ';
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
     char *imprimir = ""
                      "--------------------------------------------------------------------\n"
@@ -143,7 +136,7 @@ void interpreter(CATALOGO cat, int writeToFile)
     }
 }
 
-void commandInterpreter(CATALOGO cat, char *filename)
+void commandInterpreter(GTree *users, GTree *rides, GTree *drivers, char *filename)
 {
     int max_len = 200000;
     int query = 1;
@@ -160,8 +153,9 @@ void commandInterpreter(CATALOGO cat, char *filename)
     // correr commands
     while (fgets(buff, max_len, file))
     {
+        printf("%s \n", buff);
         printf("A executar a query %d...\n", query);
-        executeQueries(buff, cat, query);
+        executeQueries(buff, users, rides, drivers, query);
         query++;
     }
     fclose(file);
