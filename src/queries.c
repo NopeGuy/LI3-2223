@@ -125,10 +125,11 @@ char* profilefromUsername(char* username, GTree *users, GTree *rides, FILE* dest
     USER u = g_tree_lookup(users, username);
 
     if(u == NULL) {
-        fprintf(dest, "%s", "Utilizador nao encontradoo.");
+        fprintf(dest, "%s", "Utilizador nao encontrado.");
         return "";
     }
-
+    if(getAccount_status(u) == 'a') {
+    
     TRIP_ITER trip = malloc(sizeof(struct trip_iter));
     trip->username = username;
     trip->id = -1;
@@ -155,7 +156,7 @@ char* profilefromUsername(char* username, GTree *users, GTree *rides, FILE* dest
 
 
     free(trip);
-
+    }
 
     return "";
 }
@@ -168,7 +169,7 @@ char* profilefromID(int id_condutor,GTree *drivers,GTree *rides, FILE* dest)
         fprintf(dest, "%s", "Driver nao encontrado.");
         return "";
     }
-
+    if(getDriversAccountStatus(d) == 'a') {
     TRIP_ITER trip = malloc(sizeof(struct trip_iter));
     trip->id = id_condutor;
     trip->t_drivers = NULL;
@@ -193,10 +194,8 @@ char* profilefromID(int id_condutor,GTree *drivers,GTree *rides, FILE* dest)
     fprintf(dest, "%0.3f", trip->price_sum);
 
 
-
-
     free(trip);
-
+    }
 
     return "";
 }
@@ -223,35 +222,44 @@ struct cities_iter
     GTree *c_rides;
     char* city;
     double preco_total;
+    int n_cidades;
 };
 typedef struct cities_iter* CITIES_ITER;
 
 
 gboolean city_iter(gpointer key, gpointer value, gpointer data) {
-    CITIES_ITER cities_iter = (CITIES_ITER) data;
+    CITIES_ITER cities_iter = (CITIES_ITER) data; //porque é necessário igualar a data a cities_iter? não substitui os valores de cities_iter de cada iteração?
     RIDES ride = (RIDES) value;
     GTree* driversTree = cities_iter->c_drivers;
 
     if (strcmp(getRidesCity(ride), cities_iter->city) == 0) {
-        float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+        double tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
         cities_iter->preco_total += tripPrice;
+        cities_iter->n_cidades++;
     }
     return FALSE;
 }
 
-void medianPrice(GTree* rides, char* cidade, FILE *f)
+void medianPrice(GTree* rides,GTree *drivers, char* cidade, FILE *f)
 {
     //inicialização da struct aux query4
     CITIES_ITER cities_iter = malloc(sizeof(struct cities_iter));
+    cities_iter->c_drivers = drivers;
     cities_iter->c_rides = rides;
     cities_iter->city = cidade;
+    cities_iter->preco_total = 0.000;
+    cities_iter->n_cidades = 0;
 
     g_tree_foreach(rides, city_iter,cities_iter);
 
-    double preco_medio = cities_iter->preco_total / g_tree_nnodes(rides);
-
+    if(cities_iter->n_cidades == 0){ //caso a cidade não exista
+        fprintf(f, "%s", "Cidade nao encontrada.");
+        return;
+    }
+    else{
+    double preco_medio = cities_iter->preco_total / cities_iter->n_cidades; //substitui por getnnodes(rides) e troquei o tipo de variável para double
     fprintf(f, "%0.3f", preco_medio);
-
+    }
     free(cities_iter);
    
 

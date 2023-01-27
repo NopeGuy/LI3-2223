@@ -134,7 +134,7 @@ void executeQueries(char *line,GTree *users,GTree *rides,GTree *drivers, int que
     case 4:
     //Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
         cidade =strsep(&line,"\n");
-        medianPrice(rides, cidade, f);
+        medianPrice(rides, drivers, cidade, f);
         break;
 
     case 5:
