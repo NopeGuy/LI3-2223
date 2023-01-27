@@ -15,5 +15,5 @@ gint inteiros(gconstpointer a, gconstpointer b);
 gint CompareNames (gconstpointer name1, gconstpointer name2);
 char* profilefromUsername(char* username, GTree *users, GTree *rides, FILE* dest);
 char* profilefromID(int id_condutor,GTree *drivers,GTree *rides, FILE* dest);
-void medianPrice(GTree* rides, char* cidade, FILE *f);
+void medianPrice(GTree* rides,GTree* drivers, char* cidade, FILE *f);
 void medianPriceBetween(GTree *rides, struct tm date1, struct tm date2, FILE *f);
