@@ -228,7 +228,7 @@ typedef struct cities_iter* CITIES_ITER;
 
 
 gboolean city_iter(gpointer key, gpointer value, gpointer data) {
-    CITIES_ITER cities_iter = (CITIES_ITER) data; //porque é necessário igualar a data a cities_iter? não substitui os valores de cities_iter de cada iteração?
+    CITIES_ITER cities_iter = (CITIES_ITER) data;
     RIDES ride = (RIDES) value;
     GTree* driversTree = cities_iter->c_drivers;
 
