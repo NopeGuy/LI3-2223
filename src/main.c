@@ -52,8 +52,8 @@ int main(int argc, char const *argv[])
     strcat(fileDrivers, "entrada/drivers.csv");
     strcat(fileRides, "entrada/rides.csv");
 
-    loadUsers(fileUsers, users);
     loadDrivers(fileDrivers, drivers);
+    loadUsers(fileUsers, users);
     loadRides(fileRides, rides);
 
 // correr commands
@@ -74,10 +74,10 @@ int main(int argc, char const *argv[])
     }
     //unload
     fclose(file);
-
+    g_tree_destroy(rides);
     g_tree_destroy(users);
     g_tree_destroy(drivers);
-    g_tree_destroy(rides);
+    
     //free(buff);
 
     return 1;

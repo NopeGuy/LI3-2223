@@ -81,19 +81,19 @@ void buildDrivers(char *line, int lineNumber, GTree* drivers)
     DRIVERS temp = malloc(sizeof(struct drivers));
 
     // Get the info
-    int id = atoi(strsep(&buff2, ";")); //";\n"
-    char *name = strsep(&buff2, ";");
+    int id = atoi(strsep(&buff2, ";\n")); //";\n"
+    char *name = strsep(&buff2, ";\n");
 
-    struct tm birth_dayst = verifyTime(strsep(&buff2, ";"));
+    struct tm birth_dayst = verifyTime(strsep(&buff2, ";\n"));
 
-    char gender = strsep(&buff2, ";")[0]; // verify later
-    char *car_class = strsep(&buff2, ";");
-    char *license_plate = strsep(&buff2, ";");
-    char *city = strsep(&buff2, ";");
+    char gender = strsep(&buff2, ";\n")[0]; 
+    char *car_class = strsep(&buff2, ";\n");
+    char *license_plate = strsep(&buff2, ";\n");
+    char *city = strsep(&buff2, ";\n");
 
-    struct tm account_creationst = verifyTime(strsep(&buff2, ";"));
+    struct tm account_creationst = verifyTime(strsep(&buff2, ";\n"));
 
-    char account_status = strsep(&buff2, ";")[0]; // verify later
+    char account_status = strsep(&buff2, ";\n")[0]; // verify later
 
     // verifier
     if (id == 0)
@@ -108,11 +108,11 @@ void buildDrivers(char *line, int lineNumber, GTree* drivers)
     temp->birth_day = birth_dayst;
     temp->gender = gender;
     temp->car_class = car_class_int;
+    //printf("%d",temp->car_class);
     temp->license_plate = license_plate;
     temp->city = strdup(city);
     temp->account_creation = account_creationst;
     temp->account_status = account_status;
-
     g_tree_insert(t, GINT_TO_POINTER(id), temp);
 }
 
@@ -120,7 +120,6 @@ void loadDrivers(char *filename, GTree* drivers)
 {
     int max_len = 200000;
     char buff[max_len];
-
     FILE *f = fopen(filename, "r");
     if (f == NULL)
     {
