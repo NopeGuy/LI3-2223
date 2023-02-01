@@ -64,19 +64,18 @@ void buildUsers(char* line, CATALOGO cat) {
 
 
     char* username = strsep(&buff2, ";\n");
+    if(username == NULL) return;
     char* name = strsep(&buff2, ";\n");
-    
-    char gender;
-    if (strcmp(strsep(&buff2, ";\n"), "M") == 0)
-    {
-        gender = 'm';
-    } else{
-        gender = 'f';
-    }
+    if(name == NULL) return;
+    char* gender=strsep(&buff2, ";\n");
+    if(gender==NULL) return;
+    else if (strcmp(gender, "M") == 0) gender = 'm';
+    else gender = 'f';
     
     struct tm birth_date = verifyTime(strsep(&buff2, ";\n"));
+    if(birth_date.tm_year==0) return;
     struct tm account_creation = verifyTime(strsep(&buff2, ";\n"));
-    
+    if(account_creation.tm_year==0) return;
     char pay_method;
     char* temp_pay_method = strsep(&buff2, ";\n");
     if (strcmp(temp_pay_method, "cash") == 0)
@@ -87,16 +86,16 @@ void buildUsers(char* line, CATALOGO cat) {
         pay_method = 'd';
     } else if(strcmp(temp_pay_method, "credit_card") == 0){
         pay_method = 'r';
-    }
+    } else return;
 
     char account_status;
     char* temp_account_status = strsep(&buff2, ";\n");
     if (strcmp(temp_account_status, "active") == 0)
     {
         account_status = 'a';
-    } else if(strcmp(temp_account_status, "inactive") == 0){
-        account_status = 'i';
-    }
+    } else account_status = 'i';
+        
+    
 
     temp->username = strdup(username);
     temp->name = strdup(name);

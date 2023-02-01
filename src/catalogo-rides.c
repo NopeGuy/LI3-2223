@@ -78,21 +78,19 @@ RIDES temp = malloc(sizeof(struct ride));
 //struct tm date = {0};
 
 int id_temp = atoi(strsep(&buffR,";\n"));
+if(id_temp == 0) return;
 struct tm date_temp = verifyTime(strsep(&buffR, ";\n"));
+if(date_temp.tm_year==0) return;
 int driver_temp = atoi(strsep(&buffR,";\n"));
+if(driver_temp == 0) return;
 char *user_temp = strsep(&buffR,";\n");
+if(user_temp == 0) return;
 char *city_temp = strsep(&buffR,";\n");
+if(city_temp == 0) return;
 double distance_temp = atof(strsep(&buffR,";\n"));
 double score_user_temp = atof(strsep(&buffR,";\n"));
 double score_driver_temp = atof(strsep(&buffR,";\n"));
 double tip_temp = atof(strsep(&buffR,";\n"));
-
-//verificações
-if(id_temp == 0) return;
-if(driver_temp == 0) return;
-if(user_temp == 0) return;
-if(city_temp == 0) return;
-if(date_temp.tm_year==0) return;
 
 //Passar para tree temporária
 temp->id = id_temp;

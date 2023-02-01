@@ -82,31 +82,30 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     DRIVERS temp = malloc(sizeof(struct drivers));
 
     // Get the info
-    int id = atoi(strsep(&buff2, ";")); //";\n"
+    int id = atoi(strsep(&buff2, ";"));
+    if(id == 0) return;
     char *name = strsep(&buff2, ";");
-
+    if(name==NULL) return;
     struct tm birth_dayst = verifyTime(strsep(&buff2, ";"));
-
-    char gender = strsep(&buff2, ";")[0]; // verify later
+    if(birth_dayst.tm_year==0) return;
+    char gender = strsep(&buff2, ";")[0];
+    if(gender==NULL) return;
     char *car_class = toUppercase(strsep(&buff2, ";"));
     char *license_plate = strsep(&buff2, ";");
+    if(license_plate==NULL) return;
     char *city = strsep(&buff2, ";");
-
+    if(city==NULL) return;
     struct tm account_creationst = verifyTime(strsep(&buff2, ";"));
-
-    char account_status = strsep(&buff2, ";")[0]; // verify later
+    if(account_creationst.tm_year==0) return;
+    char account_status = strsep(&buff2, ";")[0]; 
     int car_class_int = -1;
 
     //captar class do driver
     if(strcmp(car_class, "BASIC")) car_class_int = 0;
     if(strcmp(car_class, "GREEN")) car_class_int = 1;
     if(strcmp(car_class, "PREMIUM")) car_class_int = 2;
-
-    // verifiers
-    if (id == 0)
-        return;
     if(car_class_int == -1) return;
-    
+
     temp->id = id;
     temp->name = strdup(name);
     temp->birth_day = birth_dayst;
