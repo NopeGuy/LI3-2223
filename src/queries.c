@@ -281,13 +281,13 @@ gboolean median_between_iter(gpointer key, gpointer value, gpointer data) {
     struct tm date1 = median_iter->date1;
     struct tm date2 = median_iter->date2;
     struct tm date_trip = getRidesDate(ride);
-
-    if(date_trip.tm_year >= date1.tm_year && date_trip.tm_mon >= date1.tm_mday && date_trip.tm_mday >= date1.tm_mday
-        && date_trip.tm_year <= date2.tm_year && date_trip.tm_mon <= date2.tm_mon && date_trip.tm_mday <= date2.tm_mday){
+    time_t t1 = mktime(&date1);
+    time_t t2 = mktime(&date2);
+    time_t t = mktime(&date_trip);
+    if(difftime(t,t1) >= 0 && difftime(t2,t) >= 0){
         double tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
         median_iter->nnodes++;
         median_iter->preco_total += tripPrice;
-
     }
     return FALSE;
 }
