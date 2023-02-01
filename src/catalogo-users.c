@@ -6,7 +6,8 @@
 #include <glib.h>
 
 #include "../includes/catalogo-users.h"
-#include "../includes/constructors.h"      //ver isto
+#include "../includes/constructors.h"
+#include "../includes/catalogo.h"        //ver isto
 #include "../includes/main.h"
 
 struct user {
@@ -54,9 +55,9 @@ char getAccount_status(USER u){
 	return u->account_status;
 }
 
-void buildUsers(char* line, GTree *users) {
+void buildUsers(char* line, CATALOGO cat) {
     GTree* t = NULL;
-    t = users;
+    t = getUsers(cat);
 
     char* buff2 = line;
     USER temp = malloc(sizeof(struct user));
@@ -109,8 +110,8 @@ void buildUsers(char* line, GTree *users) {
 }
 
 
-void loadUsers(char *fileName, GTree* users) {
-    int max_len = 400000;
+void loadUsers(char *fileName, CATALOGO cat) {
+    int max_len = 2000;
     char buff[max_len];
 
     FILE *file = fopen(fileName, "r");
@@ -123,7 +124,7 @@ void loadUsers(char *fileName, GTree* users) {
     fgets(buff, max_len, file); //primeira linha
     while(fgets(buff, max_len, file))
     {
-        buildUsers(buff, users);
+        buildUsers(buff, cat);
     }
 
     fclose(file);

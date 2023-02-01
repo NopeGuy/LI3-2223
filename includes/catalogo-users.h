@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <glib.h>
+#include "catalogo.h"
 
 
 typedef struct user* USER;
@@ -11,7 +12,7 @@ char *getUsername(USER u);
 
 char *getName(USER u);
 
-char gender(USER u);
+char getGender(USER u);
 
 struct tm getBirth_date(USER u);
 
@@ -21,6 +22,6 @@ char getPay_method(USER u);
 
 char getAccount_status(USER u);
 
-void buildUsers(char* line, GTree *users);
+void buildUsers(char* line, CATALOGO cat);
 
-void loadUsers(char *fileName, GTree *users);
+void loadUsers(char *fileName, CATALOGO cat);

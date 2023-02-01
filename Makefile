@@ -18,10 +18,10 @@ run: clean all
 	./$(EXECUTABLE)
 
 $(BIN)/$(EXECUTABLE): $(SRC)/*.c
-	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES)
+	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES) -g
 
 $(BIN)/$(TESTES): $(SRC)/*.c
-	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES)
+	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES) -g
 
 clean:
 	-rm ./$(EXECUTABLE)

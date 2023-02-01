@@ -7,7 +7,7 @@
 #include "../includes/queries.h"
 #include "../includes/constructors.h"
 
-void interpreter(GTree *users, GTree *rides, GTree *drivers, int writeToFile)
+void interpreter(CATALOGO cat, int writeToFile, char *fileUsers, char *fileDrivers, char *fileRides)
 {
     int terminated = 0;
     char *userInput = ' ';
@@ -38,15 +38,20 @@ void interpreter(GTree *users, GTree *rides, GTree *drivers, int writeToFile)
                      "--------------------------------------------------------------------\n"
                      "| 99 | Fechar programa                                              |\n"
                      "--------------------------------------------------------------------\n";
+
+    loadUsers(fileUsers, cat);
+    loadDrivers(fileDrivers, cat);
+    loadRides(fileRides, cat);
+
     while (terminated == 0)
     {
         system("clear");
         int queryNum = 0;
         int validez;
-        char arg1[300000];
+        char arg1[300];
         int argInt1 = 0;
         int argInt2 = 0;
-        char arg3[300000], arg4[300000];
+        char arg3[3000], arg4[3000];
 
         printf("%s", imprimir);
         if (validez == 0)
@@ -136,13 +141,17 @@ void interpreter(GTree *users, GTree *rides, GTree *drivers, int writeToFile)
     }
 }
 
-void commandInterpreter(GTree *users, GTree *rides, GTree *drivers, char *filename)
+void commandInterpreter(CATALOGO cat, char *filename, char *fileUsers, char *fileDrivers, char *fileRides)
 {
-    int max_len = 200000;
+    int max_len = 200;
     int query = 1;
     char buff[max_len];
     char *commandFile = filename;
     FILE *file = fopen(commandFile, "r");
+
+    loadUsers(fileUsers, cat);
+    loadDrivers(fileDrivers, cat);
+    loadRides(fileRides, cat);
 
     if (file == NULL)
     {
@@ -150,13 +159,94 @@ void commandInterpreter(GTree *users, GTree *rides, GTree *drivers, char *filena
         return 0;
     }
 
+    GTree *users = getUsers(cat);
+    GTree *drivers = getDrivers(cat);
+    GTree *rides = getRides(cat);
     // correr commands
     while (fgets(buff, max_len, file))
     {
         printf("%s \n", buff);
         printf("A executar a query %d...\n", query);
-        executeQueries(buff, users, rides, drivers, query);
+        executeQueries(buff, cat, query);
         query++;
     }
     fclose(file);
+}
+
+void executeQueries(char *line, CATALOGO cat, int query)
+{
+    char *id = strsep(&line, " ");
+    int idInt = atoi(id);
+    char *buff = &line;
+    char queryToString[30] = "";
+    char fileName[2000] = "";
+    char *username;
+    int topN;
+    char *cidade;
+
+    struct tm data1, data2;
+
+    sprintf(queryToString, "%d", query);
+    strcat(fileName, "./Resultados/command");
+    strcat(fileName, queryToString);
+    strcat(fileName, "_output.txt");
+    FILE *f = fopen(fileName, "w");
+    switch (idInt)
+    {
+    // chamar ficheiro de queries
+    case 1:
+        username = strsep(&line, "\n");
+        // Query1/ separada se é user ou driver
+        if (username[0] >= '0' && username[0] <= '9')
+        {
+            int id_condutor = atoi(username);
+            profilefromID(cat, id_condutor, f);
+        }
+        else
+        {
+            if (username != NULL)
+                profilefromUsername(cat, username, f);
+        }
+
+        break;
+    case 2:
+        // Query2/ N top condutores com maior avaliação média
+        topN = atoi(strsep(&line, " "));
+        // topDrivers(topN);
+        break;
+
+    case 3:
+        // Query3();
+        break;
+
+    case 4:
+        // Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
+        cidade = strsep(&line, "\n");
+        medianPrice(cat, cidade, f);
+        break;
+
+    case 5:
+        data1 = verifyTime(strsep(&line, " "));
+        data2 = verifyTime(strsep(&line, " "));
+        medianPriceBetween(cat, data1, data2, f);
+        break;
+
+    case 6:
+        // Query6();
+        break;
+
+    case 7:
+        // Query7/top Rides de uma cidade e não top rides de uma nacionalidade
+        // topPerCity();
+        break;
+    case 8:
+        // Query8();
+        break;
+
+    case 9:
+        // Query9();
+        break;
+    }
+
+    fclose(f);
 }

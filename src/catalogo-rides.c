@@ -6,7 +6,8 @@
 #include <glib.h>
 
 #include "../includes/catalogo-rides.h"
-#include "../includes/constructors.h"      //ver isto
+#include "../includes/constructors.h"
+#include "../includes/catalogo.h"        //ver isto
 #include "../includes/main.h"
 
 //id;date;driver;user;city;distance;score_user;score_driver;tip;comment
@@ -69,9 +70,9 @@ char *getRidesComment(RIDES a){
 }
 
 
-void buildRides (char* line, GTree *rides, int nLinha){
+void buildRides (char* line, CATALOGO cat, int nLinha){
 GTree* t = NULL;
-t = rides;                          
+t = getRides(cat);                          //por fazer
 char* buffR = line;
 RIDES temp = malloc(sizeof(struct ride));
 //struct tm date = {0};
@@ -103,15 +104,14 @@ temp->distance = distance_temp;
 temp->score_user = score_user_temp;
 temp->score_driver = score_driver_temp;
 temp->tip = tip_temp;
-//temp->comment = malloc(sizeof(char)*400000);
 temp->lnNumber = nLinha;
 //inserir na glib
 
 g_tree_insert(t, GINT_TO_POINTER(id_temp), temp);
 }
 
-void loadRides(char* filename, GTree* rides){
-    int max_len = 200000;
+void loadRides(char* filename, CATALOGO cat){
+    int max_len = 2000;
     char buff[max_len];
     FILE *f = fopen(filename, "r");
     if(f == NULL){
@@ -121,7 +121,7 @@ void loadRides(char* filename, GTree* rides){
     fgets(buff,max_len,f); //primeira linha
     int line=0;
     while(fgets(buff,max_len, f)){
-        buildRides(buff,rides,line);
+        buildRides(buff,cat,line);
         line++;
     }
     fclose(f);

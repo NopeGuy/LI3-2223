@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <glib.h>
+#include "catalogo.h"
 
 
 typedef struct drivers* DRIVERS;
@@ -19,6 +20,5 @@ struct tm getDriversAccCreation(DRIVERS c);
 char getDriversAccountStatus(DRIVERS c);
 
 
-void buildDrivers(char *line, int lineNumber, GTree* drivers);
-void loadDrivers(char *filename, GTree* drivers);
-
+void buildDrivers(char* line, int lineNumber, CATALOGO cat);
+void loadDrivers(char* filename, CATALOGO cat);

@@ -15,8 +15,8 @@
 #include "queries.h"
 #include "constructors.h"
 
-void interpreter(GTree *users,GTree *rides,GTree *drivers, int writeToFile);
+void interpreter(CATALOGO cat, int writeToFile, int writeToFile, char *fileUsers, char *fileDrivers, char *fileRides);
 
-void commandInterpreter(GTree *users,GTree *rides,GTree *drivers, char *filename);
+void commandInterpreter(CATALOGO cat, char *filename, int writeToFile, char *fileUsers, char *fileDrivers, char *fileRides);
 
 #endif /* INTERPRETER_H */

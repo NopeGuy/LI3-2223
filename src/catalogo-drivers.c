@@ -7,6 +7,7 @@
 #include <glib.h>
 
 #include "../includes/catalogo-drivers.h"
+#include "../includes/catalogo.h"
 #include "../includes/constructors.h"
 
 struct drivers
@@ -47,7 +48,7 @@ char getDriversGender(DRIVERS c)
 
 int getDriversCarClass(DRIVERS c)
 {
-    return c->car_class;
+    return (c->car_class);
 }
 
 char *getDriversLicensePlate(DRIVERS c)
@@ -72,28 +73,28 @@ char getDriversAccountStatus(DRIVERS c)
 
 //Build and Load
 
-void buildDrivers(char *line, int lineNumber, GTree* drivers)
+void buildDrivers(char *line, int lineNumber, CATALOGO cat)
 {
     GTree *t = NULL;
-    t = drivers;
+    t = getDrivers(cat);
 
     char *buff2 = line;
     DRIVERS temp = malloc(sizeof(struct drivers));
 
     // Get the info
-    int id = atoi(strsep(&buff2, ";\n")); //";\n"
-    char *name = strsep(&buff2, ";\n");
+    int id = atoi(strsep(&buff2, ";")); //";\n"
+    char *name = strsep(&buff2, ";");
 
-    struct tm birth_dayst = verifyTime(strsep(&buff2, ";\n"));
+    struct tm birth_dayst = verifyTime(strsep(&buff2, ";"));
 
-    char gender = strsep(&buff2, ";\n")[0]; 
-    char *car_class = strsep(&buff2, ";\n");
-    char *license_plate = strsep(&buff2, ";\n");
-    char *city = strsep(&buff2, ";\n");
+    char gender = strsep(&buff2, ";")[0]; // verify later
+    char *car_class = strsep(&buff2, ";");
+    char *license_plate = strsep(&buff2, ";");
+    char *city = strsep(&buff2, ";");
 
-    struct tm account_creationst = verifyTime(strsep(&buff2, ";\n"));
+    struct tm account_creationst = verifyTime(strsep(&buff2, ";"));
 
-    char account_status = strsep(&buff2, ";\n")[0]; // verify later
+    char account_status = strsep(&buff2, ";")[0]; // verify later
 
     // verifier
     if (id == 0)
@@ -108,29 +109,30 @@ void buildDrivers(char *line, int lineNumber, GTree* drivers)
     temp->birth_day = birth_dayst;
     temp->gender = gender;
     temp->car_class = car_class_int;
-    //printf("%d",temp->car_class);
     temp->license_plate = license_plate;
     temp->city = strdup(city);
     temp->account_creation = account_creationst;
     temp->account_status = account_status;
+
     g_tree_insert(t, GINT_TO_POINTER(id), temp);
 }
 
-void loadDrivers(char *filename, GTree* drivers)
+void loadDrivers(char *filename, CATALOGO cat)
 {
-    int max_len = 200000;
+    int max_len = 2000;
     char buff[max_len];
+
     FILE *f = fopen(filename, "r");
     if (f == NULL)
     {
-        printf("Ficheiro não encontrado: %s fds\n", filename);
+        printf("Ficheiro não encontrado: %s\n", filename);
         return;
     }
     fgets(buff, max_len, f);
     int line = 0;
     while (fgets(buff, max_len, f))
     {
-        buildDrivers(buff, line, drivers);
+        buildDrivers(buff, line, cat);
         line++;
     }
     fclose(f);
