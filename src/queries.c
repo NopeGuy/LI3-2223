@@ -267,8 +267,8 @@ void medianPrice(CATALOGO cat, char* cidade, FILE *f)
 struct median_between_iter
 {
     CATALOGO cat;
-    struct tm date1;
-    struct tm date2;
+    time_t date1;
+    time_t date2;
     double preco_total;
     int nnodes;
 };
@@ -278,13 +278,11 @@ gboolean median_between_iter(gpointer key, gpointer value, gpointer data) {
     MEDIAN_BETWEEN_ITER median_iter = (MEDIAN_BETWEEN_ITER) data;
     RIDES ride = (RIDES) value;
     GTree* driversTree = getDrivers(median_iter->cat);
-    struct tm date1 = median_iter->date1;
-    struct tm date2 = median_iter->date2;
+    time_t date1 = median_iter->date1;
+    time_t date2 = median_iter->date2;
     struct tm date_trip = getRidesDate(ride);
-    time_t t1 = mktime(&date1);
-    time_t t2 = mktime(&date2);
     time_t t = mktime(&date_trip);
-    if(difftime(t,t1) >= 0 && difftime(t2,t) >= 0){
+    if(difftime(t,date1) >= 0 && difftime(date2,t) >= 0){
         double tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
         median_iter->nnodes++;
         median_iter->preco_total += tripPrice;
@@ -294,9 +292,11 @@ gboolean median_between_iter(gpointer key, gpointer value, gpointer data) {
 
 void medianPriceBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f){
     MEDIAN_BETWEEN_ITER median_iter = malloc(sizeof(struct median_between_iter));
+    time_t t1 = mktime(&date1);
+    time_t t2 = mktime(&date2);
     median_iter->cat = cat;
-    median_iter->date1 = date1;
-    median_iter->date2 = date2;
+    median_iter->date1 = t1;
+    median_iter->date2 = t2;
     median_iter->preco_total = 0;
     median_iter->nnodes = 0;
 

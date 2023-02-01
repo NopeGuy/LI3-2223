@@ -102,8 +102,8 @@ void buildUsers(char* line, CATALOGO cat) {
     temp->gender = gender;
     temp->birth_date = birth_date;
     temp->account_creation = account_creation;
-    temp->pay_method = pay_method; //pay_method may be initialized
-    temp->account_status = account_status; //account_status may be unitialized
+    temp->pay_method = pay_method; 
+    temp->account_status = account_status;
 
     g_tree_insert(t, temp->username, temp);
 }
