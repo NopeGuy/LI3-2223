@@ -228,7 +228,7 @@ gboolean city_iter(gpointer key, gpointer value, gpointer data) {
     GTree* driversTree = getDrivers(cities_iter->cat);
 
     if (strcmp(getRidesCity(ride), cities_iter->city) == 0) {
-        float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+        double tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
         cities_iter->preco_total += tripPrice;
         cities_iter->n_cidades++;
     }
@@ -247,13 +247,18 @@ void medianPrice(CATALOGO cat, char* cidade, FILE *f)
     g_tree_foreach(getRides(cat), city_iter,cities_iter);
 
     if(cities_iter->n_cidades == 0) {
-        fprintf(f, "%s", "Cidade nao encontrada.");
+        fprintf(f, "%s", "Nao existem viagens nesta cidade. (n_cidades)");
+        return;
+    }
+    else if(cities_iter->preco_total == 0.000){
+        fprintf(f, "%s", "Não existem viagens nesta cidade. (preco_total)");
         return;
     }
     else{
     double preco_medio = cities_iter->preco_total / cities_iter->n_cidades;
-
-    fprintf(f, "%0.3f", preco_medio);
+    fprintf(f,"n_cidades:%d\n", cities_iter->n_cidades);
+    fprintf(f,"preco_total:%0.3f\n",cities_iter->preco_total);
+    fprintf(f, "resultado:%0.3f", preco_medio);
     }
     free(cities_iter);
    
