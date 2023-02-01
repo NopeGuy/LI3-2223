@@ -247,11 +247,7 @@ void medianPrice(CATALOGO cat, char* cidade, FILE *f)
     g_tree_foreach(getRides(cat), city_iter,cities_iter);
 
     if(cities_iter->n_cidades == 0) {
-        fprintf(f, "%s", "Nao existem viagens nesta cidade. (n_cidades)");
-        return;
-    }
-    else if(cities_iter->preco_total == 0.000){
-        fprintf(f, "%s", "Não existem viagens nesta cidade. (preco_total)");
+        fprintf(f, "%s", "Nao existem viagens nesta cidade.");
         return;
     }
     else{

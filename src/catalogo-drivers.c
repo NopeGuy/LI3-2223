@@ -88,22 +88,25 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     struct tm birth_dayst = verifyTime(strsep(&buff2, ";"));
 
     char gender = strsep(&buff2, ";")[0]; // verify later
-    char *car_class = strsep(&buff2, ";");
+    char *car_class = toUppercase(strsep(&buff2, ";"));
     char *license_plate = strsep(&buff2, ";");
     char *city = strsep(&buff2, ";");
 
     struct tm account_creationst = verifyTime(strsep(&buff2, ";"));
 
     char account_status = strsep(&buff2, ";")[0]; // verify later
+    int car_class_int = -1;
 
-    // verifier
+    //captar class do driver
+    if(strcmp(car_class, "BASIC")) car_class_int = 0;
+    if(strcmp(car_class, "GREEN")) car_class_int = 1;
+    if(strcmp(car_class, "PREMIUM")) car_class_int = 2;
+
+    // verifiers
     if (id == 0)
         return;
-
-    int car_class_int = 0;
-    if(strcmp(car_class, "green")) car_class_int = 1;
-    if(strcmp(car_class, "premium")) car_class_int = 2;
-    // Send the info
+    if(car_class_int == -1) return;
+    
     temp->id = id;
     temp->name = strdup(name);
     temp->birth_day = birth_dayst;
