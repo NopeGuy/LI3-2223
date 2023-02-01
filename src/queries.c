@@ -101,7 +101,7 @@ gboolean conta_viagens(gpointer key, gpointer value, gpointer data) {
 
     if(trip_iterator->id != -1){
         if (getRidesDriver(ride) == trip_iterator->id) {
-            float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+            double tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
             trip_iterator->price_sum += tripPrice;
             trip_iterator->total_drives++;
             trip_iterator->ranking_sum += getRidesScoreUser(ride);
@@ -109,7 +109,7 @@ gboolean conta_viagens(gpointer key, gpointer value, gpointer data) {
     } else {
 
         if (strcmp(getRidesUser(ride), trip_iterator->username) == 0) {
-            float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
+            double tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
             trip_iterator->price_sum += tripPrice;
             trip_iterator->total_drives++;
             trip_iterator->ranking_sum += getRidesScoreUser(ride);
@@ -217,6 +217,7 @@ struct cities_iter
     CATALOGO cat;
     char* city;
     double preco_total;
+    int n_cidades;
 };
 typedef struct cities_iter* CITIES_ITER;
 
@@ -229,6 +230,7 @@ gboolean city_iter(gpointer key, gpointer value, gpointer data) {
     if (strcmp(getRidesCity(ride), cities_iter->city) == 0) {
         float tripPrice = getTripPrice(driversTree, getRidesDriver(ride), getRidesDistance(ride));
         cities_iter->preco_total += tripPrice;
+        cities_iter->n_cidades++;
     }
     return FALSE;
 }
@@ -239,13 +241,20 @@ void medianPrice(CATALOGO cat, char* cidade, FILE *f)
     CITIES_ITER cities_iter = malloc(sizeof(struct cities_iter));
     cities_iter->cat = cat;
     cities_iter->city = cidade;
+    cities_iter->preco_total = 0.000;
+    cities_iter->n_cidades = 0;
 
     g_tree_foreach(getRides(cat), city_iter,cities_iter);
 
-    double preco_medio = cities_iter->preco_total / g_tree_nnodes(getRides(cat));
+    if(cities_iter->n_cidades == 0) {
+        fprintf(f, "%s", "Cidade nao encontrada.");
+        return;
+    }
+    else{
+    double preco_medio = cities_iter->preco_total / cities_iter->n_cidades;
 
     fprintf(f, "%0.3f", preco_medio);
-
+    }
     free(cities_iter);
    
 
