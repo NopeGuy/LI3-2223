@@ -54,9 +54,10 @@ int main(int argc, char const *argv[])
     strcat(fileDrivers, "entrada/drivers.csv");
     strcat(fileRides, "entrada/rides.csv");
 
+    loadRides(fileRides, cat);  
     loadUsers(fileUsers, cat);
     loadDrivers(fileDrivers, cat);
-    loadRides(fileRides, cat);
+
 
 
     //correr commands
