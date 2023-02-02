@@ -10,6 +10,7 @@
 #include "../includes/queries.h"
 #include "../includes/catalogo.h"
 #include "../includes/constructors.h"
+#include "../includes/stats.h"
 
 char *fileUsers;
 char *fileDrivers;
@@ -24,7 +25,10 @@ int main(int argc, char const *argv[])
     int max_len = 500;
     char *buff = malloc(sizeof(char) * 500);
     int query = 1;
-
+    //array com os top50 drivers
+    STATSDRIVERS d[50];
+    //array top50 users
+    u[50]
 
     CATALOGO cat = iniciarCatalogo();
 
