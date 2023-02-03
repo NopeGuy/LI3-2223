@@ -19,7 +19,7 @@ struct stat2
     int id;
     int total_rides;
     double total_a;
-    GList cidades_stats;
+    GList *cidades_stats;
 };
 
 struct stat3
@@ -36,16 +36,6 @@ int getId(STATSDRIVERS d)
 int getTotalr(STATSDRIVERS d)
 {
     return d->total_rides;
-}
-
-int getTotalRidesCity(STATSCITY c)
-{
-    return c->total_rides;
-}
-
-double getTotalACity(STATSCITY c)
-{
-    return c->total_a;
 }
 
 void setTotalr(STATSDRIVERS d, int tr)
@@ -96,6 +86,7 @@ gint compare_statDrivers(gconstpointer a, gconstpointer b)
     }
     return 0;
 }
+
 gint compare_statUsers(gconstpointer a, gconstpointer b)
 {
     STATSUSERS node_a = (STATSUSERS)a;
@@ -108,64 +99,13 @@ gint compare_statUsers(gconstpointer a, gconstpointer b)
     return (strcmp(node_a->name, node_b->name));
 }
 
-// gboolean comparecities(gpointer value, gpointer citycmp)
-// {
-//     STATSCITY city = (STATSCITY)value;
-//     char *citycmp = (char)citycmp;
-//     if (stcmp(value->city, citycmp))
-//     {
+// gboolean comparecities(gpointer value, gpointer citycmp){
+//     STATSCITY city= (STATSCITY)value;
+//     char*citycmp = (char) citycmp;
+//     if(stcmp(value->city,citycmp)){
 //         return TRUE;
 //     }
 //     return FALSE;
-// }
-
-// gboolean comparecities(gpointer value, gpointer citycmp)
-// {
-//     STATSCITY city = (STATSCITY)value;
-//     char *citycmp = (char)citycmp;
-//     if (stcmp(value->city, citycmp))
-//     {
-//         return TRUE;
-//     }
-//     return FALSE;
-// }
-
-// void buildEstatDriver(ESTAT estat, int driver, double score, char *city)
-// {
-//     GTree *t = NULL;
-//     t = getEstatDrivers(estat);
-//     STATSDRIVERS tempd = malloc(sizeof(struct stat2));
-//     STATSCITY tempc = malloc(sizeof(struct statcity));
-//     tempd->id = driver;
-//     tempd->total_a = score;
-//     tempd->total_rides = 0;
-//     tempc->total_a = score;
-//     tempc->city = strdup(city);
-//     if (g_tree_lookup(t, driver) != NULL)
-//     {
-//         tempd = g_tree_lookup(t, driver);
-//         tempd->total_a += score;
-//         tempd->total_rides += 1;
-//         GList *tmp = g_list_find_custom(tempd->cidades_stats, tempc->city, comparecities);
-//         if (tmp != NULL)
-//         {
-//             tmp->data->total_rides += 1;
-//             tmp->data->total_a += score;
-//         }
-//         else
-//         {
-//             g_list_append(tempd->cidades_stats, tempc);
-//         }
-//         g_tree_insert(t, tempd->id, tempd);
-//     }
-//     else
-//     {
-//         g_list_append(tempd->cidades_stats, tempc);
-//         g_tree_insert(t, tempd->id, tempd);
-//     }
-
-//     free(tempd);
-//     free(tempc);
 // }
 
 buildEstatUser(ESTAT estat, char *user, double distance)
@@ -187,15 +127,48 @@ buildEstatUser(ESTAT estat, char *user, double distance)
     if (g_tree_lookup(t, temp->name) != NULL)
     {
         temp->dist = temp->dist + distance;
-        printf("temp->name: %s \n", temp->name);
-        printf("temp->dist: %f \n", temp->dist);
+        // printf("temp->name: %s \n", temp->name);
+        // printf("temp->dist: %f \n", temp->dist);
         g_tree_replace_node(t, temp->name, temp);
     }
     else
     {
-        printf("temp->name: %s \n", temp->name);
-        printf("temp->dist: %f \n\n", temp->dist);
+        // printf("temp->name: %s \n", temp->name);
+        // printf("temp->dist: %f \n\n", temp->dist);
         g_tree_insert(t, temp->name, temp);
     }
     free(temp);
 }
+
+// void buildEstatDriver(ESTAT estat, int driver, double score, char* city){
+//     GTree* t = NULL;
+//     t = getEstatDrivers(estat);
+//     STATSDRIVERS tempd = malloc(sizeof(struct stat2));
+//     STATSCITY tempc = malloc(sizeof(struct statcity));
+//     tempd->id = driver;
+//     tempd->total_a = score;
+//     tempd->total_rides = 0;
+//     tempc->total_a = score;
+//     tempc->city = strdup(city);
+//     if(g_tree_lookup(t, driver) != NULL){
+//         tempd = g_tree_lookup(t, driver);
+//         tempd->total_a += score;
+//         tempd->total_rides += 1;
+//         GList* tmp = g_list_find_custom(tempd->cidades_stats, tempc->city, comparecities);
+//         if(tmp != NULL){
+//             tmp->data->total_rides += 1;
+//             tmp->data->total_a += score;
+//         }else{
+//             g_list_append(tempd->cidades_stats, tempc);
+//         }
+//         g_tree_insert(t,tempd->id,tempd);
+//     }
+//     else{
+//         g_list_append(tempd->cidades_stats, tempc);
+//         g_tree_insert(t,tempd->id,tempd);
+//     }
+
+//     free(tempd);
+//     free(tempc);
+
+// }
