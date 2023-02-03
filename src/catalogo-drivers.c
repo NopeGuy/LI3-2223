@@ -9,6 +9,7 @@
 #include "../includes/catalogo-drivers.h"
 #include "../includes/catalogo.h"
 #include "../includes/constructors.h"
+#include "../includes/stats.h"
 
 struct drivers
 {
@@ -73,7 +74,7 @@ char getDriversAccountStatus(DRIVERS c)
 
 //Build and Load
 
-void buildDrivers(char *line, int lineNumber, CATALOGO cat)
+void buildDrivers(char *line, int lineNumber, CATALOGO cat, ESTAT estat)
 {
     GTree *t = NULL;
     t = getDrivers(cat);
@@ -119,7 +120,7 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     g_tree_insert(t, GINT_TO_POINTER(id), temp);
 }
 
-void loadDrivers(char *filename, CATALOGO cat)
+void loadDrivers(char *filename, CATALOGO cat, ESTAT estat)
 {
     int max_len = 2000;
     char buff[max_len];
@@ -134,7 +135,7 @@ void loadDrivers(char *filename, CATALOGO cat)
     int line = 0;
     while (fgets(buff, max_len, f))
     {
-        buildDrivers(buff, line, cat);
+        buildDrivers(buff, line, cat, estat);
         line++;
     }
     fclose(f);

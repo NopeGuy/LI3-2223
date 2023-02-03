@@ -157,7 +157,7 @@ void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUser
     }
 
     loadRides(fileRides, cat);
-    loadUsers(fileUsers, cat);
+    loadUsers(fileUsers, cat, estat);
     loadDrivers(fileDrivers, cat);
     GTree *rides = getRides(cat);
     GTree *users = getUsers(cat);
@@ -167,8 +167,6 @@ void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUser
 
     // quack
     //talvez chamar buildTopDrivers na buildRides
-    buildTopDrivers(estat, rides);
-    // loadTopDistanceUsers(estat);
     GTree *topDrivers = getTopDrivers(estat);
     GTree *topDistanceUsers = getTopDistanceUsers(estat);
 
@@ -177,13 +175,13 @@ void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUser
     while (fgets(buff, max_len, file))
     {
         printf("A executar a query %d...\n", query);
-        executeQueries(buff, cat, query);
+        executeQueries(buff, cat, estat, query);
         query++;
     }
     fclose(file);
 }
 
-void executeQueries(char *line, CATALOGO cat, int query)
+void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
 {
     char *id = strsep(&line, " ");
     int idInt = atoi(id);
