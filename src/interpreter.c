@@ -159,8 +159,8 @@ void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUser
     loadRides(fileRides, cat);
     GTree *rides = getRides(cat);
 
-    loadUsers(fileUsers, cat, estat, rides);
-    loadDrivers(fileDrivers, cat, estat, rides);
+    loadUsers(fileUsers, cat, estat);
+    loadDrivers(fileDrivers, cat, estat);
     GTree *users = getUsers(cat);
     GTree *drivers = getDrivers(cat);
 

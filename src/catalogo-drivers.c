@@ -74,7 +74,7 @@ char getDriversAccountStatus(DRIVERS c)
 
 //Build and Load
 
-void buildDrivers(char *line, int lineNumber, CATALOGO cat, ESTAT estat, GTree* rides)
+void buildDrivers(char *line, int lineNumber, CATALOGO cat, ESTAT estat)
 {
     GTree *t = NULL;
     t = getDrivers(cat);
@@ -118,10 +118,9 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat, ESTAT estat, GTree* 
     temp->account_status = account_status;
 
     g_tree_insert(t, GINT_TO_POINTER(id), temp);
-    buildEstatDrivers(estat, rides, id);
 }
 
-void loadDrivers(char *filename, CATALOGO cat, ESTAT estat, GTree* rides)
+void loadDrivers(char *filename, CATALOGO cat, ESTAT estat)
 {
     //receber rides ja feita
     int max_len = 2000;
@@ -137,7 +136,7 @@ void loadDrivers(char *filename, CATALOGO cat, ESTAT estat, GTree* rides)
     int line = 0;
     while (fgets(buff, max_len, f))
     {
-        buildDrivers(buff, line, cat, estat, rides);
+        buildDrivers(buff, line, cat, estat);
         line++;
     }
     fclose(f);

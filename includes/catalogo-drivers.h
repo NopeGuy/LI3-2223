@@ -20,5 +20,5 @@ struct tm getDriversAccCreation(DRIVERS c);
 char getDriversAccountStatus(DRIVERS c);
 
 
-void buildDrivers(char* line, int lineNumber, CATALOGO cat, ESTAT estat, GTree* rides);
-void loadDrivers(char* filename, CATALOGO cat, ESTAT estat, GTree* rides);
+void buildDrivers(char* line, int lineNumber, CATALOGO cat, ESTAT estat);
+void loadDrivers(char* filename, CATALOGO cat, ESTAT estat);

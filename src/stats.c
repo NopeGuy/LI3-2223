@@ -55,24 +55,3 @@ void setDist(STATSUSERS u, double d){
     u->dist = d;
 }
 
-// build and load estat
-// quack
-void buildEstatDrivers(ESTAT estat, GTree* rides, int id){
-    //pegar valores do id na rides com forEach
-    //somar as viagens no iterador
-    //inserir na estat
-    printf("buildEstatDrivers\n");
-    GTree* t = NULL;
-    t = getTopDrivers(estat);
-    STATSDRIVERS temp = malloc(sizeof(struct stat2));
-    temp->id = id;
-    temp->total_rides = 0;
-    temp->total_a = 0;
-    temp->city = " ";
-
-    //fazer funçao
-    //g_tree_foreach(rides, (GTraverseFunc)addRides, temp);
-
-    g_tree_insert(t, temp->id, temp);
-}
-
