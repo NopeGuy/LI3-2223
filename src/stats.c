@@ -6,12 +6,19 @@
 #include <glib.h>
 #include "../includes/catalogo.h"
 #include "../includes/stats.h"
+#include "../includes/main.h"
+
+struct statcity{
+    int total_rides;
+    double total_a;
+    char* city;
+};
 
 struct stat2{
     int id;
     int total_rides;
+    GList* cidades_stats; 
     double total_a;
-    char* city;
 };
 
 struct stat3{
@@ -19,8 +26,24 @@ struct stat3{
     double dist;
 };
 
+int getTotalRidesCity(STATSCITY c){
+    return c->total_rides;
+}
+
+double getTotalACity(STATSCITY c){
+    return c->total_a;
+}
+
+char* getCity(STATSCITY c){
+    return strdup(c->city);
+}
+
 int getId(STATSDRIVERS d){
     return d->id;
+}
+
+void setDist(STATSDRIVERS d, int id){
+    d->id = id;
 }
 
 int getTotalr(STATSDRIVERS d){
@@ -85,4 +108,45 @@ gint compare_statUsers(gconstpointer a, gconstpointer b)
     return (strcmp (node_a->name, node_b->name));
 }
 
+gboolean comparecities(gpointer value, gpointer citycmp){
+    STATSCITY city= (STATSCITY)value;
+    char*citycmp = (char) citycmp;
+    if(stcmp(value->city,citycmp)){
+        return TRUE;
+    }
+    return FALSE;
+}
 
+void buildEstatDriver(ESTAT estat, int driver, double score, char* city){
+    GTree* t = NULL;
+    t = getRides(cat);
+    STATSDRIVERS tempd = malloc(sizeof(struct stat2));
+    STATSCITY tempc = malloc(sizeof(struct statcity));
+    tempd->driver = driver;
+    tempd->total_a = score;
+    tempd->total_rides = 0;
+    tempc->driver = driver;
+    tempc->total_a = score;
+    tempc->city = strdup(city);
+    if(g_tree_lookup(t, driver) != NULL){
+        tempd = g_tree_lookup(t, driver);
+        tempd->total_a += score;
+        tempd->total_rides += 1
+        GList* tmp = g_list_find_custom(tempd->cidades_stats, tempc->city, comparecities)
+        if(tmp != NULL){
+            tmp->data->total_rides += 1;
+            tmp->data->total_a += tempc->score;
+        }else{
+            g_list_append(tempd->cidades_stats, tempc);
+        }
+        g_tree_insert(t,tempd->driver,tempd);
+    }
+    else{
+        g_list_append(tempd->cidades_stats, tempc);
+        g_tree_insert(t,tempd->driver,tempd);
+    }
+
+    free(tempd);
+    free(tempc);
+
+}
