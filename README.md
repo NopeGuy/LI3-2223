@@ -6,4 +6,8 @@ To run :
 
 make all
 
-./Run ./entrada/
+./Run ./entrada/commands.txt
+
+To be soon added
+
+./Run
