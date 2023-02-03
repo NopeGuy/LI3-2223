@@ -106,6 +106,9 @@ temp->lnNumber = nLinha;
 //inserir na glib
 
 g_tree_insert(t, GINT_TO_POINTER(id_temp), temp);
+
+//buildEstatDriver(estat, driver_temp, score_driver_temp, city_temp);
+buildEstatUser(estat, user_temp, distance_temp);
 }
 
 void loadRides(char* filename, CATALOGO cat, ESTAT estat){
@@ -122,6 +125,8 @@ void loadRides(char* filename, CATALOGO cat, ESTAT estat){
         buildRides(buff,cat, estat, line);
         line++;
     }
+
+
     fclose(f);
 }
 
