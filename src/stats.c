@@ -57,10 +57,11 @@ void setDist(STATSUSERS u, double d){
 
 // build and load estat
 // quack
-void buildTopDrivers(ESTAT estat, GTree* rides, int id){
+void buildEstatDrivers(ESTAT estat, GTree* rides, int id){
     //pegar valores do id na rides com forEach
     //somar as viagens no iterador
     //inserir na estat
+    printf("buildEstatDrivers\n");
     GTree* t = NULL;
     t = getTopDrivers(estat);
     STATSDRIVERS temp = malloc(sizeof(struct stat2));

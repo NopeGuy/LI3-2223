@@ -16,3 +16,5 @@ void setTotala(STATSDRIVERS d, double ta);
 char* getCity(STATSDRIVERS d);
 double getDist(STATSUSERS u);
 void setDist(STATSUSERS u, double d);
+
+void buildEstatDrivers(ESTAT estat, GTree* rides, int id);

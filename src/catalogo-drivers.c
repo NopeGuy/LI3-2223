@@ -118,7 +118,7 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat, ESTAT estat, GTree* 
     temp->account_status = account_status;
 
     g_tree_insert(t, GINT_TO_POINTER(id), temp);
-    buildTopDrivers(estat, rides, id);
+    buildEstatDrivers(estat, rides, id);
 }
 
 void loadDrivers(char *filename, CATALOGO cat, ESTAT estat, GTree* rides)
