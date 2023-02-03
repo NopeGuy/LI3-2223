@@ -22,8 +22,8 @@ int main(int argc, char const *argv[])
     GTree *drivers = g_tree_new(inteiros);
     GTree *rides = g_tree_new(inteiros);
     //mudar depois iterador v
-    // GTree *topDrivers = g_tree_new(inteiros);
-    // GTree *topDistUsers = g_tree_new(CompareNames);
+    GTree *topDrivers = g_tree_new(inteiros);
+    GTree *topDistUsers = g_tree_new(CompareNames);
 
     int max_len = 500;
     char *buff = malloc(sizeof(char) * 500);
@@ -34,8 +34,8 @@ int main(int argc, char const *argv[])
     setUsers(cat, users);
     setDrivers(cat, drivers);
     setRides(cat, rides);
-    // setTopDrivers(estat, topDrivers);
-    // setTopDistanceUsers(estat, topDistUsers);
+    setTopDrivers(estat, topDrivers);
+    setTopDistanceUsers(estat, topDistUsers);
 
 
     char *commandFile = "./entrada/commands.txt";
