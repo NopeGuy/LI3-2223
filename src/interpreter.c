@@ -156,15 +156,13 @@ void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUser
         return 0;
     }
 
-    loadRides(fileRides, cat);
-    GTree *rides = getRides(cat);
 
     loadUsers(fileUsers, cat, estat);
     loadDrivers(fileDrivers, cat, estat);
     GTree *users = getUsers(cat);
     GTree *drivers = getDrivers(cat);
-
-
+    loadRides(fileRides, cat, estat);
+    GTree *rides = getRides(cat);
 
     // quack
     //talvez chamar buildTopDrivers na buildRides

@@ -70,7 +70,7 @@ char *getRidesComment(RIDES a){
 }
 
 
-void buildRides (char* line, CATALOGO cat, int nLinha){
+void buildRides (char* line, CATALOGO cat, ESTAT estat, int nLinha){
 GTree* t = NULL;
 t = getRides(cat);                          //por fazer
 char* buffR = line;
@@ -108,7 +108,7 @@ temp->lnNumber = nLinha;
 g_tree_insert(t, GINT_TO_POINTER(id_temp), temp);
 }
 
-void loadRides(char* filename, CATALOGO cat){
+void loadRides(char* filename, CATALOGO cat, ESTAT estat){
     int max_len = 2000;
     char buff[max_len];
     FILE *f = fopen(filename, "r");
@@ -119,7 +119,7 @@ void loadRides(char* filename, CATALOGO cat){
     fgets(buff,max_len,f); //primeira linha
     int line=0;
     while(fgets(buff,max_len, f)){
-        buildRides(buff,cat,line);
+        buildRides(buff,cat, estat, line);
         line++;
     }
     fclose(f);
