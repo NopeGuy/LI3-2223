@@ -9,7 +9,6 @@
 #include "../includes/constructors.h"
 #include "../includes/catalogo.h"        //ver isto
 #include "../includes/main.h"
-#include "../includes/stats.h"
 
 struct user {
 	char* username;
@@ -23,7 +22,6 @@ struct user {
 	// a for active i for inactive
 	char account_status;
 };
-
 
 char *getUsername(USER u){
     return u->username;
@@ -63,7 +61,8 @@ void buildUsers(char* line, CATALOGO cat) {
 
     char* buff2 = line;
     USER temp = malloc(sizeof(struct user));
-    //STATSUSER s = malloc(sizeof(struct statUsers));
+
+
     char* username = strsep(&buff2, ";\n");
     if(username == NULL) return;
     char* name = strsep(&buff2, ";\n");
@@ -105,7 +104,6 @@ void buildUsers(char* line, CATALOGO cat) {
     temp->account_creation = account_creation;
     temp->pay_method = pay_method; 
     temp->account_status = account_status;
-    //Ver se só é necessário ter já a loadDrivers executada (na main)
 
     g_tree_insert(t, temp->username, temp);
 }
@@ -126,7 +124,6 @@ void loadUsers(char *fileName, CATALOGO cat) {
     while(fgets(buff, max_len, file))
     {
         buildUsers(buff, cat);
-        //void buildSat
     }
 
     fclose(file);

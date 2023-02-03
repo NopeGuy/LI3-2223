@@ -12,7 +12,6 @@
 #include "../includes/catalogo-drivers.h"
 #include "../includes/constructors.h"
 #include "../includes/catalogo.h"
-#include "../includes/stats.h"
 
 //structs auxiliares
 
@@ -33,7 +32,6 @@ gint CompareNames (gconstpointer name1, gconstpointer name2)
 {
     return (strcmp (name1, name2));
 }
-
 
 //funcoes_aux Query4
 
@@ -252,11 +250,17 @@ void medianPrice(CATALOGO cat, char* cidade, FILE *f)
         fprintf(f, "%d", "0\n");
         return;
     }
+    else{
     double preco_medio = cities_iter->preco_total / cities_iter->n_cidades;
+    fprintf(f,"n_cidades:%d\n", cities_iter->n_cidades);
+    fprintf(f,"preco_total:%0.3f\n",cities_iter->preco_total);
     fprintf(f, "resultado:%0.3f", preco_medio);
+    }
     free(cities_iter);
    
+
 }
+
 
 //Query 5
 
@@ -297,10 +301,13 @@ void medianPriceBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f)
     median_iter->nnodes = 0;
 
     g_tree_foreach(getRides(cat), median_between_iter,median_iter);
-    if(median_iter->nnodes == 0) {
+
+    if (median_iter->nnodes == 0)
+    {
         fprintf(f, "%d", "0\n");
         return;
     }
+    
     double preco_medio = median_iter->preco_total / median_iter->nnodes;
 
     fprintf(f, "%0.3f", preco_medio);
@@ -308,28 +315,31 @@ void medianPriceBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f)
     free(median_iter);
 }
 
-//Query 6
+// Query 6
 
 struct dist_city_iter_between
 {
     GTree *rides;
-    char* city;
+    char *city;
     time_t date1;
     time_t date2;
     double dist_total;
     int n;
 };
-typedef struct dist_city_iter_between* CITY_BETWEEN_ITER;
+typedef struct dist_city_iter_between *CITY_BETWEEN_ITER;
 
-gboolean median_dist_iter(gpointer key, gpointer value, gpointer data) {
-    CITY_BETWEEN_ITER city_between_iter = (CITY_BETWEEN_ITER) data;
-    RIDES ride = (RIDES) value;
-    if(strcmp(getRidesCity(ride), city_between_iter->city) == 0){
-    struct tm date_trip = getRidesDate(ride);
-    time_t t = mktime(&date_trip);
-    time_t date1 = city_between_iter->date1;
-    time_t date2 = city_between_iter->date2;
-        if(difftime(t,date1) >= 0 && difftime(date2,t) >= 0){
+gboolean median_dist_iter(gpointer key, gpointer value, gpointer data)
+{
+    CITY_BETWEEN_ITER city_between_iter = (CITY_BETWEEN_ITER)data;
+    RIDES ride = (RIDES)value;
+    if (strcmp(getRidesCity(ride), city_between_iter->city) == 0)
+    {
+        struct tm date_trip = getRidesDate(ride);
+        time_t t = mktime(&date_trip);
+        time_t date1 = city_between_iter->date1;
+        time_t date2 = city_between_iter->date2;
+        if (difftime(t, date1) >= 0 && difftime(date2, t) >= 0)
+        {
             city_between_iter->n++;
             city_between_iter->dist_total += getRidesDistance(ride);
         }
@@ -337,7 +347,8 @@ gboolean median_dist_iter(gpointer key, gpointer value, gpointer data) {
     return FALSE;
 }
 
-void medianDistBetween(GTree *rides, char* city, struct tm date1, struct tm date2, FILE *f){
+void medianDistBetween(GTree *rides, char *city, struct tm date1, struct tm date2, FILE *f)
+{
     CITY_BETWEEN_ITER city_between_iter = malloc(sizeof(struct dist_city_iter_between));
     time_t t1 = mktime(&date1);
     time_t t2 = mktime(&date2);
@@ -348,8 +359,9 @@ void medianDistBetween(GTree *rides, char* city, struct tm date1, struct tm date
     city_between_iter->dist_total = 0;
     city_between_iter->n = 0;
 
-    g_tree_foreach(rides, median_dist_iter,city_between_iter);
-    if(city_between_iter->n == 0){
+    g_tree_foreach(rides, median_dist_iter, city_between_iter);
+    if (city_between_iter->n == 0)
+    {
         fprintf(f, "%d", "0\n");
         return;
     }

@@ -8,8 +8,10 @@
 typedef struct statcity* STATSCITY;
 typedef struct stat2* STATSDRIVERS;
 typedef struct stat3* STATSUSERS;
+
 gint compare_statDrivers(gconstpointer a, gconstpointer b);
 gint compare_statUsers(gconstpointer a, gconstpointer b);
+
 double calcula_media(int total_r, double total_a);
 int getId(STATSDRIVERS d);
 int getTotalr(STATSDRIVERS d);
@@ -19,5 +21,5 @@ void setTotala(STATSDRIVERS d, double ta);
 char* getCity(STATSDRIVERS d);
 double getDist(STATSUSERS u);
 void setDist(STATSUSERS u, double d);
-gboolean comparecities(gpointer value, gpointer citycmp);
-void buildEstatDrivers(ESTAT estat, GTree* rides, int id);
+
+buildEstatUser(estat, user_temp, distance_temp);

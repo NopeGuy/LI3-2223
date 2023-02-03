@@ -50,7 +50,7 @@ GTree *getTopDrivers(ESTAT estat)
 }
 GTree *getTopDistanceUsers(ESTAT estat)
 {
-    return estat->topDrivers;
+    return estat->topDistanceUsers;
 }
 
 void setUsers(CATALOGO cat, GTree* t){

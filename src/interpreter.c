@@ -212,19 +212,17 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
         else
         {
             if (username != NULL)
-            profilefromUsername(cat, username, f);
+                profilefromUsername(cat, username, f);
         }
 
         break;
     case 2:
         // Query2/ N top condutores com maior avaliação média
         topN = atoi(strsep(&line, " "));
-        // Query2();
+        // topDrivers(topN);
         break;
 
     case 3:
-        // Query3/ N top utilizadores com maior distância percorrida
-        topN = atoi(strsep(&line, " "));
         // Query3();
         break;
 
@@ -241,10 +239,7 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
         break;
 
     case 6:
-        cidade = strsep(&line, " ");
-        data1 = verifyTime(strsep(&line, " "));
-        data2 = verifyTime(strsep(&line, " "));
-        medianDistBetween(getRides(cat), cidade,data1,data2, f);
+        // Query6();
         break;
 
     case 7:
