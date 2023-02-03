@@ -239,7 +239,10 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
         break;
 
     case 6:
-        // Query6();
+        cidade = strsep(&line, " ");
+        data1 = verifyTime(strsep(&line, " "));
+        data2 = verifyTime(strsep(&line, " "));
+        medianDistBetween(getRides(cat), cidade, data1, data2, f);
         break;
 
     case 7:
