@@ -7,6 +7,8 @@
 
 typedef struct stat2* STATSDRIVERS;
 typedef struct stat3* STATSUSERS;
+gint compare_statDrivers(gconstpointer a, gconstpointer b);
+gint compare_statUsers(gconstpointer a, gconstpointer b);
 double calcula_media(int total_r, double total_a);
 int getId(STATSDRIVERS d);
 int getTotalr(STATSDRIVERS d);
