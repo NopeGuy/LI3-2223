@@ -54,22 +54,3 @@ double getDist(STATSUSERS u){
 void setDist(STATSUSERS u, double d){
     u->dist = d;
 }
-
-// build and load estat
-// quack
-void buildTopDrivers(ESTAT estat, GTree* rides)
-{
-    //input tem de receber de dentro da rides os valores que queremos e somar caso
-    //o id do driver seja igual
-    GTree *t = NULL;
-    t = getTopDrivers(estat);
-    STATSDRIVERS temp = malloc(sizeof(struct stat2));
-
-
-    //int id = iteradorRides(rides);
-    
-    //temp->id = strdup(id);
-
-    g_tree_insert(t, temp->id, temp);
-}
-
