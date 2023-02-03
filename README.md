@@ -7,5 +7,7 @@ To run :
 make all
 
 ./Run ./entrada/commands.txt
+
 To be soon added
+
 ./Run
