@@ -5,6 +5,7 @@
 #include <time.h>
 #include <glib.h>
 
+typedef struct statcity* STATSCITY;
 typedef struct stat2* STATSDRIVERS;
 typedef struct stat3* STATSUSERS;
 gint compare_statDrivers(gconstpointer a, gconstpointer b);
@@ -18,5 +19,5 @@ void setTotala(STATSDRIVERS d, double ta);
 char* getCity(STATSDRIVERS d);
 double getDist(STATSUSERS u);
 void setDist(STATSUSERS u, double d);
-
+gboolean comparecities(gpointer value, gpointer citycmp);
 void buildEstatDrivers(ESTAT estat, GTree* rides, int id);
