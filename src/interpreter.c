@@ -150,26 +150,28 @@ void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUser
     char buff[max_len];
     char *commandFile = filename;
     FILE *file = fopen(commandFile, "r");
-
-    loadUsers(fileUsers, cat);
-    loadDrivers(fileDrivers, cat);
-    loadRides(fileRides, cat);
-    //quack
-    //loadTopDrivers(estat);
-    //loadTopDistanceUsers(estat);
-    //
-
     if (file == NULL)
     {
         printf("Ficheiro não encontrado, introduza ficheiro em: ./entrada/commands.txt e escreva o PATH completo\n");
         return 0;
     }
 
+    loadRides(fileRides, cat);
+    loadUsers(fileUsers, cat);
+    loadDrivers(fileDrivers, cat);
+    GTree *rides = getRides(cat);
     GTree *users = getUsers(cat);
     GTree *drivers = getDrivers(cat);
-    GTree *rides = getRides(cat);
+
+
+
+    // quack
+    buildTopDrivers(estat, rides);
+    // loadTopDistanceUsers(estat);
     GTree *topDrivers = getTopDrivers(estat);
     GTree *topDistanceUsers = getTopDistanceUsers(estat);
+
+
     // correr commands
     while (fgets(buff, max_len, file))
     {

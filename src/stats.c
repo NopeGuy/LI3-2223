@@ -4,16 +4,17 @@
 #include <string.h>
 #include <time.h>
 #include <glib.h>
+#include "../includes/catalogo.h"
 #include "../includes/stats.h"
 
-struct statd{
+struct stat2{
     int id;
     int total_rides;
     double total_a;
     char* city;
 };
 
-struct statu{
+struct stat3{
     char* name;
     double dist;
 };
@@ -53,3 +54,21 @@ double getDist(STATSUSERS u){
 void setDist(STATSUSERS u, double d){
     u->dist = d;
 }
+
+// build and load estat
+// quack
+
+void buildTopDrivers(ESTAT estat, GTree* rides)
+{
+    GTree *t = NULL;
+    t = getTopDrivers(estat);
+    STATSDRIVERS temp = malloc(sizeof(struct stat2));
+
+
+    //int id = iteradorRides(rides);
+    
+    //temp->id = strdup(id);
+
+    g_tree_insert(t, temp->id, temp);
+}
+

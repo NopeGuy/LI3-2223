@@ -5,8 +5,8 @@
 #include <time.h>
 #include <glib.h>
 
-typedef struct statd* STATSDRIVERS;
-typedef struct statu* STATSUSERS;
+typedef struct stat2* STATSDRIVERS;
+typedef struct stat3* STATSUSERS;
 double calcula_media(int total_r, double total_a);
 int getId(STATSDRIVERS d);
 int getTotalr(STATSDRIVERS d);
@@ -16,3 +16,5 @@ void setTotala(STATSDRIVERS d, double ta);
 char* getCity(STATSDRIVERS d);
 double getDist(STATSUSERS u);
 void setDist(STATSUSERS u, double d);
+
+void buildTopDrivers(ESTAT estat, GTree* rides);
