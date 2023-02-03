@@ -55,3 +55,34 @@ void setDist(STATSUSERS u, double d){
     u->dist = d;
 }
 
+gint compare_statDrivers(gconstpointer a, gconstpointer b)
+{
+    STATSDRIVERS node_a = (STATSDRIVERS)a;
+    STATSDRIVERS node_b = (STATSDRIVERS)b;
+
+    if (node_a->total_a < node_b->total_a)
+        return -1;
+    else if (node_a->total_a > node_b->total_a)
+        return 1;
+    else{ //se as avaliacoes forem iguais, ordena por ordem crescente de id
+            if (node_a->id < node_b->id)  
+                return -1;
+            else if (node_a->id > node_b->id)
+                return 1;
+        }
+    return 0;
+}
+
+gint compare_statUsers(gconstpointer a, gconstpointer b)
+{
+    STATSUSERS node_a = (STATSUSERS)a;
+    STATSUSERS node_b = (STATSUSERS)b;
+
+    if (node_a->dist < node_b->dist)
+        return -1;
+    else if (node_a->dist > node_b->dist)
+        return 1;
+    return (strcmp (node_a->name, node_b->name));
+}
+
+
