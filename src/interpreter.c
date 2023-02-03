@@ -166,6 +166,7 @@ void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUser
 
 
     // quack
+    //talvez chamar buildTopDrivers na buildRides
     buildTopDrivers(estat, rides);
     // loadTopDistanceUsers(estat);
     GTree *topDrivers = getTopDrivers(estat);
