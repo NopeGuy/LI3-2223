@@ -6,6 +6,8 @@
 #include <ctype.h>
 #include "../includes/queries.h"
 #include "../includes/constructors.h"
+#include "../includes/stats.h"
+
 
 void interpreter(CATALOGO cat, int writeToFile, char *fileUsers, char *fileDrivers, char *fileRides)
 {
@@ -141,7 +143,7 @@ void interpreter(CATALOGO cat, int writeToFile, char *fileUsers, char *fileDrive
     }
 }
 
-void commandInterpreter(CATALOGO cat, char *filename, char *fileUsers, char *fileDrivers, char *fileRides)
+void commandInterpreter(CATALOGO cat,ESTAT estat, char *filename, char *fileUsers, char *fileDrivers, char *fileRides)
 {
     int max_len = 200;
     int query = 1;
@@ -152,6 +154,10 @@ void commandInterpreter(CATALOGO cat, char *filename, char *fileUsers, char *fil
     loadUsers(fileUsers, cat);
     loadDrivers(fileDrivers, cat);
     loadRides(fileRides, cat);
+    //quack
+    //loadTopDrivers(estat);
+    //loadTopDistanceUsers(estat);
+    //
 
     if (file == NULL)
     {
@@ -162,10 +168,11 @@ void commandInterpreter(CATALOGO cat, char *filename, char *fileUsers, char *fil
     GTree *users = getUsers(cat);
     GTree *drivers = getDrivers(cat);
     GTree *rides = getRides(cat);
+    GTree *topDrivers = getTopDrivers(estat);
+    GTree *topDistanceUsers = getTopDistanceUsers(estat);
     // correr commands
     while (fgets(buff, max_len, file))
     {
-        printf("%s \n", buff);
         printf("A executar a query %d...\n", query);
         executeQueries(buff, cat, query);
         query++;

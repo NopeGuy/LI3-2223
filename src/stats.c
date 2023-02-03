@@ -11,7 +11,7 @@ struct statd{
     int total_rides;
     double total_a;
     char* city;
-}
+};
 
 struct statu{
     char* name;
@@ -20,10 +20,6 @@ struct statu{
 
 int getId(STATSDRIVERS d){
     return d->id;
-}
-
-void setDist(STATSDRIVERS d, int id){
-    d->id = id;
 }
 
 int getTotalr(STATSDRIVERS d){

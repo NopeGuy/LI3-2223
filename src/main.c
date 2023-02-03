@@ -21,21 +21,21 @@ int main(int argc, char const *argv[])
     GTree *users = g_tree_new(CompareNames);
     GTree *drivers = g_tree_new(inteiros);
     GTree *rides = g_tree_new(inteiros);
+    //mudar depois iterador v
+    // GTree *topDrivers = g_tree_new(inteiros);
+    // GTree *topDistUsers = g_tree_new(CompareNames);
 
     int max_len = 500;
     char *buff = malloc(sizeof(char) * 500);
     int query = 1;
-    //array com os top50 drivers
-    STATSDRIVERS d[50];
-    //array top50 users
-    u[50]
-
     CATALOGO cat = iniciarCatalogo();
+    ESTAT estat = iniciarEstat();
 
     setUsers(cat, users);
     setDrivers(cat, drivers);
     setRides(cat, rides);
-
+    // setTopDrivers(estat, topDrivers);
+    // setTopDistanceUsers(estat, topDistUsers);
 
 
     char *commandFile = "./entrada/commands.txt";
@@ -58,20 +58,22 @@ int main(int argc, char const *argv[])
     strcat(fileDrivers, "entrada/drivers.csv");
     strcat(fileRides, "entrada/rides.csv");
 
-    loadRides(fileRides, cat);  
-    loadUsers(fileUsers, cat);
-    loadDrivers(fileDrivers, cat);
-
 
 
     //correr commands
-    while (fgets(buff, max_len, file))
+    if (argc == 1)
     {
-        printf("A executar a query %d...\n", query);
-        executeQueries(buff,cat,query);
-        query++;
+        interpreter(cat, 0, fileUsers, fileDrivers, fileRides);
     }
 
+    if (argc == 2)
+    {
+        commandInterpreter(cat, estat, argv[1], fileUsers, fileDrivers, fileRides);
+    }
+
+    if (strcmp(argv[0], "./testes") == 0)
+    {
+    }
 
     //unload
     fclose(file);
