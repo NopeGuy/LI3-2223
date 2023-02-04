@@ -19,7 +19,7 @@ char* profilefromUsername(CATALOGO cat,char*username, FILE* dest, int i);
 
 char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest, int i);
 
-int* topUsersDistance(int n, ESTAT estat);
+GSList* topUsersDistance(CATALOGO cat, ESTAT estat, int n, FILE *f, int i);
 
 void medianPriceBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f, int i);
 

@@ -338,6 +338,7 @@ void executeQueries2(CATALOGO cat, ESTAT estat, int query, char *inp1, char *inp
 
     case 3:
         // Query3();
+        // topUsersDistance();
         printf("\n\npress 1\n");
         scanf("%s", argggg);
         break;
@@ -377,6 +378,9 @@ void executeQueries2(CATALOGO cat, ESTAT estat, int query, char *inp1, char *inp
 
     case 9:
         // Query9();
+        data1 = verifyTime(inp1);
+        data2 = verifyTime(inp2);
+        tipBetween(cat, data1, data2, f, 1);
         break;
     }
 

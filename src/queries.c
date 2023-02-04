@@ -12,6 +12,7 @@
 #include "../includes/catalogo-drivers.h"
 #include "../includes/constructors.h"
 #include "../includes/catalogo.h"
+#include "../includes/stats.h"
 
 // structs auxiliares
 
@@ -226,16 +227,39 @@ char *profilefromID(CATALOGO cat, int id_condutor, FILE *dest, int i)
 }
 
 // Query 2
-// topDrivers(int topN)
-//{
-//  queryCharOut = numTypes(users);
-//  // char* writeToFile1 = malloc(sizeof(char)*200);
-//  // sprintf(writeToFile1, "%d", queryCharOut);
-//  strcat(fileName, queryToString);
-//  strcat(fileName, "_output.txt");
-//  saveToFile(fileName, queryCharOut, firstTime);
+// gint compare_by_distance(gconstpointer a, gconstpointer b, gpointer user_data)
+// {
+//     STATSUSERS nd1 = (STATSUSERS)a;
+//     STATSUSERS nd2 = (STATSUSERS)b;
 
-//}
+//     return (nd2->dist - nd1->dist) > 0 ? 1 : -1;
+// }
+
+// GSList *topUsersDistance(CATALOGO cat, ESTAT estat, int n, FILE *f, int it)
+// {
+//     GTree *tree1 = NULL;
+//     tree1 = getTopDistanceUsers(estat);
+//     gint x = (gint)n;
+//     GSList *top_n = NULL;
+
+//     g_tree_foreach(tree1, (GTraverseFunc)g_slist_prepend, &top_n);
+//     top_n = g_slist_sort_with_data(top_n, compare_by_distance, NULL);
+
+//     gint count = 0;
+//     GSList *node = top_n;
+//     while (node && count < x)
+//     {
+//         fprintf(f, "%s, %f\n", node->name, node->dist);
+//         node = node->next;
+//         count++;
+//     }
+
+//     if (node)
+//     {
+//         g_slist_free_full(node->next, g_free);
+//         node->next = NULL;
+//     }
+// }
 
 // Query 3
 
