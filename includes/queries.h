@@ -21,6 +21,10 @@ char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest, int i);
 
 int* topUsersDistance(int n, ESTAT estat);
 
-void medianPrice(CATALOGO cat, char* cidade, FILE *f);
+void medianPriceBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f, int i);
 
-void medianDistBetween(GTree *rides, char* city, struct tm date1, struct tm date2, FILE *f);
+void medianPrice(CATALOGO cat, char* cidade, FILE *f, int i);
+
+void medianDistBetween(GTree *rides, char* city, struct tm date1, struct tm date2, FILE *f, int i);
+
+void tipBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f, int i);

@@ -71,6 +71,7 @@ void interpreter(CATALOGO cat, ESTAT estat)
         int queryNum = 0;
         int validez;
         char arg1[300];
+        char arg2[300];
         int argInt1 = 0;
         int argInt2 = 0;
         char arg3[3000], arg4[3000];
@@ -94,7 +95,8 @@ void interpreter(CATALOGO cat, ESTAT estat)
             if (userInput == 2)
             {
                 printf("Introduza o N: ");
-                scanf("%d", &argInt1);
+                scanf("%s", arg1);
+                executeQueries2(cat, estat, 2, arg1, "", "");
                 queryNum = 2;
             }
             if (userInput == 3)
@@ -107,6 +109,7 @@ void interpreter(CATALOGO cat, ESTAT estat)
             {
                 printf("Introduza a cidade: ");
                 scanf("%s", arg1);
+                executeQueries2(cat, estat, 2, arg1, "", "");
                 queryNum = 4;
             }
             if (userInput == 5)
@@ -114,7 +117,8 @@ void interpreter(CATALOGO cat, ESTAT estat)
                 printf("Introduza a data A: ");
                 scanf("%s", arg1);
                 printf("Introduza a data B: ");
-                scanf("%s", arg3);
+                scanf("%s", arg2);
+                executeQueries2(cat, estat, 2, arg1, arg2, "");
                 queryNum = 5;
             }
             if (userInput == 6)
@@ -124,7 +128,8 @@ void interpreter(CATALOGO cat, ESTAT estat)
                 printf("Introduza a data A: ");
                 scanf("%s", arg3);
                 printf("Introduza a data B: ");
-                scanf("%s", arg4);
+                scanf("%s", arg3);
+                executeQueries2(cat, estat, 2, arg1, arg2, arg3);
                 queryNum = 6;
             }
             if (userInput == 7)
@@ -132,7 +137,7 @@ void interpreter(CATALOGO cat, ESTAT estat)
                 printf("Introduza o N: ");
                 scanf("%d", &argInt1);
                 printf("Introduza a cidade: ");
-                scanf("%s", arg3);
+                scanf("%s", arg2);
                 queryNum = 7;
             }
             if (userInput == 8)
@@ -140,7 +145,7 @@ void interpreter(CATALOGO cat, ESTAT estat)
                 printf("Introduza o género: ");
                 scanf("%s", arg1);
                 printf("Introduza a idade: ");
-                scanf("%d", &argInt1);
+                scanf("%d", arg2);
                 queryNum = 8;
             }
             if (userInput == 9)
@@ -148,7 +153,7 @@ void interpreter(CATALOGO cat, ESTAT estat)
                 printf("Introduza a data A: ");
                 scanf("%s", arg1);
                 printf("Introduza a data B: ");
-                scanf("%s", arg3);
+                scanf("%s", arg2);
                 queryNum = 9;
             }
         }
@@ -251,20 +256,20 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
     case 4:
         // Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
         cidade = strsep(&line, "\n");
-        medianPrice(cat, cidade, f);
+        medianPrice(cat, cidade, f, 0);
         break;
 
     case 5:
         data1 = verifyTime(strsep(&line, " "));
         data2 = verifyTime(strsep(&line, " "));
-        medianPriceBetween(cat, data1, data2, f);
+        medianPriceBetween(cat, data1, data2, f, 0);
         break;
 
     case 6:
         cidade = strsep(&line, " ");
         data1 = verifyTime(strsep(&line, " "));
         data2 = verifyTime(strsep(&line, " "));
-        medianDistBetween(getRides(cat), cidade, data1, data2, f);
+        medianDistBetween(getRides(cat), cidade, data1, data2, f, 0);
         break;
 
     case 7:
@@ -277,6 +282,9 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
 
     case 9:
         // Query9();
+        data1 = verifyTime(strsep(&line, " "));
+        data2 = verifyTime(strsep(&line, " "));
+        tipBetween(cat, data1, data2, f, 0);
         break;
     }
 
@@ -324,29 +332,39 @@ void executeQueries2(CATALOGO cat, ESTAT estat, int query, char *inp1, char *inp
         // Query2/ N top condutores com maior avaliação média
         topN = atoi(inp1);
         // topDrivers(topN);
+        printf("\n\npress 1\n");
+        scanf("%s", argggg);
         break;
 
     case 3:
         // Query3();
+        printf("\n\npress 1\n");
+        scanf("%s", argggg);
         break;
 
     case 4:
         // Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
         cidade = inp1;
-        medianPrice(cat, cidade, f);
+        medianPrice(cat, cidade, f,1);
+        printf("\n\npress 1\n");
+        scanf("%s", argggg);
         break;
 
     case 5:
         data1 = verifyTime(inp1);
         data2 = verifyTime(inp2);
-        medianPriceBetween(cat, data1, data2, f);
+        medianPriceBetween(cat, data1, data2, f, 1);
+        printf("\n\npress 1\n");
+        scanf("%s", argggg);
         break;
 
     case 6:
         cidade = inp1;
         data1 = verifyTime(inp2);
         data2 = verifyTime(inp3);
-        medianDistBetween(getRides(cat), cidade, data1, data2, f);
+        medianDistBetween(getRides(cat), cidade, data1, data2, f, 1);
+        printf("\n\npress 1\n");
+        scanf("%s", argggg);
         break;
 
     case 7:
