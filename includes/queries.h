@@ -15,9 +15,9 @@ gint inteiros(gconstpointer a, gconstpointer b);
 
 gint CompareNames (gconstpointer name1, gconstpointer name2);
 
-char* profilefromUsername(CATALOGO cat,char*username, FILE* dest);
+char* profilefromUsername(CATALOGO cat,char*username, FILE* dest, int i);
 
-char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest);
+char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest, int i);
 
 int* topUsersDistance(int n, ESTAT estat);
 

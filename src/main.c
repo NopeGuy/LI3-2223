@@ -63,7 +63,7 @@ int main(int argc, char const *argv[])
     //correr commands
     if (argc == 1)
     {
-        interpreter(cat, 0, fileUsers, fileDrivers, fileRides);
+        interpreter(cat, estat);
     }
 
     if (argc == 2)

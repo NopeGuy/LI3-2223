@@ -9,10 +9,28 @@
 #include "../includes/stats.h"
 
 
-void interpreter(CATALOGO cat, int writeToFile, char *fileUsers, char *fileDrivers, char *fileRides)
+void interpreter(CATALOGO cat, ESTAT estat)
 {
     int terminated = 0;
     char *userInput = ' ';
+    char *foldername = malloc(sizeof(char) * 300);
+    char *temp1 = malloc(sizeof(char) * 300);
+    char *temp2 = malloc(sizeof(char) * 300);
+    char *f1 = "/users.csv";
+    char *f2 = "/drivers.csv";
+    char *f3 = "/rides.csv";
+
+    char* print1 = "Introduza o caminho para a pasta de entrada: ";
+    printf("%s", print1);
+    scanf("%s", foldername);
+    temp1 = strdup(foldername);
+    temp2 = strdup(foldername);
+    char *fileUsers = malloc(sizeof(char) * 300);
+    char *fileDrivers = malloc(sizeof(char) * 300);
+    char *fileRides = malloc(sizeof(char) * 300);
+    fileUsers = strcat(foldername, f1);
+    fileDrivers = strcat(temp1, f2);
+    fileRides = strcat(temp2, f3);
 
     char *imprimir = ""
                      "--------------------------------------------------------------------\n"
@@ -41,13 +59,15 @@ void interpreter(CATALOGO cat, int writeToFile, char *fileUsers, char *fileDrive
                      "| 99 | Fechar programa                                              |\n"
                      "--------------------------------------------------------------------\n";
 
-    loadUsers(fileUsers, cat);
-    loadDrivers(fileDrivers, cat);
-    loadRides(fileRides, cat);
+    loadUsers(fileUsers, cat, estat);
+    loadDrivers(fileDrivers, cat, estat);
+    GTree *users = getUsers(cat);
+    GTree *drivers = getDrivers(cat);
+    loadRides(fileRides, cat, estat);
+    GTree *rides = getRides(cat);
 
     while (terminated == 0)
     {
-        system("clear");
         int queryNum = 0;
         int validez;
         char arg1[300];
@@ -68,6 +88,7 @@ void interpreter(CATALOGO cat, int writeToFile, char *fileUsers, char *fileDrive
             {
                 printf("Introduza o ID: ");
                 scanf("%s", arg1);
+                executeQueries2(cat, estat, 1, arg1, "", "");
                 queryNum = 1;
             }
             if (userInput == 2)
@@ -133,6 +154,7 @@ void interpreter(CATALOGO cat, int writeToFile, char *fileUsers, char *fileDrive
         }
         if (userInput == 99)
         {
+            system("clear");
             printf("A fechar...\n");
             terminated = 1;
         }
@@ -207,12 +229,12 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
         if (username[0] >= '0' && username[0] <= '9')
         {
             int id_condutor = atoi(username);
-            profilefromID(cat, id_condutor, f);
+            profilefromID(cat, id_condutor, f, 0);
         }
         else
         {
             if (username != NULL)
-                profilefromUsername(cat, username, f);
+                profilefromUsername(cat, username, f, 0);
         }
 
         break;
@@ -242,6 +264,88 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
         cidade = strsep(&line, " ");
         data1 = verifyTime(strsep(&line, " "));
         data2 = verifyTime(strsep(&line, " "));
+        medianDistBetween(getRides(cat), cidade, data1, data2, f);
+        break;
+
+    case 7:
+        // Query7/top Rides de uma cidade e não top rides de uma nacionalidade
+        // topPerCity();
+        break;
+    case 8:
+        // Query8();
+        break;
+
+    case 9:
+        // Query9();
+        break;
+    }
+
+    fclose(f);
+}
+
+void executeQueries2(CATALOGO cat, ESTAT estat, int query, char *inp1, char *inp2, char *inp3)
+{
+    int idInt = query;
+    char queryToString[30] = "";
+    char fileName[2000] = "";
+    char *username;
+    int topN;
+    char argggg[6];
+    char *cidade;
+
+    struct tm data1, data2;
+
+    sprintf(queryToString, "%d", query);
+    strcat(fileName, "./Resultados/command");
+    strcat(fileName, queryToString);
+    strcat(fileName, "_output.txt");
+    FILE *f = fopen(fileName, "w");
+    switch (idInt)
+    {
+    // chamar ficheiro de queries
+    case 1:
+        username = inp1;
+        // Query1/ separada se é user ou driver
+        if (username[0] >= '0' && username[0] <= '9')
+        {
+            int id_condutor = atoi(username);
+            profilefromID(cat, id_condutor, f, 1);
+        }
+        else
+        {
+            if (username != NULL)
+                profilefromUsername(cat, username, f, 1);
+        }
+        printf("\n\npress 1\n");
+        scanf("%s", argggg);
+
+        break;
+    case 2:
+        // Query2/ N top condutores com maior avaliação média
+        topN = atoi(inp1);
+        // topDrivers(topN);
+        break;
+
+    case 3:
+        // Query3();
+        break;
+
+    case 4:
+        // Query4/ Preço médio das viagens (sem considerar gorjetas) numa determinada cidade
+        cidade = inp1;
+        medianPrice(cat, cidade, f);
+        break;
+
+    case 5:
+        data1 = verifyTime(inp1);
+        data2 = verifyTime(inp2);
+        medianPriceBetween(cat, data1, data2, f);
+        break;
+
+    case 6:
+        cidade = inp1;
+        data1 = verifyTime(inp2);
+        data2 = verifyTime(inp3);
         medianDistBetween(getRides(cat), cidade, data1, data2, f);
         break;
 

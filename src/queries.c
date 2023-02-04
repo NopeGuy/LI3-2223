@@ -119,7 +119,7 @@ gboolean conta_viagens(gpointer key, gpointer value, gpointer data) {
     return FALSE;
 }
 
-char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
+char* profilefromUsername(CATALOGO cat,char* username, FILE* dest, int i)
 {
     USER u = g_tree_lookup(getUsers(cat), username);
 
@@ -138,6 +138,17 @@ char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
 
     g_tree_foreach(getRides(cat), conta_viagens, trip);
 
+
+    if(i==1){
+        printf("%s ;", getName(u));
+        printf("%c ;", getGender(u));
+        printf("%d ;", getAge(getBirth_date(u)));
+        printf("%0.3f ;", trip->ranking_sum/trip->total_drives);
+        printf("%d ;", trip->total_drives);
+        printf("%0.3f ;", trip->price_sum);
+
+    }
+    else{
     fprintf(dest, "%s", getName(u));
     fprintf(dest, ";");
     fprintf(dest, "%c", getGender(u));
@@ -149,7 +160,7 @@ char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
     fprintf(dest, "%d", trip->total_drives);
     fprintf(dest, ";");
     fprintf(dest, "%0.3f", trip->price_sum);
-
+    }
 
     free(trip);
 
@@ -157,7 +168,7 @@ char* profilefromUsername(CATALOGO cat,char* username, FILE* dest)
     return "";
 }
 
-char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest)
+char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest, int i)
 {
     DRIVERS d = g_tree_lookup(getDrivers(cat), id_condutor);
 
@@ -175,6 +186,15 @@ char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest)
 
     g_tree_foreach(getRides(cat), conta_viagens, trip);
 
+    if(i==1){
+        printf("%s ;", getDriversName(d));
+        printf("%c ;", getDriversGender(d));
+        printf("%d ;", getAge(getDriversBirthDay(d)));
+        printf("%0.3f ;", trip->ranking_sum/trip->total_drives);
+        printf("%d ;", trip->total_drives);
+        printf("%0.3f ;", trip->price_sum);
+    }
+    else{
     fprintf(dest, "%s", getDriversName(d));
     fprintf(dest, ";");
     fprintf(dest, "%c", getDriversGender(d));
@@ -186,7 +206,7 @@ char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest)
     fprintf(dest, "%d", trip->total_drives);
     fprintf(dest, ";");
     fprintf(dest, "%0.3f", trip->price_sum);
-
+    }
 
 
 

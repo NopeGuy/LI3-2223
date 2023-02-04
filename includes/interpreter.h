@@ -15,7 +15,7 @@
 #include "queries.h"
 #include "constructors.h"
 
-void interpreter(CATALOGO cat, int writeToFile, int writeToFile, char *fileUsers, char *fileDrivers, char *fileRides);
+void interpreter(CATALOGO cat, ESTAT estat);
 
 void commandInterpreter(CATALOGO cat, char *filename, int writeToFile, char *fileUsers, char *fileDrivers, char *fileRides);
 
