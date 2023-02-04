@@ -21,5 +21,7 @@ void setTotala(STATSDRIVERS d, double ta);
 char* getCity(STATSDRIVERS d);
 double getDist(STATSUSERS u);
 void setDist(STATSUSERS u, double d);
+gint compare_by_distance(gconstpointer a, gconstpointer b, gpointer user_data)
+
 
 buildEstatUser(estat, user_temp, distance_temp);

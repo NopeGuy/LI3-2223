@@ -27,4 +27,4 @@ void medianPrice(CATALOGO cat, char* cidade, FILE *f, int i);
 
 void medianDistBetween(GTree *rides, char* city, struct tm date1, struct tm date2, FILE *f, int i);
 
-void tipBetween(CATALOGO cat, struct tm date1, struct tm date2, FILE *f, int i);
+void topUsersDistance(CATALOGO cat, ESTAT estat, int n, FILE *f, int i);

@@ -227,15 +227,9 @@ char *profilefromID(CATALOGO cat, int id_condutor, FILE *dest, int i)
 }
 
 // Query 2
-// gint compare_by_distance(gconstpointer a, gconstpointer b, gpointer user_data)
-// {
-//     STATSUSERS nd1 = (STATSUSERS)a;
-//     STATSUSERS nd2 = (STATSUSERS)b;
 
-//     return (nd2->dist - nd1->dist) > 0 ? 1 : -1;
-// }
 
-// GSList *topUsersDistance(CATALOGO cat, ESTAT estat, int n, FILE *f, int it)
+// void topUsersDistance(CATALOGO cat, ESTAT estat, int n, FILE *f, int i)
 // {
 //     GTree *tree1 = NULL;
 //     tree1 = getTopDistanceUsers(estat);
@@ -249,7 +243,15 @@ char *profilefromID(CATALOGO cat, int id_condutor, FILE *dest, int i)
 //     GSList *node = top_n;
 //     while (node && count < x)
 //     {
-//         fprintf(f, "%s, %f\n", node->name, node->dist);
+//         STATSUSERS nd = (STATSUSERS)node->data;
+//         if (i == 1)
+//         {
+//             printf("Name: %s\n Distance: %f\n", nd->name, nd->dist);
+//         }
+//         else
+//         {
+//             fprintf(f, "Name: %s\n Distance: %f\n", nd->name, nd->dist);
+//         }
 //         node = node->next;
 //         count++;
 //     }

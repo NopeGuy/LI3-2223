@@ -140,6 +140,14 @@ buildEstatUser(ESTAT estat, char *user, double distance)
     free(temp);
 }
 
+// gint compare_by_distance(gconstpointer a, gconstpointer b, gpointer user_data)
+// {
+//     STATSUSERS nd1 = (STATSUSERS)a;
+//     STATSUSERS nd2 = (STATSUSERS)b;
+
+//     return (nd2->dist - nd1->dist) > 0 ? 1 : -1;
+// }
+
 // void buildEstatDriver(ESTAT estat, int driver, double score, char* city){
 //     GTree* t = NULL;
 //     t = getEstatDrivers(estat);
