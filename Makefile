@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 `pkg-config --cflags glib-2.0`
+CFLAGS=-Wall -Ofast -Wpedantic -Wextra -g `pkg-config --cflags glib-2.0`
 
 
 BIN     := .
@@ -18,10 +18,10 @@ run: clean all
 	./$(EXECUTABLE)
 
 $(BIN)/$(EXECUTABLE): $(SRC)/*.c
-	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES)
+	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES) -g
 
 $(BIN)/$(TESTES): $(SRC)/*.c
-	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES)
+	$(CC) $(CFLAGS) -lm  $^ -o $@ $(LIBRARIES) -g
 
 clean:
 	-rm ./$(EXECUTABLE)
