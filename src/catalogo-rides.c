@@ -7,8 +7,9 @@
 
 #include "../includes/catalogo-rides.h"
 #include "../includes/constructors.h"
-#include "../includes/catalogo.h"        //ver isto
+#include "../includes/catalogo.h"        
 #include "../includes/main.h"
+#include "../includes/queries.h"
 
 //id;date;driver;user;city;distance;score_user;score_driver;tip;comment
 
@@ -108,7 +109,7 @@ temp->lnNumber = nLinha;
 g_tree_insert(t, GINT_TO_POINTER(id_temp), temp);
 
 //buildEstatDriver(estat, driver_temp, score_driver_temp, city_temp);
-//buildEstatUser(estat, user_temp, distance_temp);
+buildEstatUser(estat, user_temp, distance_temp);
 }
 
 void loadRides(char* filename, CATALOGO cat, ESTAT estat){

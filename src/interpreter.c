@@ -225,7 +225,7 @@ void executeQueries(char *line, CATALOGO cat, ESTAT estat, int query)
     case 3:
         // Query3/ N top utilizadores com maior distância percorrida
         topN = atoi(strsep(&line, " "));
-        // Query3();
+        topUsersDistance(cat, estat, topN, f, 0);
         break;
 
     case 4:

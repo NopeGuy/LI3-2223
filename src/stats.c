@@ -107,8 +107,8 @@ gint compare_statUsers(gconstpointer a, gconstpointer b)
 //     }
 //     return FALSE;
 // }
-/*
-buildEstatUser(ESTAT estat, char *user, double distance)
+
+void buildEstatUser(ESTAT estat, char *user, double distance)
 {
     // pegar valores do id na rides com forEach
     // somar as viagens no iterador
@@ -129,7 +129,7 @@ buildEstatUser(ESTAT estat, char *user, double distance)
         temp->dist = temp->dist + distance;
         // printf("temp->name: %s \n", temp->name);
         // printf("temp->dist: %f \n", temp->dist);
-        g_tree_replace_node(t, temp->name, temp);
+        g_tree_replace(t, temp->name, temp);
     }
     else
     {
@@ -139,7 +139,7 @@ buildEstatUser(ESTAT estat, char *user, double distance)
     }
     free(temp);
 }
-*/
+
 // void buildEstatDriver(ESTAT estat, int driver, double score, char* city){
 //     GTree* t = NULL;
 //     t = getEstatDrivers(estat);
@@ -179,3 +179,12 @@ gint compare_by_distance(gconstpointer a, gconstpointer b, gpointer user_data) {
 
   return (nd2->dist - nd1->dist) > 0 ? 1 : -1;
 }
+
+void printnode(GSList *data,FILE *f, int i){
+        STATSUSERS nd = (STATSUSERS)data->data;
+        if(i == 1){
+            printf("Name: %s\n Distance: %f\n", nd->name, nd->dist);
+        }else{
+            fprintf(f,"Name: %s\n Distance: %f\n", nd->name, nd->dist);
+        }
+} 
