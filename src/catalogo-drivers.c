@@ -6,8 +6,10 @@
 #include <time.h>
 #include <glib.h>
 
-#include "catalogo-drivers.h"
-#include "catalogo.h"
+#include "../includes/catalogo-drivers.h"
+#include "../includes/catalogo.h"
+#include "../includes/constructors.h"
+#include "../includes/stats.h"
 
 struct drivers
 {
@@ -15,7 +17,7 @@ struct drivers
     char *name;
     struct tm birth_day;
     char gender;
-    char *car_class;
+    int car_class;
     char *license_plate;
     char *city;
     
@@ -45,9 +47,9 @@ char getDriversGender(DRIVERS c)
     return (c->gender);
 }
 
-char *getDriversCarClass(DRIVERS c)
+int getDriversCarClass(DRIVERS c)
 {
-    return strdup(c->car_class);
+    return (c->car_class);
 }
 
 char *getDriversLicensePlate(DRIVERS c)
@@ -72,7 +74,7 @@ char getDriversAccountStatus(DRIVERS c)
 
 //Build and Load
 
-void buildDrivers(char *line, int lineNumber, CATALOGO cat)
+void buildDrivers(char *line, int lineNumber, CATALOGO cat, ESTAT estat)
 {
     GTree *t = NULL;
     t = getDrivers(cat);
@@ -81,45 +83,47 @@ void buildDrivers(char *line, int lineNumber, CATALOGO cat)
     DRIVERS temp = malloc(sizeof(struct drivers));
 
     // Get the info
-    int id = atoi(strsep(&buff2, ";")); //";\n"
+    int id = atoi(strsep(&buff2, ";"));
+    if(id == 0) return;
     char *name = strsep(&buff2, ";");
-
-    char *datestr = strsep(&buff2, ";");
-    struct tm birth_dayst;
-    strptime(datestr, "%d-%m-%Y", &birth_dayst);
-
-    char gender = strsep(&buff2, ";")[0]; // verify later
-    char *car_class = strsep(&buff2, ";");
+    if(name==NULL) return;
+    struct tm birth_dayst = verifyTime(strsep(&buff2, ";"));
+    if(birth_dayst.tm_year==0) return;
+    char gender = strsep(&buff2, ";")[0];
+    if(gender==NULL) return;
+    char *car_class = toUppercase(strsep(&buff2, ";"));
     char *license_plate = strsep(&buff2, ";");
+    if(license_plate==NULL) return;
     char *city = strsep(&buff2, ";");
+    if(city==NULL) return;
+    struct tm account_creationst = verifyTime(strsep(&buff2, ";"));
+    if(account_creationst.tm_year==0) return;
+    char account_status = strsep(&buff2, ";")[0]; 
+    int car_class_int = -1;
 
-    char *datestr2 = strsep(&buff2, ";");
-    struct tm account_creationst;
-    strptime(datestr2, "%d-%m-%Y", &account_creationst);
+    //captar class do driver
+    if(strcmp(car_class, "BASIC")) car_class_int = 0;
+    if(strcmp(car_class, "GREEN")) car_class_int = 1;
+    if(strcmp(car_class, "PREMIUM")) car_class_int = 2;
+    if(car_class_int == -1) return;
 
-    char account_status = strsep(&buff2, ";")[0]; // verify later
-
-    // verifier
-    if (id == 0)
-        return;
-
-    // Send the info
     temp->id = id;
-    temp->name = name;
+    temp->name = strdup(name);
     temp->birth_day = birth_dayst;
     temp->gender = gender;
-    temp->car_class = car_class;
+    temp->car_class = car_class_int;
     temp->license_plate = license_plate;
-    temp->city = city;
+    temp->city = strdup(city);
     temp->account_creation = account_creationst;
     temp->account_status = account_status;
 
     g_tree_insert(t, GINT_TO_POINTER(id), temp);
 }
 
-void loadDrivers(char *filename, CATALOGO cat)
+void loadDrivers(char *filename, CATALOGO cat, ESTAT estat)
 {
-    int max_len = 200000;
+    //receber rides ja feita
+    int max_len = 2000;
     char buff[max_len];
 
     FILE *f = fopen(filename, "r");
@@ -132,7 +136,7 @@ void loadDrivers(char *filename, CATALOGO cat)
     int line = 0;
     while (fgets(buff, max_len, f))
     {
-        buildDrivers(buff, line, cat);
+        buildDrivers(buff, line, cat, estat);
         line++;
     }
     fclose(f);

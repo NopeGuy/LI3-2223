@@ -5,10 +5,10 @@
 #include <time.h>
 #include <glib.h>
 
-#include "catalogo-users.h"
-#include "constructors.h"
-#include "catalogo.h"        //ver isto
-#include "main.h"
+#include "../includes/catalogo-users.h"
+#include "../includes/constructors.h"
+#include "../includes/catalogo.h"        //ver isto
+#include "../includes/main.h"
 
 struct user {
 	char* username;
@@ -24,7 +24,7 @@ struct user {
 };
 
 char *getUsername(USER u){
-    return strdup(u->username);
+    return u->username;
 }
 
 char *getName(USER u){
@@ -34,7 +34,7 @@ char *getName(USER u){
     return strdup(u->name);
 }
 
-char gender(USER u){
+char getGender(USER u){
 	return u->gender;
 }
 
@@ -62,20 +62,20 @@ void buildUsers(char* line, CATALOGO cat) {
     char* buff2 = line;
     USER temp = malloc(sizeof(struct user));
 
+
     char* username = strsep(&buff2, ";\n");
+    if(username == NULL) return;
     char* name = strsep(&buff2, ";\n");
-    
-    char gender;
-    if (strcmp(strsep(&buff2, ";\n"), "M") == 0)
-    {
-        gender = 'm';
-    } else{
-        gender = 'f';
-    }
+    if(name == NULL) return;
+    char* gender=strsep(&buff2, ";\n");
+    if(gender==NULL) return;
+    else if (strcmp(gender, "M") == 0) gender = 'm';
+    else gender = 'f';
     
     struct tm birth_date = verifyTime(strsep(&buff2, ";\n"));
+    if(birth_date.tm_year==0) return;
     struct tm account_creation = verifyTime(strsep(&buff2, ";\n"));
-    
+    if(account_creation.tm_year==0) return;
     char pay_method;
     char* temp_pay_method = strsep(&buff2, ";\n");
     if (strcmp(temp_pay_method, "cash") == 0)
@@ -86,31 +86,31 @@ void buildUsers(char* line, CATALOGO cat) {
         pay_method = 'd';
     } else if(strcmp(temp_pay_method, "credit_card") == 0){
         pay_method = 'r';
-    }
+    } else return;
 
     char account_status;
     char* temp_account_status = strsep(&buff2, ";\n");
     if (strcmp(temp_account_status, "active") == 0)
     {
         account_status = 'a';
-    } else if(strcmp(temp_account_status, "inactive") == 0){
-        account_status = 'i';
-    }
+    } else account_status = 'i';
+        
+    
 
-    strcpy(temp->username, username);
-    strcpy(temp->name, name);
+    temp->username = strdup(username);
+    temp->name = strdup(name);
     temp->gender = gender;
     temp->birth_date = birth_date;
     temp->account_creation = account_creation;
-    temp->pay_method = pay_method; //pay_method may be initialized
-    temp->account_status = account_status; //account_status may be unitialized
+    temp->pay_method = pay_method; 
+    temp->account_status = account_status;
 
-    g_tree_insert(t, username, temp);
+    g_tree_insert(t, temp->username, temp);
 }
 
 
 void loadUsers(char *fileName, CATALOGO cat) {
-    int max_len = 400000;
+    int max_len = 2000;
     char buff[max_len];
 
     FILE *file = fopen(fileName, "r");

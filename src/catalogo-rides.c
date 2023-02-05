@@ -5,10 +5,10 @@
 #include <time.h>
 #include <glib.h>
 
-#include "catalogo-rides.h"
-#include "constructors.h"
-#include "catalogo.h"        //ver isto
-#include "main.h"
+#include "../includes/catalogo-rides.h"
+#include "../includes/constructors.h"
+#include "../includes/catalogo.h"        //ver isto
+#include "../includes/main.h"
 
 //id;date;driver;user;city;distance;score_user;score_driver;tip;comment
 
@@ -28,6 +28,7 @@ struct ride {
 
 //getters
 
+
 int getRidesid(RIDES a){
     return a->id;
 }
@@ -41,11 +42,11 @@ int getRidesDriver(RIDES a){
 }
 
 char *getRidesUser(RIDES a){
-    return strdup(a->user);
+    return a->user;
 }
 
 char *getRidesCity(RIDES a){
-    return strdup(a->city);
+    return a->city;
 }
 
 double getRidesDistance(RIDES a){
@@ -69,7 +70,7 @@ char *getRidesComment(RIDES a){
 }
 
 
-void buildRides (char* line, CATALOGO cat, int nLinha){
+void buildRides (char* line, CATALOGO cat, ESTAT estat, int nLinha){
 GTree* t = NULL;
 t = getRides(cat);                          //por fazer
 char* buffR = line;
@@ -77,41 +78,41 @@ RIDES temp = malloc(sizeof(struct ride));
 //struct tm date = {0};
 
 int id_temp = atoi(strsep(&buffR,";\n"));
+if(id_temp == 0) return;
 struct tm date_temp = verifyTime(strsep(&buffR, ";\n"));
+if(date_temp.tm_year==0) return;
 int driver_temp = atoi(strsep(&buffR,";\n"));
+if(driver_temp == 0) return;
 char *user_temp = strsep(&buffR,";\n");
+if(user_temp == 0) return;
 char *city_temp = strsep(&buffR,";\n");
+if(city_temp == 0) return;
 double distance_temp = atof(strsep(&buffR,";\n"));
 double score_user_temp = atof(strsep(&buffR,";\n"));
 double score_driver_temp = atof(strsep(&buffR,";\n"));
 double tip_temp = atof(strsep(&buffR,";\n"));
 
-//verificações
-if(id_temp == 0) return;
-if(driver_temp == 0) return;
-if(user_temp == 0) return;
-if(city_temp == 0) return;
-if(date_temp.tm_year==0) return;
-
 //Passar para tree temporária
 temp->id = id_temp;
 temp->date = date_temp;
 temp->driver = driver_temp;
-temp->user = user_temp;
-temp->city = city_temp;
+temp->user = strdup(user_temp);
+temp->city = strdup(city_temp);
 temp->distance = distance_temp;
 temp->score_user = score_user_temp;
 temp->score_driver = score_driver_temp;
 temp->tip = tip_temp;
-temp->comment = malloc(sizeof(char)*400000);
 temp->lnNumber = nLinha;
 //inserir na glib
 
 g_tree_insert(t, GINT_TO_POINTER(id_temp), temp);
+
+//buildEstatDriver(estat, driver_temp, score_driver_temp, city_temp);
+//buildEstatUser(estat, user_temp, distance_temp);
 }
 
-void loadRides(char* filename, CATALOGO cat){
-    int max_len = 200000;
+void loadRides(char* filename, CATALOGO cat, ESTAT estat){
+    int max_len = 2000;
     char buff[max_len];
     FILE *f = fopen(filename, "r");
     if(f == NULL){
@@ -121,9 +122,11 @@ void loadRides(char* filename, CATALOGO cat){
     fgets(buff,max_len,f); //primeira linha
     int line=0;
     while(fgets(buff,max_len, f)){
-        buildRides(buff,cat,line);
+        buildRides(buff,cat, estat, line);
         line++;
     }
+
+
     fclose(f);
 }
 
