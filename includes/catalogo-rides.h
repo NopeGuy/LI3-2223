@@ -5,6 +5,7 @@
 #include <time.h>
 #include <glib.h>
 #include "catalogo.h"
+#include "stats.h"
 
 typedef struct ride* RIDES;
 

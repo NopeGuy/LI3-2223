@@ -23,4 +23,5 @@ char* getCity(STATSDRIVERS d);
 double getDist(STATSUSERS u);
 void setDist(STATSUSERS u, double d);
 
-buildEstatUser(estat, user_temp, distance_temp);
+void buildEstatUser(estat, user_temp, distance_temp);
+void printnode(GSList *data,FILE *f, int i);

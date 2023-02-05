@@ -19,7 +19,7 @@ char* profilefromUsername(CATALOGO cat,char*username, FILE* dest);
 
 char* profilefromID(CATALOGO cat,int id_condutor, FILE* dest);
 
-int* topUsersDistance(int n, ESTAT estat);
+void topUsersDistance(CATALOGO cat, ESTAT estat, int n, FILE *f, int i);
 
 void medianPrice(CATALOGO cat, char* cidade, FILE *f);
 
