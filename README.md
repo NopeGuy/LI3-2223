@@ -11,3 +11,6 @@ make all
 To be soon added
 
 ./Run
+
+[@NopeGuy](https://github.com/NopeGuy) \
+[@Bernazad](https://github.com/HBernaH) 
